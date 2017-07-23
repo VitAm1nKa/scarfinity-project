@@ -1,0 +1,356 @@
+@import '../../styles/utility.less';
+
+.uss {
+    display: flex;
+    flex-direction: row;
+
+    & > div {
+        margin: 10px;
+    }
+}
+
+.catalog-produc-card-default {
+	padding: 2px;
+
+	&__image {
+		position: relative;
+		overflow: hidden;
+
+		&:hover & {
+			&__image {
+				filter: opacity(25%);
+			}
+
+			&__info {
+				background: rgba(250, 250, 250, 0.24);
+				opacity: 1;
+				pointer-events: auto;
+				cursor: pointer;
+				// transform: translate3d(0, 0%, 0);
+			}
+		}
+
+		&__image {
+			transition: all 0.2s linear;
+		}
+		
+		&__info {
+			position: absolute;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			left: 0;
+
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+
+			font-size: 0;
+
+			& > span {
+				font-family: "Roboto";
+				font-size: 14px;
+				font-weight: 500;
+				text-transform: uppercase;
+
+				color: #555;
+				text-align: center;
+				margin: 7px 0px;
+				user-select: none;
+			}
+
+			background: rgba(255, 255, 255, 0.02);
+
+			transition: all 0.2s linear;
+
+			opacity: 0;
+			user-select: none;
+			pointer-events: none;
+
+			// transform: translate3d(0, 100%, 0);
+		}
+	}
+
+	&__rating {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		position: relative;
+		font-size: 0;
+
+		& > div {
+			background: #fefefe;
+			padding: 0px 7px;
+			z-index: 2;
+		}
+
+		&:before {
+			content: "";
+			position: absolute;
+			border-top: 2px solid rgba(0, 0, 0, 0.12);
+			top: calc(~"50% - 1px");
+			left: -2px;
+			right: -2px;
+
+			z-index: 1;
+		}
+	}
+
+	&__description {
+		padding: 5px 10px 15px 10px;
+	}
+
+	&__title {
+		display: block;
+		font-family: "Roboto";
+		font-weight: 500;
+		font-size: 14px;
+		line-height: 24px;
+
+		text-transform: capitalize;
+		user-select: none;
+
+		color: #444;
+
+		margin: 3px 0px;
+	}
+
+	@media screen and (max-width: 545px) {
+		&__title {
+			font-size: 12px;
+		}
+	}
+}
+
+.offers {
+
+	&__best-sellers-block {
+		margin-top: 5px;
+        margin-bottom: 5px;
+		display: inline-block;
+		background: #fff;
+		position: relative;
+		
+		&__container {
+			overflow: hidden;
+			padding: 5px 0px;
+			&__top-block {
+				position: relative;
+				overflow: hidden;
+				
+				&:hover &__annotation {
+					.transform(translate3d(0, 0%, 0));
+				}
+
+				&__annotation {
+					position: absolute;
+					top: 0;
+					bottom: 0;
+					left: 0;
+					right: 0;
+					.transform(translate3d(0, 100%, 0));
+					transition: transform 0.2s ease-in-out;
+					
+					&__container {
+						height: 100%;
+						display: flex;
+						flex-direction: column;
+						justify-content: center;
+						align-items: center;
+						padding: 0px 5px;
+						
+						& h4 {
+							font-family: "Roboto";
+							font-weight: 500;
+							color: #505050;
+							font-size: 14px;
+							text-transform: uppercase;
+							margin: 5px 0px;
+							padding: 0px;
+						}
+					}
+				}
+
+				cursor: pointer;
+				padding: 10px 10px;
+				
+				&:hover &__image {
+					.filter(blur(2px) opacity(0.2) brightness(1));
+				    .transform(scale(1.1));
+				}
+				
+				&__image {
+					transition: all 0.2s linear;
+					width: 200px;
+					height: 200px;
+					
+					& > img {
+						width: 100%;
+						height: 100%;
+					}
+				}
+			}
+			&__middle-block {
+				// padding: 8px 0px;
+                margin-left: -5px;
+                margin-right: -5px;
+				position: relative;
+				text-align: center;
+				font-size: 0;
+				overflow: hidden;
+				
+				&__button {
+					display: inline-block;
+					width: 42px;
+					height: 42px;
+					.transform(rotate(45deg));
+					.border-radius(4px);
+					background: #e05543;
+                    position: absolute;
+                    right: 0;
+                    left: 0;
+                    top: 11px;
+                    margin-left: auto; 
+                    margin-right: auto;
+				}
+				
+				&:before {
+					content: "";
+					position: absolute;
+					bottom: 50%;
+					left: -5px;
+					right: -5px;
+					top: 0;
+					border-bottom: 1px solid #ccc;
+                    .box-shadow(rgba(0, 0, 0, 0.12) 0px 1px 3px);
+					// .box-shadow(0px 1px 2px 0px rgba(0,0,0,0.05));
+				}
+			}
+			&__bottom-block {
+				// border: 1px solid #ccc;
+				padding-bottom: 10px;
+				
+                & > span.title {
+                    display: block;
+                    margin: 0;
+					padding: 0;
+					text-transform: capitalize;
+					font-family: "Roboto";
+					color: #303030;
+					margin-top: 10px;
+					font-weight: 500;
+					font-size: 16px;
+					text-align: center;
+                }
+
+                & > span.cost {
+                    display: block;
+                    margin: 0;
+					padding: 0;
+					text-transform: capitalize;
+					font-family: "Roboto";
+					color: #414141;
+					margin-top: 5px;
+					font-weight: 500;
+					font-size: 22px;
+					text-align: center;
+                }
+			}
+		}
+	}
+
+	&__offer-block {
+		margin: 5px;
+		.border-radius(4px);
+		display: inline-block;
+		overflow: hidden;
+		font-size: 0;
+		background: #fff;
+		
+		&__container {
+			display: flex;
+			flex-direction: row;
+			justify-content: stretch;
+			align-items: center;
+			font-size: 17px;
+
+			&__left-side {
+				padding: 15px;
+				&__header {
+					margin: 5px 0px;
+					padding: 0;
+					font-family: "Istok";
+					font-size: 16px;
+					font-weight: 700;
+					color: #8767c8;
+					
+					&.new {
+						color: #8767c8;
+					}
+
+					&.hot {
+						color: #ee8944;
+					}
+
+					&.sale {
+						color: #9cbf3d;
+					}
+				}
+
+
+				&__title {
+					margin: 0;
+					padding: 0;
+					text-transform: capitalize;
+					font-family: "Roboto";
+					color: #414141;
+					margin: 5px 0px;
+					font-weight: 500;
+					font-size: 17px;
+				}
+
+				&__discription {
+					max-width: 180px;
+					margin: 0;
+					padding: 0;
+					font-size: 15px;
+					font-family: "Roboto";
+					color: #797979;
+					margin: 5px 0px;
+				}
+
+				&__button {
+					margin-top: 5px;
+					display: inline-block;
+					padding: 5px 20px;
+					border: 1px solid #ccc;
+					.border-radius(4px);
+					text-decoration: none;
+					font-family: "Roboto";
+					font-size: 12px;
+					background: #fefefe;
+					color: #212121;
+					font-weight: 500;
+					
+					&:hover {
+						background: #9cbf3d;
+						color: #fff;
+					}
+				}
+			}
+
+			&__right-side {
+				&__container {
+					width: 110px;
+					height: 130px;
+					
+					& > img {
+						width: 130px;
+						height: 130px;
+					}
+				}
+			}
+		}
+	}
+}

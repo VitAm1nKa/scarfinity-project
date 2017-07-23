@@ -1,0 +1,36 @@
+@import '../../styles/utility.less';
+
+.color {
+	&__color-container {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+
+	&__color-select {
+		.border-radius(50%);
+		position: relative;
+		display: inline-block;
+		margin: 5px;
+		box-sizing: border-box;
+		
+		&.s22 {	width: 22px; height: 22px; }
+		&.s24 {	width: 24px; height: 24px; }
+		&.s26 {	width: 26px; height: 26px; }
+		&.s28 {	width: 28px; height: 28px; }
+		&.s30 {	width: 30px; height: 30px; }
+		&.s32 {	width: 32px; height: 32px; }
+		&.s34 {	width: 34px; height: 34px; }
+
+		&.p-15-0343 { background: #86AF49; }
+		&.p-15-3919 { background: #90a7d0; }
+		&.p-17-1744 { background: #ef5c6e; }
+
+		&.rnd-white { 
+			border: 3px solid rgba(255, 255, 255, 1); 
+			.box-shadow(0px 0px 1px 2px rgba(160, 160, 160, 0.3));
+		}
+
+	}
+}

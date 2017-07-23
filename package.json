@@ -1,0 +1,43 @@
+{
+  "name": "scarfinity-project",
+  "version": "1.0.0",
+  "description": "Scarfinity site project",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "devserver": "webpack-dev-server --debug --hot --devtool eval-source-map --output-pathinfo --watch --colors --inline --content-base public --port 8090 --host 192.168.1.198"
+  },
+  "author": "Mikhail VitAm1nKa.trisquare Silantyev",
+  "license": "ISC",
+  "dependencies": {
+    "jquery": "*",
+    "material-ui": "^0.18.1",
+    "prop-types": "^15.5.8",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "react-redux": "^5.0.5",
+    "react-router": "^4.1.1",
+    "react-router-dom": "^4.1.1",
+    "react-router-redux": "^4.0.8",
+    "react-tap-event-plugin": "^2.0.1",
+    "redux": "^3.7.2",
+    "redux-devtools-extension": "^2.13.2",
+    "redux-thunk": "^2.2.0"
+  },
+  "devDependencies": {
+    "autoprefixer-loader": "*",
+    "babel": "6.x",
+    "babel-core": "6.24.0",
+    "babel-loader": "7.x",
+    "babel-preset-react": "^6.24.1",
+    "css-loader": "0.28.x",
+    "file-loader": "0.11.0",
+    "json-loader": "^0.5.4",
+    "less": "^2.3.1",
+    "less-loader": "^4.0.3",
+    "style-loader": "0.17.0",
+    "url-loader": "0.5.8",
+    "webpack": "^2.x",
+    "webpack-dev-server": "^2.4.5"
+  }
+}

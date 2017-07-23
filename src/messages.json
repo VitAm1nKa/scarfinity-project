@@ -1,0 +1,37 @@
+[
+	{
+		"id": "qwer",
+		"subject": "Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
+		"senderName": "Misha",
+		"senderEmail": "VitAm1nKa.trisquare@gmail.com",
+		"body": "1. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque explicabo in iste ipsum saepe! Voluptatum incidunt, dicta facilis velit provident saepe, vitae aliquid sunt porro modi veritatis officiis similique animi."
+	},
+	{
+		"id": "asdf",
+		"subject": "Eos autem praesentium a itaque quas distinctio inventore illum aperiam, omnis.",
+		"senderName": "Vova",
+		"senderEmail": "VitAm1nKa.trisquare@gmail.com",
+		"body": "2. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque explicabo in iste ipsum saepe! Voluptatum incidunt, dicta facilis velit provident saepe, vitae aliquid sunt porro modi veritatis officiis similique animi."
+	},
+	{
+		"id": "zxcv",
+		"subject": "Iure, maxime consectetur!",
+		"senderName": "Masha",
+		"senderEmail": "VitAm1nKa.trisquare@gmail.com",
+		"body": "3. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque explicabo in iste ipsum saepe! Voluptatum incidunt, dicta facilis velit provident saepe, vitae aliquid sunt porro modi veritatis officiis similique animi."
+	},
+	{
+		"id": "tyui",
+		"subject": "Modi quam aliquid beatae repellendus nemo ipsum sed.",
+		"senderName": "Tanya",
+		"senderEmail": "VitAm1nKa.trisquare@gmail.com",
+		"body": "4. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque explicabo in iste ipsum saepe! Voluptatum incidunt, dicta facilis velit provident saepe, vitae aliquid sunt porro modi veritatis officiis similique animi."
+	},
+	{
+		"id": "ghjk",
+		"subject": "Hello!!!",
+		"senderName": "Kolya",
+		"senderEmail": "VitAm1nKa.trisquare@gmail.com",
+		"body": "5. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque explicabo in iste ipsum saepe! Voluptatum incidunt, dicta facilis velit provident saepe, vitae aliquid sunt porro modi veritatis officiis similique animi."
+	}
+]

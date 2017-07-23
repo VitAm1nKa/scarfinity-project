@@ -1,0 +1,42 @@
+@import '../styles/greeds.less';
+
+.catalog-page {
+
+    &__top-section {
+        margin: 5px;
+    }
+
+    &__middle-section {
+        display: flex;
+        flex-direction: row;
+        margin: 10px 5px;
+        justify-content: space-between;
+
+        &__left-side {
+            flex-basis: 200px;
+            margin-right: 5px;
+            border: 1px solid #ccc;
+        }
+
+        &__content-side {
+            border: 1px solid #ccc;
+            flex: 1;
+            margin-left: 5px;
+
+            &__container {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: flex-end;
+
+                & > div {
+                    margin: 5px;
+                }
+            }
+        }
+    }
+
+    &__bottom-section {
+        margin: 5px;
+    }
+}

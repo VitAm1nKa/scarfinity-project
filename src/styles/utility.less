@@ -1,0 +1,92 @@
+// colors
+@colors-green: #1bb869;
+@colors-green-hover: #37c17b;
+@colors-green-pressed: #119f57;
+@colors-orange: #ef8742;
+@colors-orange-hover: #f19659;
+@colors-orange-pressed: #d76f31;
+@colors-red: #e05543;
+@colors-red-hover: #e46a5a;
+@colors-red-pressed: #c94230;
+@colors-blue: #2799c9;
+@colors-blue-hover: #41a5d0;
+@colors-blue-pressed: #1881ac;
+@colors-lightgreen: #9cbf3e;
+@colors-lightgreen-hover: #a8c755;
+@colors-lightgreen-pressed: #86a72e;
+@colors-yellow: #f6b63a;
+@colors-yellow-hover: #f7bf52;
+@colors-yellow-pressed: #dc9b2a;
+@colors-magenta: #bf4f79;
+@colors-magenta-hover: #c76489;
+@colors-magenta-pressed: #a54066;
+@colors-purple: #8869ca;
+@colors-purple-hover: #967bd0;
+@colors-purple-pressed: #7557b4;
+@colors-normal: #3c5569;
+@colors-normal-hover: #4b6275;
+@colors-normal-pressed: #31485b;
+
+
+.filter(@filter) {
+	-webkit-filter: @filter;
+	filter: @filter;
+}
+
+.row-of-icons {
+  -webkit-user-select: none;  /* Chrome all / Safari all */
+  -moz-user-select: none;     /* Firefox all */
+  -ms-user-select: none;      /* IE 10+ */
+  user-select: none;          /* Likely future */      
+}
+
+.box-shadow(@shadow) {
+	-webkit-box-shadow:@shadow;
+	-moz-box-shadow: @shadow;
+	box-shadow: @shadow;
+}
+
+.transform(@transform) {
+	-moz-transform: @transform; /* Для Firefox */
+    -ms-transform: @transform; /* Для IE */
+    -webkit-transform: @transform; /* Для Safari, Chrome, iOS */
+    -o-transform: @transform; /* Для Opera */
+    transform: @transform;
+}
+
+.transition(@transition) {
+  -webkit-transition: @transition;
+-moz-transition: @transition;
+-o-transition: @transition;
+transition: @transition;
+}
+
+.border-radius(@radius) {
+	-webkit-border-radius: @radius;
+	-moz-border-radius: @radius;
+	border-radius: @radius;
+}
+
+.border-top-left-radius(@radius) {
+	-webkit-border-top-left-radius: @radius;
+	-moz-border-top-left-radius: @radius;
+	border-top-left-radius: @radius;
+}
+
+.border-top-right-radius(@radius) {
+	-webkit-border-top-right-radius: @radius;
+	-moz-border-top-right-radius: @radius;
+	border-top-right-radius: @radius;
+}
+
+.border-bottom-left-radius(@radius) {
+	-webkit-border-bottom-left-radius: @radius;
+	-moz-border-bottom-left-radius: @radius;
+	border-bottom-left-radius: @radius;
+}
+
+.border-bottom-right-radius(@radius) {
+	-webkit-border-bottom-right-radius: @radius;
+	-moz-border-bottom-right-radius: @radius;
+	border-bottom-right-radius: @radius;
+}
