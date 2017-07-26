@@ -17,7 +17,7 @@ class Utility__Currency extends React.Component {
             size: "utility__currency--small",
             accent: "",
             unmutable: false,
-            noanimation: false,
+            noanimation: props.noanimation,
             test: false,
         }
 
@@ -117,6 +117,9 @@ class Utility__Currency extends React.Component {
             </div>
         );
     }
+}
+Utility__Currency.defaultProps = {
+    noanimation: false,
 }
 
 export default Utility__Currency;

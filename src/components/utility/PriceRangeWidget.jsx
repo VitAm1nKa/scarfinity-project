@@ -247,7 +247,7 @@ PriceRangeSliderController.defaultProps = {
 const PriceRangeInput = (props) => {
     return(
         <div className="price-range-input">
-            <Utility__Currency value={props.value}/>
+            <Utility__Currency value={props.value} noanimation/>
         </div>
     )
 }
