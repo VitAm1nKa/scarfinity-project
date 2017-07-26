@@ -21,6 +21,7 @@ import {getTracks} from './actions/tracks';
 
 
 import PriceRangeWidget from '../components/utility/PriceRangeWidget.jsx';
+import {DevelopFiltersContainer, FilterContainerView} from '../components/filters/FilterBlock.jsx';
 
 
 
@@ -30,6 +31,20 @@ const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)));
 
 const filterTracks = (tracks, searhTrackTitle = '') => {
     return tracks.filter(track => track.title.includes(searhTrackTitle));
+}
+
+// Develop container
+const DevelopContainer = (props) => {
+    return(
+        <div style={{background: "#eaeaea"}}>
+            <PriceRangeWidget />
+            <DevelopFiltersContainer>
+                <FilterContainerView>
+                    <PriceRangeWidget />
+                </FilterContainerView>
+            </DevelopFiltersContainer>   
+        </div>
+    )
 }
 
 // Components  -----------------------------------
@@ -158,7 +173,7 @@ const TestRedux = () => (
         <HashRouter>
             <Switch>
                 <Route exact path='/' component={TestReduxWrap} />
-                <Route path='/test' component={PriceRangeWidget} />
+                <Route path='/test' component={DevelopContainer} />
                 <Route exact path='/:id' component={PriceRangeWidget} />
             </Switch>
         </HashRouter>
