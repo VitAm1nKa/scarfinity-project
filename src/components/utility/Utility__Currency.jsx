@@ -17,6 +17,7 @@ class Utility__Currency extends React.Component {
             size: "utility__currency--small",
             accent: "",
             unmutable: false,
+            noanimation: false,
             test: false,
         }
 
@@ -81,20 +82,24 @@ class Utility__Currency extends React.Component {
 
     changeValue({value}) {
         if(!this.styleData.unmutable) {
-            if(value != null && typeof(value) === 'number') {
-                if(value >= 0) {
-                    let oldValue = this.state.value;
-                    if(oldValue != value) {
-                        let tickValue = (value - oldValue) / 30.0;
-                        let iteration = 1;
-                        let interval = setInterval(() => {
-                            this.setState({ value: oldValue + Math.floor(iteration++ * tickValue) });
-                            if(iteration > 30) {
-                                clearInterval(interval);
-                            }
-                        }, 10);
+            if(!this.styleData.noanimation) {
+                if(value != null && typeof(value) === 'number') {
+                    if(value >= 0) {
+                        let oldValue = this.state.value;
+                        if(oldValue != value) {
+                            let tickValue = (value - oldValue) / 30.0;
+                            let iteration = 1;
+                            let interval = setInterval(() => {
+                                this.setState({ value: oldValue + Math.floor(iteration++ * tickValue) });
+                                if(iteration > 30) {
+                                    clearInterval(interval);
+                                }
+                            }, 10);
+                        }
                     }
                 }
+            } else {
+                this.setState({value});
             }
         }
     }
