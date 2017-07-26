@@ -14,7 +14,6 @@ const PriceRangeSliderPill = (props) => {
             style={{
                 position: 'absolute',
                 pointerEvents: 'none',
-                cursor: 'pointer',
                 top: (props.parentHeight - props.height) / 2,
                 bottom: (props.parentHeight - props.height) / 2,
                 left: props.parentHeight / 2,
@@ -40,7 +39,6 @@ const PriceRangeSliderRound = (props) => {
             style={{
                 position: 'absolute',
                 pointerEvents: 'none',
-                cursor: 'pointer',
                 width: props.parentHeight,
                 height: props.parentHeight,
                 top: 0,
