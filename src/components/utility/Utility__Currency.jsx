@@ -51,6 +51,7 @@ class Utility__Currency extends React.Component {
 
         if(size && typeof(size) === 'string') {
             switch(size) {
+                case "xsmall": this.styleData.size = "utility__currency--xsmall"; break;
                 case "small": this.styleData.size = "utility__currency--small"; break;
                 case "medium": this.styleData.size = "utility__currency--medium"; break;
                 case "large": this.styleData.size = "utility__currency--large"; break;
