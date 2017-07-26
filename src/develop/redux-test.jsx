@@ -19,6 +19,12 @@ import reducer from './reducers'
 
 import {getTracks} from './actions/tracks';
 
+
+import PriceRangeWidget from '../components/utility/PriceRangeWidget.jsx';
+
+
+
+
 const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)));
 // const history = syncHistoryWithStore(hashHistory, store);
 
@@ -152,7 +158,8 @@ const TestRedux = () => (
         <HashRouter>
             <Switch>
                 <Route exact path='/' component={TestReduxWrap} />
-                <Route exact path='/:id' component={Track} />
+                <Route path='/test' component={PriceRangeWidget} />
+                <Route exact path='/:id' component={PriceRangeWidget} />
             </Switch>
         </HashRouter>
     </Provider>
