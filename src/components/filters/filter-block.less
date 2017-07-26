@@ -1,0 +1,60 @@
+.filter-block {
+	display: flex;
+	flex-direction: column;
+	background: #fefefe;
+	font-size: 16px;
+	
+	&__header {
+		// padding: 12px;
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		
+		&__title {
+			flex: 1;
+			line-height: 20px;
+			font-size: 1em;
+			font-weight: 500;
+			color: #777;
+			margin-right: 10px;
+		}
+
+		&__reset-block {
+			flex: 0 0;
+			font-size: 0.9em;
+			color: #aaa;
+			text-decoration: underline;
+
+			&:hover {
+				text-decoration: none;
+				cursor: pointer;
+			}
+		}
+	}
+
+	&__content {
+		padding: 10px 0px;
+	}
+
+	&__delim {
+		flex: 0 0 6px;
+		overflow: hidden;
+		
+		&:after {
+			content: "";
+			position: absolute;
+			box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.22) 0px 1px 1px;
+			left: 0;
+			right: 0;
+			height: 1px;
+			background: transparent;
+		}
+	}
+}
+
+// Develop less
+.develop-filters-container {
+	display: flex;
+	flex-direction: row;
+	padding: 20px;
+} 
