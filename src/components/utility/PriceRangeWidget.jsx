@@ -14,6 +14,7 @@ const PriceRangeSliderPill = (props) => {
             style={{
                 position: 'absolute',
                 pointerEvents: 'none',
+                cursor: 'pointer',
                 top: (props.parentHeight - props.height) / 2,
                 bottom: (props.parentHeight - props.height) / 2,
                 left: props.parentHeight / 2,
@@ -39,6 +40,7 @@ const PriceRangeSliderRound = (props) => {
             style={{
                 position: 'absolute',
                 pointerEvents: 'none',
+                cursor: 'pointer',
                 width: props.parentHeight,
                 height: props.parentHeight,
                 top: 0,
@@ -68,11 +70,11 @@ PriceRangeSliderRound.defaultProps = {
 
 const PriceRangeSlider = (props) => {
     return(
-        <div 
+        <div
+            className="price-range-widget-noselect"
             style={{
                 position: 'relative',
                 height: props.height,
-                cursor: 'pointer',
                 userFocus: 'none',
             }}
             onMouseDown={props.onMouseDown}
@@ -95,6 +97,7 @@ class PriceRangeSliderController extends React.Component {
         this.state = {
             values: props.values,
             mouseDown: false,
+            touchStart: false,
             height: props.height,
         }
 
@@ -197,24 +200,24 @@ class PriceRangeSliderController extends React.Component {
     handleSliderTouchStart(event) {
         this.clientX = event.touches[0].clientX;
         this.sliderOffsetPosirion = event.target.getBoundingClientRect().left
-        this.setStateAction({values: this.getValue(), mouseDown: true});
+        this.setStateAction({values: this.getValue(), touchStart: true});
     }
 
     handleSliderTouchMove(event) {
-        if(this.state.mouseDown) {
+        if(this.state.touchStart) {
             this.clientX = event.touches[0].clientX;
             this.setStateAction({values: this.getValue()});
         }
     }
 
     handleSliderTouchEnd() {
-        if(this.state.mouseDown)
-            this.setStateAction({values: this.getValue(), mouseDown: false});
+        if(this.state.touchStart)
+            this.setStateAction({values: this.getValue(), touchStart: false});
     }
 
     handleSliderTouchCancel() {
-        if(this.state.mouseDown)
-            this.setStateAction({values: this.getValue(event), mouseDown: false});
+        if(this.state.touchStart)
+            this.setStateAction({values: this.getValue(), touchStart: false});
     }
     
     render() {
@@ -259,9 +262,7 @@ const PriceRangeWidgetView = (props) => {
     return(
         <div style={{background: "#fefefe"}}>
             <div className="price-range-widget">
-                <div className="price-range-widget__slider">
-                    <PriceRangeSliderController onValueChange={props.onValueChange} values={props.values} />
-                </div>
+                <PriceRangeSliderController onValueChange={props.onValueChange} values={props.values} />
                 <div className="price-range-widget__body" style={{paddingLeft: 12, paddingRight: 12}}>
                     <PriceRangeInput value={props.inputValues[0]} />
                     <SwapHoriz color="#ccc" />
