@@ -3,41 +3,52 @@ import React from 'react';
 import FilterContainerView  from '../filter-block';
 import PriceRangeWidget     from '../../utility/PriceRangeWidget.jsx';
 
-class FilterPriceRange extends React.Component {
+import RaisedButton from 'material-ui/RaisedButton';
+
+export class FilterPriceRange extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            values: [50, 90],
-            minValue: 150,
-            maxValue: 5000,
-        };
+        this.state = props;
 
         this.handleButtonAction = this.handleButtonAction.bind(this);
+        this.handleValueChange = this.handleValueChange.bind(this);
     }
 
     handleButtonAction() {
-        this.setState({values: [10, 90]});
+        this.setState({values: this.state.defaultValues});
+    }
+
+    handleValueChange(values) {
+        // this.state.values = values;
     }
 
     render() {
-        const {values, minValue, maxValue} = this.state;
         return(
-            <FilterContainerView buttonAction={this.handleButtonAction}>
-                <PriceRangeWidget
-                    values={values}
-                    minValue={minValue}
-                    maxValue={maxValue}
-                    onValueChange={this.handleValueChange}/>
+            <FilterContainerView
+                title="Цена"
+                buttonTitle={"сброс"}
+                buttonAction={this.handleButtonAction}>
+                    <PriceRangeWidget
+                        {...this.state.values}
+                        minValue={this.state.minValue}
+                        maxValue={this.state.maxValue}
+                        onValueChange={this.handleValueChange}/>
             </FilterContainerView>
         )
     }
 }
 FilterPriceRange.defaultProps = {
-    values: [50, 90],
-    defaultValues: [10, 90],
+    values: {
+        leftValue: 0,
+        rightValue: 100,
+    },
+    defaultValues: {
+        leftValue: 0,
+        rightValue: 100,
+    },
     minValue: 500,
     maxValue: 5000,
-}
+};
 
 export default FilterPriceRange;
