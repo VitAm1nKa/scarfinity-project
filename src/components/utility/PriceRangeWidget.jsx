@@ -93,7 +93,8 @@ class PriceRangeSliderController extends React.Component {
         super(props);
 
         this.state = {
-            values: props.values,
+            leftValue: props.leftValue,
+            rightValue: props.rightValue,
             mouseDown: false,
             touchStart: false,
             height: props.height,
@@ -116,8 +117,11 @@ class PriceRangeSliderController extends React.Component {
         this.handleSliderTouchCancel = this.handleSliderTouchCancel.bind(this);
     }
 
-    componentWillReceiveProps(props) {
-        this.setState({values: props.values});
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            leftValue: nextProps.leftValue,
+            rightValue: nextProps.rightValue,
+        });
     }
 
     // utility, sort state values
@@ -130,9 +134,9 @@ class PriceRangeSliderController extends React.Component {
         return 0;
     }
 
-    getValue() {
+    getValue(callback) {
         let {width} = this.sliderRef.getBoundingClientRect();
-        let {values} = this.state;
+        let {leftValue, rightValue} = this.state;
 
         let offsetX = this.clientX - this.sliderOffsetPosirion;
 
@@ -140,16 +144,23 @@ class PriceRangeSliderController extends React.Component {
         const sliderWorkWidth = width - this.state.height;
         const percent = Math.round((Math.max(Math.min(offsetX, width - sliderOffset), sliderOffset) - sliderOffset) / sliderWorkWidth * 100);
 
-        let index = values.indexOf(
-            values.map(value => ({value: value, diff: Math.abs(percent - value)}))
-                  .sort(this.sort)[0].value);
-        values[index] = percent;
-        
-        return values;
+        if(Math.abs(leftValue - percent) < Math.abs(rightValue - percent))
+            this.state.leftValue = percent;
+        else 
+            this.state.rightValue = percent;
+
+        if(callback) callback();
     }
 
-    setStateAction(stateData) {
-        this.setState(stateData, this.onValueChange(this.state.values));
+    setStateAction(stateData = {}) {
+        this.getValue(() => {
+            this.setState(stateData, () => {
+                this.onValueChange({
+                    leftValue: this.state.leftValue,
+                    rightValue: this.state.rightValue,
+                });
+            });
+        });
     }
 
     // global mouse heandler
@@ -182,19 +193,20 @@ class PriceRangeSliderController extends React.Component {
         this.clientX = event.nativeEvent.clientX;
         this.sliderOffsetPosirion = this.clientX - event.nativeEvent.offsetX;
 
-        this.setStateAction({values: this.getValue(), mouseDown: true});
+        this.setStateAction({mouseDown: true});
     }
 
     handleSliderMouseMove(event) {
         if(this.state.mouseDown) {
             this.clientX = event.clientX;
-            this.setStateAction({values: this.getValue()});
+            this.setStateAction();
         }
     }
 
     handleSliderMouseUp(event) {
         if(this.state.mouseDown)
-            this.setStateAction({values: this.getValue(event), mouseDown: false});
+            this.setState({mouseDown: false});
+            // this.setStateAction({values: this.getValue(event), mouseDown: false});
         
     }
 
@@ -202,24 +214,24 @@ class PriceRangeSliderController extends React.Component {
     handleSliderTouchStart(event) {
         this.clientX = event.touches[0].clientX;
         this.sliderOffsetPosirion = event.target.getBoundingClientRect().left
-        this.setStateAction({values: this.getValue(), touchStart: true});
+        this.setStateAction({touchStart: true});
     }
 
     handleSliderTouchMove(event) {
         if(this.state.touchStart) {
             this.clientX = event.touches[0].clientX;
-            this.setStateAction({values: this.getValue()});
+            this.setStateAction();
         }
     }
 
     handleSliderTouchEnd() {
         if(this.state.touchStart)
-            this.setStateAction({values: this.getValue(), touchStart: false});
+            this.setStateAction({touchStart: false});
     }
 
     handleSliderTouchCancel() {
         if(this.state.touchStart)
-            this.setStateAction({values: this.getValue(), touchStart: false});
+            this.setStateAction({touchStart: false});
     }
     
     render() {
@@ -230,20 +242,18 @@ class PriceRangeSliderController extends React.Component {
                 onMouseDown={this.handleSliderMouseDown}
                 onTouchStart={this.handleSliderTouchStart}>
                 <PriceRangeSliderPill 
-                    leftValue={this.state.values[0]} 
-                    rightValue={this.state.values[1]}
+                    leftValue={this.state.leftValue} 
+                    rightValue={this.state.rightValue}
                     parentHeight={this.state.height}/>
-                    {
-                        this.state.values.map((value, index) =>
-                            <PriceRangeSliderRound key={index} valuePosition={value} parentHeight={this.state.height}/>
-                        )
-                    }
+                        <PriceRangeSliderRound valuePosition={this.state.leftValue} parentHeight={this.state.height} />
+                        <PriceRangeSliderRound valuePosition={this.state.rightValue} parentHeight={this.state.height} />
             </PriceRangeSlider>
         )
     }
 }
 PriceRangeSliderController.defaultProps = {
-    values: [10, 90],
+    leftValue: 10,
+    rightValue: 20,
     height: 24,
     onValueChange: () => {},
 }
@@ -264,65 +274,74 @@ const PriceRangeWidgetView = (props) => {
     return(
         <div style={{background: "#fefefe"}}>
             <div className="price-range-widget">
-                <PriceRangeSliderController onValueChange={props.onValueChange} values={props.values} />
+                <PriceRangeSliderController
+                    leftValue={props.leftValue}
+                    rightValue={props.rightValue}
+                    onValueChange={props.onValueChange}/>
                 <div className="price-range-widget__body" style={{paddingLeft: 12, paddingRight: 12}}>
-                    <PriceRangeInput value={props.inputValues[0]} />
+                    <PriceRangeInput value={props.inputLeftValue} />
                     <SwapHoriz color="#ccc" />
-                    <PriceRangeInput value={props.inputValues[1]} />
+                    <PriceRangeInput value={props.inputRightValue} />
                 </div>
             </div>
         </div>
     )
 }
 PriceRangeWidgetView.defaultProps = {
-    values: [10, 90],
+    leftValue: 10,
+    rightValue: 90,
+    inputLeftValue: 0,
+    inputRightValue: 0,
     onValueChange: () => {},
-    inputValues: [0, 0],
 }
 
-// Export classes
 class PriceRangeWidget extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            values: [0, 100],
-            minValue: props.minValue,
-            maxValue: props.maxValue,
-        }
-
-        this.onValueChange = props.onValueChange;
+        this.state = props;
 
         this.handleValueChange = this.handleValueChange.bind(this);
     }
 
-    componentWillReceiveProps(props) {
-        this.setState({values: props.values});
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            leftValue: nextProps.leftValue,
+            rightValue: nextProps.rightValue,
+        });
     }
 
     handleValueChange(values) {
-        this.setState({values}, this.onValueChange(values));
+        this.setState({
+            leftValue: values.leftValue,
+            rightValue: values.rightValue,
+        });
     }
 
-    getValues(values) {
+    getValues () {
         const {minValue, maxValue} = this.state;
-        const valuePerPoint = (maxValue - minValue) / 100
-        return (values.map(value => Math.round(value * valuePerPoint + minValue)));
+        const valuePerPoint = (maxValue - minValue) / 100;
+        return ({
+            inputLeftValue: Math.round(this.state.leftValue * valuePerPoint + minValue),
+            inputRightValue: Math.round(this.state.rightValue * valuePerPoint + minValue),
+        })
     }
 
     render() {
         return(
             <PriceRangeWidgetView
-                values={this.state.values}
-                inputValues={this.getValues(this.state.values)}
-                onValueChange={this.handleValueChange} />
+                leftValue={this.state.leftValue}
+                rightValue={this.state.rightValue}
+                {...this.getValues()}
+                onValueChange={this.handleValueChange}/>
         )
     }
 }
 PriceRangeWidget.defaultProps = {
-    onValueChange: () => {},
-    minValue: 100,
-    maxValue: 1000,
+    leftValue: 10,
+    rightValue: 90,
+    minValue: 500,
+    maxValue: 5000,
 }
 
 export default PriceRangeWidget;
