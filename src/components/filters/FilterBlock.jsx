@@ -55,11 +55,7 @@ export class FilterPriceRange extends React.Component {
     }
 
     handleButtonAction() {
-        // console.log(this.defaultProps);
-        // this.state.values = this.defaultValues;
-        // this.forceUpdate();
-        // this.setState({values: this.defaultValues});
-        this.forceUpdate();
+        this.setState({values: [10, 90]});
     }
 
     render() {
