@@ -23,6 +23,7 @@ import {getTracks} from './actions/tracks';
 import PriceRangeWidget from '../components/utility/PriceRangeWidget.jsx';
 import DevelopFiltersContainer from '../components/filters/filters-container';
 import FilterPriceRange from '../components/filters/price-range';
+import FilterColorPicker from '../components/filters/color-picker';
 
 
 const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)));
@@ -36,9 +37,9 @@ const filterTracks = (tracks, searhTrackTitle = '') => {
 const DevelopContainer = (props) => {
     return(
         <div style={{background: "#eaeaea"}}>
-            <PriceRangeWidget />
             <DevelopFiltersContainer>
                 <FilterPriceRange />
+                <FilterColorPicker />
             </DevelopFiltersContainer>
         </div>
     )
