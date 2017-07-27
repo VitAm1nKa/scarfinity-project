@@ -21,7 +21,6 @@ class FilterPriceRange extends React.Component {
     }
 
     render() {
-        console.log(this.state.values);
         const {values, minValue, maxValue} = this.state;
         return(
             <FilterContainerView buttonAction={this.handleButtonAction}>
