@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './filter-block.less';
+import './filters.less';
 
 import Paper from 'material-ui/Paper';
 
