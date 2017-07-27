@@ -9,7 +9,10 @@ const FilterColorPickerView = (props) => {
             title={props.title}
             buttonTitle={props.buttonTitle}
             buttonAction={props.buttonAction}>
-                <ColorPicker />
+                <ColorPicker
+                    colors={props.colors}
+                    selectedIndex={props.selectedColors}
+                    multiselect/>
         </FilterContainerView>
     )
 }
@@ -17,6 +20,8 @@ FilterColorPickerView.defaultProps = {
     title: "Цвет",
     buttonTitle: "сброс",
     buttonAction: () => {},
+    colors: "",
+    selectedColors: "",
 }
 
 class FilterColorPicker extends React.Component {
@@ -24,24 +29,35 @@ class FilterColorPicker extends React.Component {
         super(props);
 
         this.state = {
-
+            colors: props.colors,
+            values: props.values,
+            defaultValues: props.defaultValues,
         }
 
         this.handleButtonAction = this.handleButtonAction.bind(this);
     }
 
     handleButtonAction() {
-
+        this.setState({values: this.state.defaultValues});
     }
 
     render() {
         return(
-            <FilterColorPickerView />
+            <FilterColorPickerView
+                colors={this.state.colors}
+                selectedColors={this.state.values.selectedColors}
+                buttonAction={this.handleButtonAction}/>
         )
     }
 }
 FilterColorPicker.defaultProps = {
-    
+    colors: "1, 2, 3",
+    values: {
+        selectedColors: "",
+    },
+    defaultValues: {
+        selectedColors: "",
+    }
 }
 
 export default FilterColorPicker;
