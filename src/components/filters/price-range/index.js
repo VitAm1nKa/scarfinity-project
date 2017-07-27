@@ -3,45 +3,82 @@ import React from 'react';
 import FilterContainerView  from '../filter-block';
 import PriceRangeWidget     from '../../utility/PriceRangeWidget.jsx';
 
-class FilterPriceRange extends React.Component {
+import RaisedButton from 'material-ui/RaisedButton';
+
+export class FilterPriceRange extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            values: [50, 90],
-            minValue: 150,
-            maxValue: 5000,
-        };
+        this.state = props;
 
         this.handleButtonAction = this.handleButtonAction.bind(this);
+        this.handleValueChange = this.handleValueChange.bind(this);
     }
 
     handleButtonAction() {
-        console.log(123123123123);
-        this.setState({values: [10, 90]});
+        this.setState({values: this.state.defaultValues});
+    }
+
+    handleValueChange(values) {
+        // this.state.values = values;
     }
 
     render() {
-        const {values, minValue, maxValue} = this.state;
         return(
             <FilterContainerView
                 title="Цена"
                 buttonTitle={"сброс"}
                 buttonAction={this.handleButtonAction}>
                     <PriceRangeWidget
-                        values={values}
-                        minValue={minValue}
-                        maxValue={maxValue}
+                        {...this.state.values}
+                        minValue={this.state.minValue}
+                        maxValue={this.state.maxValue}
                         onValueChange={this.handleValueChange}/>
             </FilterContainerView>
         )
     }
 }
 FilterPriceRange.defaultProps = {
-    values: [50, 90],
-    defaultValues: [10, 90],
+    values: {
+        leftValue: 50,
+        rightValue: 60,
+    },
+    defaultValues: {
+        leftValue: 10,
+        rightValue: 90,
+    },
     minValue: 500,
     maxValue: 5000,
+};
+
+export class TestFilter extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            leftValue: 10,
+            rightValue: 90,
+        }
+
+        this.click = this.click.bind(this);
+    }
+
+    click() {
+        this.forceUpdate(() => {
+            console.log(this.state);
+        });
+    }
+
+    render() {
+        return(
+            <div>
+                <PriceRangeWidget
+                    leftValue={this.state.leftValue}
+                    rightValue={this.state.rightValue}/>
+                <RaisedButton label="Primary" primary={true} onClick={this.click}/>
+            </div>
+        )
+    }
 }
 
 export default FilterPriceRange;
