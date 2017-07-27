@@ -123,45 +123,41 @@ export class ColorPicker extends React.Component {
         super(props, context);
 
         this.state = {
-            multiSelect: false,
-            items: [
-                { colorId: 1 },
-                { colorId: 2 },
-                { colorId: 3 },
-                { colorId: 4 },
-                { colorId: 0 },
-                { colorId: 6 },
-            ],
-            selectedIndex: [0],
-            unselectable: false,
-        }
-
-        this.itemSize = 24;
-        this.itemGap = 5;
-
-        if(props.itemSize != null) {
-            this.itemSize = props.itemSize;
-        }
-
-        if(props.itemGap != null) {
-            this.itemGap = props.itemGap;
-        }
-
-        if(props.multiselect != null) {
-            this.state.multiSelect = props.multiselect;
-        }
-
-        if(props.unselectable != null) {
-            this.state.unselectable = props.unselectable;
+            multiSelect: props.multiSelect,
+            items: this.getItems(props.colors),
+            selectedIndex: this.getIndices(props.selectedIndex),
+            unselectable: props.unselectable,
+            itemSize: props.itemSize,
+            itemGap: props.itemGap,
         }
 
         this.style = {
             main: {
-                margin: `0px ${-this.itemGap}px`,
+                margin: `0px ${-this.state.itemGap}px`,
             }
         }
 
         this.handleSelectChange = this.handleSelectChange.bind(this);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({selectedIndex: this.getIndices(nextProps.selectedIndex)});
+    }
+
+    getIndices(indices) {
+        if(indices) {
+            return indices.split(",").map(value => parseInt(value));
+        }
+
+        return [];
+    }
+
+    getItems(colors) {
+        if(colors) {
+            return colors.split(",").map(value => ({colorId: parseInt(value)}));
+        }
+
+        return [];
     }
 
     changeSelectedIndex(index, selected, multiSelect) {
@@ -197,7 +193,7 @@ export class ColorPicker extends React.Component {
                             key={index} 
                             selected={selectedIndex.indexOf(index) != -1 && !unselectable ? true : false} 
                             colorId={item.colorId} 
-                            size={this.itemSize}
+                            size={this.state.itemSize}
                             unselectable={unselectable}
                             onSelectChange={(selected) => {return this.handleSelectChange(index, selected)}} />
                     )
@@ -205,4 +201,12 @@ export class ColorPicker extends React.Component {
             </div>
         )
     }
+}
+ColorPicker.defaultProps = {
+    multiSelect: false,
+    unselectable: false,
+    itemSize: 24,
+    itemGap: 5,
+    selectedIndex: "",
+    colors: "",
 }
