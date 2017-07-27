@@ -116,6 +116,10 @@ class PriceRangeSliderController extends React.Component {
         this.handleSliderTouchCancel = this.handleSliderTouchCancel.bind(this);
     }
 
+    componentWillReceiveProps(props) {
+        this.setState({values: props.values});
+    }
+
     // utility, sort state values
     sort(a, b) {
         const keyA = a.diff;
@@ -283,15 +287,21 @@ class PriceRangeWidget extends React.Component {
 
         this.state = {
             values: [0, 100],
-            minValue: 500,
-            maxValue: 10000,
+            minValue: props.minValue,
+            maxValue: props.maxValue,
         }
+
+        this.onValueChange = props.onValueChange;
 
         this.handleValueChange = this.handleValueChange.bind(this);
     }
 
+    componentWillReceiveProps(props) {
+        this.setState({values: props.values});
+    }
+
     handleValueChange(values) {
-        this.setState({values});
+        this.setState({values}, this.onValueChange(values));
     }
 
     getValues(values) {
@@ -308,6 +318,11 @@ class PriceRangeWidget extends React.Component {
                 onValueChange={this.handleValueChange} />
         )
     }
+}
+PriceRangeWidget.defaultProps = {
+    onValueChange: () => {},
+    minValue: 100,
+    maxValue: 1000,
 }
 
 export default PriceRangeWidget;
