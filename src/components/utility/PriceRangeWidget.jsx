@@ -3,8 +3,6 @@ import React from 'react';
 import './price-range-widget.less';
 
 import Utility__Currency from './Utility__Currency.jsx';
-import ArrowForward from 'material-ui/svg-icons/Navigation/arrow-forward';
-import ArrowBack from 'material-ui/svg-icons/Navigation/arrow-back';
 import SwapHoriz from 'material-ui/svg-icons/action/swap-horiz';
 
 // Slider components
