@@ -21,9 +21,7 @@ import {getTracks} from './actions/tracks';
 
 
 import PriceRangeWidget from '../components/utility/PriceRangeWidget.jsx';
-import {FilterPriceRange, DevelopFiltersContainer} from '../components/filters/FilterBlock.jsx';
-
-
+import {FilterPriceRange, DevelopFiltersContainer} from '../components/filters';
 
 
 const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)));
