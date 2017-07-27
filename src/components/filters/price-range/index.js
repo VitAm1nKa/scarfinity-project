@@ -40,45 +40,15 @@ export class FilterPriceRange extends React.Component {
 }
 FilterPriceRange.defaultProps = {
     values: {
-        leftValue: 50,
-        rightValue: 60,
+        leftValue: 0,
+        rightValue: 100,
     },
     defaultValues: {
-        leftValue: 10,
-        rightValue: 90,
+        leftValue: 0,
+        rightValue: 100,
     },
     minValue: 500,
     maxValue: 5000,
 };
-
-export class TestFilter extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            leftValue: 10,
-            rightValue: 90,
-        }
-
-        this.click = this.click.bind(this);
-    }
-
-    click() {
-        this.forceUpdate(() => {
-            console.log(this.state);
-        });
-    }
-
-    render() {
-        return(
-            <div>
-                <PriceRangeWidget
-                    leftValue={this.state.leftValue}
-                    rightValue={this.state.rightValue}/>
-                <RaisedButton label="Primary" primary={true} onClick={this.click}/>
-            </div>
-        )
-    }
-}
 
 export default FilterPriceRange;
