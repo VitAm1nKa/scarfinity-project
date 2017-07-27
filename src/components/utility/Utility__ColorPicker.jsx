@@ -123,7 +123,7 @@ export class ColorPicker extends React.Component {
         super(props, context);
 
         this.state = {
-            multiSelect: props.multiSelect,
+            multiSelect: props.multiselect,
             items: this.getItems(props.colors),
             selectedIndex: this.getIndices(props.selectedIndex),
             unselectable: props.unselectable,
@@ -203,7 +203,7 @@ export class ColorPicker extends React.Component {
     }
 }
 ColorPicker.defaultProps = {
-    multiSelect: false,
+    multiselect: false,
     unselectable: false,
     itemSize: 24,
     itemGap: 5,
