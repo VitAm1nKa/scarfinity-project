@@ -25,6 +25,7 @@ import DevelopFiltersContainer from '../components/filters/filters-container';
 import FilterPriceRange from '../components/filters/price-range';
 import FilterColorPicker from '../components/filters/color-picker';
 import FilterRatingSelect from '../components/filters/rating-select';
+import FilterTagGrid from '../components/filters/tag-grid';
 
 
 
@@ -43,6 +44,7 @@ const DevelopContainer = (props) => {
                 <FilterPriceRange />
                 <FilterColorPicker />
                 <FilterRatingSelect />
+                <FilterTagGrid />
             </DevelopFiltersContainer>
         </div>
     )

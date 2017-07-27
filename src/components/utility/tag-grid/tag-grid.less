@@ -1,0 +1,66 @@
+// Colors -----------------------------------------
+@background:    #f9f9f9;
+@border:        #d7d7d7;
+@text:          #808080;
+@circle:        #f9f9f9;
+
+.tag-grid {
+	display: flex;
+	flex-wrap: wrap;
+	margin: -5px;
+	font-size: 0;
+}
+
+.tag {
+    display: inline-block;
+    padding: 5px 0px;
+    margin: 5px;
+    border: 1px solid @border;
+    border-radius: 2px;
+
+    background: @background;
+
+    cursor: pointer;
+
+    font-size: 0;
+
+    &__label {
+        display: inline-flex;
+        position: relative;
+        align-items: center;
+        
+        height: 16px;
+        padding: 0px 5px 0px 22px;
+
+        background: #bf4f79;
+        font-family: "Roboto";
+        font-size: 11px;
+        font-weight: 500;
+        text-transform: uppercase;
+        color: @text;
+        z-index: 0;
+        
+        &:after {
+            content: "";
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            border-radius: 4px;
+            background: @circle;
+            left: 6px;
+            top: 6px;
+        }
+
+        &:before {
+            content: "";
+            position: absolute;
+            border: 8px solid @background;
+            left: 8px;
+            right: 0;
+            top: 0; // IE
+            border-right: none;
+            border-left-color: transparent;
+            z-index: -1;
+        }
+    }
+}
