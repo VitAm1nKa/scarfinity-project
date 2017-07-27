@@ -64,12 +64,13 @@ export class FilterPriceRange extends React.Component {
 
     render() {
         console.log(this.state.values);
+        const {values, minValue, maxValue} = this.state;
         return(
             <FilterContainerView buttonAction={this.handleButtonAction}>
                 <PriceRangeWidget
-                    values={this.state.values}
-                    minValue={this.state.minValue}
-                    maxValue={this.state.maxValue}
+                    values={values}
+                    minValue={minValue}
+                    maxValue={maxValue}
                     onValueChange={this.handleValueChange}/>
             </FilterContainerView>
         )
