@@ -17,18 +17,22 @@ class FilterPriceRange extends React.Component {
     }
 
     handleButtonAction() {
+        console.log(123123123123);
         this.setState({values: [10, 90]});
     }
 
     render() {
         const {values, minValue, maxValue} = this.state;
         return(
-            <FilterContainerView buttonAction={this.handleButtonAction}>
-                <PriceRangeWidget
-                    values={values}
-                    minValue={minValue}
-                    maxValue={maxValue}
-                    onValueChange={this.handleValueChange}/>
+            <FilterContainerView
+                title="Цена"
+                buttonTitle={"сброс"}
+                buttonAction={this.handleButtonAction}>
+                    <PriceRangeWidget
+                        values={values}
+                        minValue={minValue}
+                        maxValue={maxValue}
+                        onValueChange={this.handleValueChange}/>
             </FilterContainerView>
         )
     }
