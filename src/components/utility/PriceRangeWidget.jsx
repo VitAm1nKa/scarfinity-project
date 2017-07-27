@@ -307,7 +307,7 @@ class PriceRangeWidget extends React.Component {
     getValues(values) {
         const {minValue, maxValue} = this.state;
         const valuePerPoint = (maxValue - minValue) / 100
-        return (values.map(value => value * valuePerPoint + minValue));
+        return (values.map(value => Math.round(value * valuePerPoint + minValue)));
     }
 
     render() {
