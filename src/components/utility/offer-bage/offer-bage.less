@@ -1,0 +1,25 @@
+//  Colors ------------------------------------------------
+    @new:   #8869ca;
+    @hot:   #ef8742;
+    @sale:  #9cbf3e;
+    @text:  #ffffff;
+//  -------------------------------------------------------
+
+.offer-bage {
+    display: inline-block;
+    background: transparent;
+    font-size: 0;
+
+    &--new { background: @new; }
+    &--hot { background: @hot; }
+    &--sale { background: @sale; }
+
+    &__title {
+        font-family: "Roboto";
+        font-weight: 500;
+
+        color: @text;
+
+        text-transform: uppercase;
+    }
+}

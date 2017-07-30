@@ -27,6 +27,7 @@ import FilterColorPicker from '../components/filters/color-picker';
 import FilterRatingSelect from '../components/filters/rating-select';
 import FilterTagGrid from '../components/filters/tag-grid';
 import FilterSeasonSelectView from '../components/filters/check-box-list-view';
+import FilterPopularItems from '../components/filters/popular-items';
 
 
 
@@ -45,9 +46,9 @@ const DevelopContainer = (props) => {
                 <FilterPriceRange />
                 <FilterColorPicker />
                 <FilterRatingSelect />
+                <FilterPopularItems />
                 <FilterTagGrid />
                 <FilterSeasonSelectView />
-                <div></div>
                 <div></div>
                 <div></div>
             </DevelopFiltersContainer>
