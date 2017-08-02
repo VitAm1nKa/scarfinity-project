@@ -6,6 +6,17 @@ import Paper from 'material-ui/Paper';
 import {CatalogProductCardDefault} from './CatalogProductCardMini.jsx';
 import CatalogNavigation from '../catalogNavigation/CatalogNavigation.jsx';
 import Utility__SelectBox from '../utility/Utility__SelectBox.jsx';
+import {ProductCardCatalogView, Tes} from '../utility/product-card-catalog';
+
+// Filters
+const FiltersContainerView = (props) => {
+    return(
+        <div className="">
+            
+        </div>
+    )
+}
+
 
 export default class CatalogGrid extends React.Component {
 
@@ -86,7 +97,7 @@ export default class CatalogGrid extends React.Component {
                     {
                         itemList.map((value, index) => 
                             <div key={index} className={`catalog-grid__container__item ${value.isItem ? "catalog-grid__container__item--active" : ""}`}>
-                                {value.isItem ? <CatalogProductCardDefault /> : ""}
+                                {value.isItem ? <ProductCardCatalogView /> : ""}
                             </div>
                         )
                     }

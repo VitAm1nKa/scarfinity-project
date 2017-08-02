@@ -31,7 +31,11 @@ import FilterPopularItems from '../components/filters/popular-items';
 
 // Catalog
 import {ProductCardCatalogView, Tes} from '../components/utility/product-card-catalog';
-import {PriceTicket} from '../components/utility/price-ticket';
+import PriceTicket from '../components/utility/price-ticket';
+import CatalogGrid from '../components/catalog/CatalogGrid.jsx';
+
+// Main
+import ContentGrid from '../components/utility/content-grid';
 
 
 
@@ -46,6 +50,8 @@ const filterTracks = (tracks, searhTrackTitle = '') => {
 const DevelopContainer = (props) => {
     return(
         <div style={{background: "#eaeaea"}}>
+            <ContentGrid />
+            <CatalogGrid />
             <DevelopFiltersContainer>
                 <FilterPriceRange />
                 <FilterColorPicker />
