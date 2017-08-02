@@ -29,6 +29,10 @@ import FilterTagGrid from '../components/filters/tag-grid';
 import FilterSeasonSelectView from '../components/filters/check-box-list-view';
 import FilterPopularItems from '../components/filters/popular-items';
 
+// Catalog
+import {ProductCardCatalogView, Tes} from '../components/utility/product-card-catalog';
+import {PriceTicket} from '../components/utility/price-ticket';
+
 
 
 const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)));
@@ -49,9 +53,11 @@ const DevelopContainer = (props) => {
                 <FilterPopularItems />
                 <FilterTagGrid />
                 <FilterSeasonSelectView />
+                <ProductCardCatalogView /> 
                 <div></div>
                 <div></div>
             </DevelopFiltersContainer>
+            <PriceTicket />
         </div>
     )
 }

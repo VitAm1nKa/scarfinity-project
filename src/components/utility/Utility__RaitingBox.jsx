@@ -14,6 +14,7 @@ class Utility__RaitingBox extends React.Component {
         this.state = {
             currentValue: [1, 1, 0.5, 0, 0],
             changeable: false,
+            text: props.text,
         }
 
         const {currentValue, changeable} = props;
@@ -109,9 +110,18 @@ class Utility__RaitingBox extends React.Component {
                         }
                     })
                 }
+                {
+                    this.state.text.length > 0 &&
+                    <span className="utility__rating-box__text">
+                        {`(${ this.state.text})`}
+                    </span>
+                }
             </div>
         );
     }
+}
+Utility__RaitingBox.defaultProps = {
+    text: "",
 }
 
 export default Utility__RaitingBox;
