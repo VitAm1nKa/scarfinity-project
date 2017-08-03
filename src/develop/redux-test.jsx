@@ -30,12 +30,13 @@ import FilterSeasonSelectView from '../components/filters/check-box-list-view';
 import FilterPopularItems from '../components/filters/popular-items';
 
 // Catalog
-import {ProductCardCatalogView, Tes} from '../components/utility/product-card-catalog';
+import ProductCardCatalogView from '../components/utility/product-card-catalog';
 import PriceTicket from '../components/utility/price-ticket';
 import CatalogGrid from '../components/catalog/CatalogGrid.jsx';
 
 // Main
 import ContentGrid from '../components/utility/content-grid';
+import {ProductCardsGridView, FiltersGrid} from '../components/catalog/catalog-grid';
 
 
 
@@ -46,11 +47,27 @@ const filterTracks = (tracks, searhTrackTitle = '') => {
     return tracks.filter(track => track.title.includes(searhTrackTitle));
 }
 
+                // leftSection={connect(
+                //     state => ({
+                //         testStore: state.colors
+                //     }),
+                //     dispatch => ({})
+                //     (
+                //         props => {
+                //             return(
+                //                 <FiltersGrid />
+                //             )
+                //         }
+                //     )
+                // )}
+
 // Develop container
 const DevelopContainer = (props) => {
     return(
         <div style={{background: "#eaeaea"}}>
-            <ContentGrid />
+            <ContentGrid
+                leftSection={<Connect__FiltersGrid />}
+                middleSection={<ProductCardsGridView />}/>
             <CatalogGrid />
             <DevelopFiltersContainer>
                 <FilterPriceRange />
@@ -69,6 +86,25 @@ const DevelopContainer = (props) => {
 }
 
 // Components  -----------------------------------
+const Connect__FiltersGrid = connect(
+    state => ({
+        colors: state.colors,
+        priceRange: state.priceRange,
+        rating: state.rating,
+        season: state.season,
+    }),
+    dispatch => ({})
+)
+(
+    props => {
+        console.log("Props => ", props);
+        return(
+            <FiltersGrid
+                priceRange={props.priceRange}/>
+        )
+    }
+)
+
 const FirstTest = connect(
     state => ({
         testStore: filterTracks(state.tracks, state.filterTracks),

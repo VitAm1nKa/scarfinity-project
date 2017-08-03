@@ -6,7 +6,7 @@ import Paper from 'material-ui/Paper';
 import {CatalogProductCardDefault} from './CatalogProductCardMini.jsx';
 import CatalogNavigation from '../catalogNavigation/CatalogNavigation.jsx';
 import Utility__SelectBox from '../utility/Utility__SelectBox.jsx';
-import {ProductCardCatalogView, Tes} from '../utility/product-card-catalog';
+import ProductCardCatalogView from '../utility/product-card-catalog';
 
 // Filters
 const FiltersContainerView = (props) => {
@@ -76,9 +76,9 @@ export default class CatalogGrid extends React.Component {
         return(
             <div className={`catalog-grid ${inProcess ? "catalog-grid--in-process" : "" }`}>
                 <div className="catalog-grid__navigation">
-                    {/*<div className="catalog-grid__navigation__pagination">
+                    <div className="catalog-grid__navigation__pagination">
                         <CatalogNavigation onIndexChange={this.handleIndexChange} pagesCount={1} currentPage={1} />
-                    </div>*/}
+                    </div>
                     <div className="catalog-grid__navigation__item">
                         <Paper zDepth={1}>
                             <Utility__SelectBox lightTheme/>

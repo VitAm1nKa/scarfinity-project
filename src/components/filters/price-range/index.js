@@ -43,10 +43,6 @@ FilterPriceRange.defaultProps = {
         leftValue: 0,
         rightValue: 100,
     },
-    defaultValues: {
-        leftValue: 0,
-        rightValue: 100,
-    },
     minValue: 500,
     maxValue: 5000,
 };

@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "jquery": "*",
+    "key-mirror": "^1.0.1",
     "material-ui": "^0.18.1",
     "prop-types": "^15.5.8",
     "react": "^15.5.4",

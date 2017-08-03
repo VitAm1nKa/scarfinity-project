@@ -12,7 +12,7 @@ import Utility__RaitingBox              from '../Utility__RaitingBox.jsx';
 import Utility__Currency                from '../Utility__Currency.jsx';
 import {ColorPicker, ColorPickerItem}   from '../Utility__ColorPicker.jsx';
 
-export const ProductCardCatalogView = (props) => {
+const ProductCardCatalogView = (props) => {
     return(
         <Paper zDepth={1} >
             <div className="product-card-catalog">
@@ -50,3 +50,5 @@ export const ProductCardCatalogView = (props) => {
         </Paper>
     )
 }
+
+export default ProductCardCatalogView;

@@ -32,7 +32,7 @@
 			background: lighten(red, 35%);
 		}
 
-		&__right-side {
+		&__middle-section {
 			background: lighten(blue, 35%);
 		}
 
@@ -43,29 +43,33 @@
 		&__delim {
 			flex: 14px;
 			flex-shrink: 0;
+			background: lightcyan;
 		}
 
 		@media screen and (min-width: 899px) {
-			&__right-side {
-				flex-basis: calc(~"(100%-28px)/16*12");
-				flex-shrink: 1;
+			&__middle-section {
+				// flex-basis: calc(~"(100%-28px)/16*12");
+				width: calc(~"(100%-28px)/16*12");
+				// flex-shrink: 1;
 			}
 
 			&__left-section {
-				flex-basis: calc(~"(100%-28px)/16*3");
-				flex-shrink: 1;
+				// flex-basis: calc(~"(100%-28px)/16*3");
+				width: calc(~"(100%-28px)/16*3");
+				// flex-shrink: 1;
 			}
 
 			&__additional-section {
-				flex-basis: calc(~"(100%-28px)/16*1");
-				flex-shrink: 0;
+				// flex-basis: calc(~"(100%-28px)/16*1");
+				width: calc(~"(100%-28px)/16*1");
+				// flex-shrink: 0;
 			}
 		}
 
 		@media screen and (max-width: 898px) { 
 			flex-direction: column;
 			
-			&__right-side {
+			&__middle-section {
 				flex-basis: 0px;
 				width: 100%;
 			}
