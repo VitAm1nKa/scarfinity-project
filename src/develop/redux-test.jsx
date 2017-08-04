@@ -38,6 +38,9 @@ import CatalogGrid from '../components/catalog/CatalogGrid.jsx';
 import ContentGrid from '../components/utility/content-grid';
 import {ProductCardsGridView, FiltersGrid} from '../components/catalog/catalog-grid';
 
+// Left menu
+import {LeftMenuExpandItem} from '../components/utility/left-menu';
+
 
 
 const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)));
@@ -68,6 +71,7 @@ const DevelopContainer = (props) => {
             <ContentGrid
                 leftSection={<Connect__FiltersGrid />}
                 middleSection={<ProductCardsGridView />}/>
+            <LeftMenuExpandItem />
             <CatalogGrid />
             <DevelopFiltersContainer>
                 <FilterPriceRange />
@@ -88,22 +92,18 @@ const DevelopContainer = (props) => {
 // Components  -----------------------------------
 const Connect__FiltersGrid = connect(
     state => ({
-        colors: state.colors,
-        priceRange: state.priceRange,
-        rating: state.rating,
-        season: state.season,
+        colors: state.filters.colors,
+        priceRange: state.filters.priceRange,
+        rating: state.filters.rating,
+        season: state.filters.season,
     }),
-    dispatch => ({})
+    dispatch => ({
+        onPriceRangeChange: (action) => {
+            dispatch({type: 'PRICE_RANGE__DEFAULT', action: action});
+        }
+    })
 )
-(
-    props => {
-        console.log("Props => ", props);
-        return(
-            <FiltersGrid
-                priceRange={props.priceRange}/>
-        )
-    }
-)
+(FiltersGrid);
 
 const FirstTest = connect(
     state => ({

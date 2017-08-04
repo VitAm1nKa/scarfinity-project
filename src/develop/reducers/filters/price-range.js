@@ -3,8 +3,8 @@ import CONST from '../../lib/constants.js';
 const initialState = {
     minValue: 500,
     maxValue: 5000,
-    leftValue: 500,
-    rightValue: 5000,
+    leftValue: 1200,
+    rightValue: 4000,
     leftValueDefault: 500,
     rightValueDefault: 5000,
 };
