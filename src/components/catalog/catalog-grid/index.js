@@ -32,6 +32,7 @@ ProductCardsGridView.defaultProps = {
 
 // Filters
 export const FiltersGridView = (props) => {
+    console.log(props);
     return(
         <div className="filters-grid">
             {
@@ -44,7 +45,7 @@ export const FiltersGridView = (props) => {
                     minValue={props.priceRange.minValue}
                     maxValue={props.priceRange.maxValue}/>
             }
-            {props.color && <FilterColorPicker />}
+            {props.colors && <FilterColorPicker />}
             {props.rating && <FilterRatingSelect />}
             {props.season && <FilterSeasonSelectView />}
         </div>
@@ -52,40 +53,26 @@ export const FiltersGridView = (props) => {
 }
 FiltersGridView.defaultProps = {
     priceRange: null,
-    color: null,
+    colors: null,
     rating: null,
     season: null,
 }
 
-export class FiltersGrid extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            priceRange: props.priceRange,
-            colors: props.colors,
-            rating: props.rating,
-            season: props.season,
-        }
-
-        console.log("State = >", this.state);
-    }
-
-    render() {
-        return(
-            <FiltersGridView
-                priceRange={this.state.priceRange}
-                colors={this.state.colors}
-                rating={this.state.rating}
-                season={this.state.season}/>
-        )
-    }
+export const FiltersGrid = (props) => {
+    return(
+        <FiltersGridView
+            priceRange={props.priceRange}
+            colors={props.colors}
+            rating={props.rating}
+            season={props.season}/>
+    )
 }
 FiltersGrid.defaultProps = {
     priceRange: null,
     colors: null,
     rating: null,
     season: null,
+    onClick: () => {},
 }
 
 export default ProductCardsGridView;
