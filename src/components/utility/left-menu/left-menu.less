@@ -1,0 +1,159 @@
+//  Colors ------------------------------------------------
+    @background:        #fefefe;
+    @sub__fontColor:    #303030;
+    @itemBackground:    #bf4f79;
+    @color:             #ffffff;
+    @arrow:             rgba(255, 255, 255, 0.5);
+    @active:            #bf4f79;
+    @decoration:        #d7d7d7;
+//  -------------------------------------------------------
+
+// Styles -------------------------------------------------
+    @expandPadding: 10px;
+//---------------------------------------------------------
+
+.left-menu-test-container {
+    width: 265px;
+    padding: 20px;
+}
+
+.left-menu {
+    background: @background;
+}
+
+.left-menu-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    background: @itemBackground;
+
+    border-top: 1px solid lighten(@itemBackground, 10%);
+    border-bottom: 1px solid darken(@itemBackground, 10%);
+
+    padding: 10px 14px;
+    
+    transition: background 0.175s;
+    
+    &:hover {
+        background-color: lighten(@itemBackground, 5%);
+        cursor: pointer;
+    }   
+
+    &:first-child { border-top: none; }
+    &:last-child { border-bottom: none; }
+
+    &__title {
+        font-family: "Roboto";
+        font-size: 16px;
+
+        color: @color;
+    }
+
+    & > svg {
+        color: @arrow !important;
+    }
+
+}
+
+.left-menu-expand {
+    position: relative;
+
+    padding: @expandPadding 10px;
+    background: @background;
+
+    transition: all 0.2s linear;
+
+    &:before {
+        content: "";
+        position: absolute;
+
+        left: 0;
+        right: 0;
+        top: 0;
+
+        height: @expandPadding;
+        z-index: 10;
+
+        background: linear-gradient(@background 0%, rgba(255, 255, 255, 0.0) 100%);
+    }
+
+    &:after {
+        content: "";
+        position: absolute;
+
+        left: 0;
+        right: 0;
+        bottom: 0;
+
+        height: @expandPadding;
+        z-index: 10;
+
+        background: linear-gradient(rgba(255, 255, 255, 0.0) 0%, @background 100%);
+    }
+}
+
+.left-menu-expand-item {
+    position: relative;
+    display: flex;
+    
+    padding: 8px 0px;
+    padding-left: 24px;
+
+    font-size: 15px;
+    font-family: "Roboto";
+    font-weight: 400;
+
+    color: @sub__fontColor;
+
+    transition: color 0.175s;
+
+    &:after {
+        content: "";
+        position: absolute;
+        left: 7px;
+        top: calc(~'50% - 5px');
+
+        border: 2px solid @background;
+        height: 6px;
+        width: 6px;
+        background: @decoration;
+        border-radius: 6px;
+        transition: background 0.2s;
+    }
+
+    &:before {
+        content: "";
+        position: absolute;
+        border: 1px solid @decoration;
+        top: 0;
+        bottom: 0;
+        left: 11px;
+
+        pointer-events: none;
+    }
+
+    &:hover {
+        cursor: pointer;
+        color: @active;
+    }
+
+    &--selected {
+        &:after {
+            background: @active;
+        }
+    }
+
+    &:first-child {
+        &:before {
+            top: -@expandPadding;
+        }
+    }
+
+    &:last-child {
+        &:before {
+            bottom: -@expandPadding;
+        }
+    }
+}
