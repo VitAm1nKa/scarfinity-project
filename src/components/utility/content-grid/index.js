@@ -22,6 +22,7 @@ const ContentGrid = (props) => {
                     </div>
                     <div className="content-grid__container__delim"></div>
                     <div className="content-grid__container__middle-section">
+                        {props.treeNavigation}
                         {props.middleSection}
                     </div>
                     <div className="content-grid__container__delim"></div>
@@ -37,6 +38,7 @@ ContentGrid.defaultProps = {
     leftSection: null,
     middleSection: null,
     additionalSection: null,
+    treeNavigation: null,
 }
 
 export default ContentGrid;

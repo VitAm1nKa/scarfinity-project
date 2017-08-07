@@ -38,6 +38,9 @@ import CatalogGrid from '../components/catalog/CatalogGrid.jsx';
 import ContentGrid from '../components/utility/content-grid';
 import {ProductCardsGridView, FiltersGrid} from '../components/catalog/catalog-grid';
 
+// Navigation
+import TreeNavigation from '../components/navigation/tree-navigation';
+
 
 
 
@@ -68,9 +71,10 @@ const DevelopContainer = (props) => {
         <div style={{background: "#eaeaea"}}>
             <ContentGrid
                 leftSection={<Connect__FiltersGrid />}
-                middleSection={<ProductCardsGridView />}/>
-            {/* <CatalogGrid /> */}
-            {/* <DevelopFiltersContainer>
+                middleSection={<ProductCardsGridView />}
+                treeNavigation={<TreeNavigation />}/>
+            <CatalogGrid /> 
+            <DevelopFiltersContainer>
                 <FilterPriceRange />
                 <FilterColorPicker />
                 <FilterRatingSelect />
@@ -81,7 +85,7 @@ const DevelopContainer = (props) => {
                 <div></div>
                 <div></div>
             </DevelopFiltersContainer>
-            <PriceTicket /> */}
+            <PriceTicket /> 
         </div>
     )
 }
