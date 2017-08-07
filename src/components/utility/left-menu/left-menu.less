@@ -14,11 +14,17 @@
 
 .left-menu-test-container {
     width: 265px;
+    height: 400px;
     padding: 20px;
 }
 
 .left-menu {
     background: @background;
+}
+
+.left-menu-item-container {
+    overflow: hidden;
+    transition: max-height 0.25s ease-in-out;
 }
 
 .left-menu-item {
@@ -53,17 +59,23 @@
 
     & > svg {
         color: @arrow !important;
+        transition-duration: 0.2s !important;
     }
 
+    &--not-expandable {
+        & > svg {
+            color: rgba(255, 255, 255, 0.0) !important;
+        }
+    }
 }
 
 .left-menu-expand {
     position: relative;
 
+    overflow: hidden;
+
     padding: @expandPadding 10px;
     background: @background;
-
-    transition: all 0.2s linear;
 
     &:before {
         content: "";
@@ -91,6 +103,20 @@
         z-index: 10;
 
         background: linear-gradient(rgba(255, 255, 255, 0.0) 0%, @background 100%);
+    }
+
+    &--collapsed {
+
+        padding-top: 0px;
+        padding-bottom: 0px;
+
+        &:before {
+            content: none;
+        }
+
+        &:after {
+            content: none;
+        }
     }
 }
 

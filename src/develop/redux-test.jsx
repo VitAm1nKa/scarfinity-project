@@ -38,8 +38,6 @@ import CatalogGrid from '../components/catalog/CatalogGrid.jsx';
 import ContentGrid from '../components/utility/content-grid';
 import {ProductCardsGridView, FiltersGrid} from '../components/catalog/catalog-grid';
 
-// Left menu
-import {LeftMenuExpandItem} from '../components/utility/left-menu';
 
 
 
@@ -71,9 +69,8 @@ const DevelopContainer = (props) => {
             <ContentGrid
                 leftSection={<Connect__FiltersGrid />}
                 middleSection={<ProductCardsGridView />}/>
-            <LeftMenuExpandItem />
-            <CatalogGrid />
-            <DevelopFiltersContainer>
+            {/* <CatalogGrid /> */}
+            {/* <DevelopFiltersContainer>
                 <FilterPriceRange />
                 <FilterColorPicker />
                 <FilterRatingSelect />
@@ -84,7 +81,7 @@ const DevelopContainer = (props) => {
                 <div></div>
                 <div></div>
             </DevelopFiltersContainer>
-            <PriceTicket />
+            <PriceTicket /> */}
         </div>
     )
 }

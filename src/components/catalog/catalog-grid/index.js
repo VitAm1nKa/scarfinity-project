@@ -11,6 +11,7 @@ import FilterPriceRange         from '../../filters/price-range';
 import FilterColorPicker        from '../../filters/color-picker';
 import FilterRatingSelect       from '../../filters/rating-select';
 import FilterSeasonSelectView   from '../../filters/check-box-list-view';
+import LeftMenu                 from '../../utility/left-menu';
 
 // Product cards
 export const ProductCardsGridView = (props) => {
@@ -35,6 +36,7 @@ export const FiltersGridView = (props) => {
     console.log(props);
     return(
         <div className="filters-grid">
+            <LeftMenu />
             {
                 props.priceRange && 
                 <FilterPriceRange
