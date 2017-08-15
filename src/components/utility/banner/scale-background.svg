@@ -1,0 +1,10 @@
+<svg viewBox="0 0 20 20" width="20" height="20">
+<defs>
+    <style>
+      .scale-background {
+        fill: red;
+      }
+    </style>
+  </defs>
+  <rect x="9" width="2" height="20"/>
+</svg>
