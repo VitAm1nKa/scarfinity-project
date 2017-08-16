@@ -47,6 +47,13 @@ import MainMenu from '../components/navigation/main-menu';
 import {Wrapper} from '../components/utility/Utility__Css.jsx';
 import Banner from '../components/utility/banner';
 
+// SaleBage
+import SaleBage from '../components/utility/sale-bage';
+
+// Svg
+import SaleCircle from '../components/utility/svg/sale-circle';
+import Ribbon from '../components/utility/svg/ribbon';
+
 
 
 // Icon test
@@ -106,6 +113,33 @@ const DevelopContainer = (props) => {
             <MainMenu />
             <Wrapper>
                 <Banner />
+            </Wrapper>
+            <Wrapper>
+                <div style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'space-around',
+                }}>
+                    <Ribbon ribbonType="hot"/>
+                    <Ribbon ribbonType="new"/>
+                    <Ribbon ribbonType="sale"/>
+                </div>
+            </Wrapper>
+            <Wrapper>
+                <div style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'space-around',
+                }}>
+                    <SaleBage saleSize={10} />
+                    <SaleBage saleSize={20} />
+                    <SaleBage saleSize={30} />
+                    <SaleBage saleSize={40} />
+                    <SaleBage saleSize={50} />
+                    <SaleBage saleSize={60} />
+                    <SaleBage saleSize={70} />
+                    <SaleBage saleSize={80} />
+                </div>
             </Wrapper>
             <ContentGrid
                 leftSection={<Connect__FiltersGrid />}
