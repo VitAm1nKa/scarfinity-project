@@ -312,6 +312,10 @@
         align-items: center;
         height: 24px;
 
+        &:hover {
+            cursor: pointer;
+        }
+
         &__text {
             display: block;
             font-family: "Roboto";
@@ -382,6 +386,10 @@
 
         color: @banner-subtitle;
         margin: 0px 0px 10px 20px;
+
+        &:hover {
+            cursor: pointer;
+        }
     }
 
     &:before {
@@ -421,6 +429,8 @@
 
     &__white {
         position: absolute;
+
+        transform: 'scale3d(1, 1, 1)';
 
         background: @content;
         top: 0;

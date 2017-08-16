@@ -8,7 +8,7 @@ import ChevronLeft          from 'material-ui/svg-icons/navigation/chevron-left'
 import ChevronRight         from 'material-ui/svg-icons/navigation/chevron-right';
 import Paper                from 'material-ui/Paper';
 
-let bannerWebWorker = new Worker('./bannerWebWorker.js');
+var BannerWebWorker = require('worker-loader!./bannerWebWorker.js');
 
 var iconStyle = {
     circle: {
@@ -156,15 +156,20 @@ const BannerMenuItem = (props) => {
         <div
             className="banner-menu-item"
             data-index={indexString}>
-                <div className={`banner-menu-item__title banner-menu-item__title--style${indexString} ${props.active ? `banner-menu-item__title--active${indexString}` : ""}`}>
-                    {
-                        props.active
-                        ? <ArrowForward style={iconStyle.arrow} />
-                        : <FiberManualRecord style={iconStyle.circle} />
-                    }
+                <div 
+                    className={`banner-menu-item__title banner-menu-item__title--style${indexString} ${props.active ? `banner-menu-item__title--active${indexString}` : ""}`}
+                    onClick={props.onClick}>
+                        {
+                            props.active
+                            ? <ArrowForward style={iconStyle.arrow} />
+                            : <FiberManualRecord style={iconStyle.circle} />
+                        }
                     <span className="banner-menu-item__title__text">{props.title}</span>
                 </div>
-                <span className="banner-menu-item__subtitle">{props.subtitle}</span>
+                <span 
+                    className="banner-menu-item__subtitle"
+                    onClick={props.onClick}
+                    >{props.subtitle}</span>
         </div>
     )
 }
@@ -173,6 +178,7 @@ BannerMenuItem.defaultProps = {
     subtitle: "",
     index: 0,
     active: false,
+    onClick: () => {},
 }
 
 const BannerMenu = (props) => {
@@ -186,7 +192,8 @@ const BannerMenu = (props) => {
                         index={index}
                         title={item.title}
                         subtitle={item.subtitle}
-                        active={props.activeIndex === index}/>
+                        active={props.activeIndex == index}
+                        onClick={() => {props.onItemClick(index)}}/>
                 )
             }
         </div>
@@ -200,6 +207,7 @@ BannerMenu.defaultProps = {
         {title: "Четвертое", subtitle: "еуке цукеуцк к"},
     ],
     activeIndex: -1,
+    onItemClick: () => {},
 }
 
 // Slide bar -------------------------------------------
@@ -210,6 +218,7 @@ class BannerSlideBar extends React.Component {
         this.state = {
             slideIndex: props.slideIndex,
             slides: props.slides,
+            start: false,
         }
 
         this.slides = Array.apply(null, Array(props.slides)).map((item, index) => (
@@ -219,11 +228,18 @@ class BannerSlideBar extends React.Component {
         ));
 
         this.changeIndex = this.changeIndex.bind(this);
+        this.start = this.start.bind(this);
     }
 
     componentWillReceiveProps(props) {
         if(this.state.slideIndex !== props.slideIndex) {
             this.changeIndex(props.slideIndex);
+        }
+
+        if(props.start == true) {
+            this.setState({
+                start: true,
+            });
         }
     }
 
@@ -233,18 +249,30 @@ class BannerSlideBar extends React.Component {
         });
     }
 
+    start() {
+        if(!this.state.start) {
+            this.setState({
+                start: true,
+            });
+        }
+    }
+
     getState(index, slideIndex) {
-        if(slideIndex < 0)
+        if(this.state.start) {
+            if(slideIndex < 0)
+                return "empty";
+
+            if(index < slideIndex) 
+                return "fill";
+
+            if(index == slideIndex)
+                return "fillup";
+
+            if(index > slideIndex)
+                return "empty";
+        } else {
             return "empty";
-
-        if(index < slideIndex) 
-            return "fill";
-
-        if(index == slideIndex)
-            return "fillup";
-
-        if(index > slideIndex)
-            return "empty";
+        }
 
         return "empty";
     }
@@ -320,16 +348,20 @@ BannerSlideBarItem.defaultProps = {
 const BannerNavigation = (props) => {
     return(
         <div className="banner__menu">
-            <BannerSlideBar 
+            <BannerSlideBar
+                ref={props.slideBarRef}
                 slideIndex={props.index} />
             <ScaleBarContainer />
             <BannerMenu
-                activeIndex={props.index} />
+                activeIndex={props.index}
+                onItemClick={props.onMenuItemClick}/>
         </div>
     )
 }
 BannerNavigation.defaultProps = {
     index: -1,
+    onMenuItemClick: () => {},
+    slideBarRef: null,
 }
 
 class BannerConatiner extends React.Component {
@@ -351,45 +383,48 @@ class BannerConatiner extends React.Component {
         this.goNext = this.goNext.bind(this);
         this.goPrev = this.goPrev.bind(this);
         this.goToIndex = this.goToIndex.bind(this);
+        this.goToIndexPreare = this.goToIndexPreare.bind(this);
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        if(nextState.showIndex !== this.state.showIndex || nextState.bannerIndex !== this.state.bannerIndex) {
+            return true;
+        }
+
+        return false;
     }
 
     goNext() {
         const nextIndex = (this.state.bannerIndex + 1) % this.bannersLenth;
-        console.log("nextIndex=", nextIndex, this.state.bannerIndex);
-        this.goToIndex(nextIndex);
+        return this.goToIndexPreare(nextIndex);
     }
 
     goPrev() {
         const prevIndex = this.state.bannerIndex - 1;
-        this.goToIndex(prevIndex >= 0 ? prevIndex : this.bannersLenth - 1);
+        return this.goToIndexPreare(prevIndex >= 0 ? prevIndex : this.bannersLenth - 1);
+    }
+
+    goToIndexPreare(nextIndex) {
+        this.setState({
+            showIndex: this.state.bannerIndex,
+            releaseIndex: this.state.bannerIndex,
+            prepareIndex: nextIndex,
+        }, () => {
+            this.state.showIndex = -1;
+            this.state.releaseIndex = -1;
+            this.state.prepareIndex = -1;
+        });
+
+        return () => {this.goToIndex(nextIndex)};
     }
 
     goToIndex(index) {
-        let prepareIndex = index;
-        let showIndex = index;
-        let releaseIndex = this.state.bannerIndex;
         this.setState({
-            prepareIndex,
-            releaseIndex,
+            showIndex: index,
+            bannerIndex: index,
         }, () => {
-
-            this.state.prepareIndex = -1;
-            this.state.releaseIndex = -1;
-
-            let timeout = setTimeout(() => {
-                this.setState({
-                    showIndex,
-                    bannerIndex: showIndex,
-                }, () => {
-                    this.state.showIndex = -1;
-                    clearTimeout(timeout);
-                });
-            }, 1000);
+            this.state.showIndex = -1;
         });
-    }
-
-    onClick() {
-        this.goPrev();
     }
 
     render() {
@@ -400,7 +435,6 @@ class BannerConatiner extends React.Component {
                         return(
                             <div 
                                 className={`banner-container__item ${index === this.state.bannerIndex ? "banner-container__item--active" : ""}`}
-                                onClick={this.onClick.bind(this)}
                                 key={index}>
                                     <BannerItem
                                         primary={`Harder, ${index} Better,`}
@@ -427,6 +461,7 @@ class Banner extends React.Component {
 
         this.state = {
             navigationIndex: 0,
+            itemsCount: 4,
         }
 
         this.banner = null;
@@ -437,42 +472,85 @@ class Banner extends React.Component {
         if(typeof(Worker) !== 'undefined') {
             if(typeof(this.worker) == 'undefined') {
                 console.log("Here");
-                // this.worker = new bannerWebWorker();
-                // this.worker.onmessage = this.onWebWorker;
-                bannerWebWorker.onmessage = this.onWebWorker;
+                this.worker = new BannerWebWorker();
+                this.worker.onmessage = this.onWebWorker.bind(this);
+                this.worker.postMessage({
+                    message: "start",
+                    props: {
+                        delay: 1000,
+                        stepLength: 5,
+                        stepCount: 4,
+                    }
+                });
             }
         } else {
             console.error("Web worker no support...");
         }
-            
-            // if(true) {
-            //     let intervalIndex = 0;
-            //     let timeout = setTimeout(() => {
-            //         this.interval = setInterval(() => {
-            //             intervalIndex = (intervalIndex + 1) % 20;
-            //             console.log(intervalIndex);
+    }
 
-            //             if((intervalIndex + 1) % 5 === 0) {
-            //                 this.banner.goNext();
-            //             }
+    changeIndex(index) {
+        if(index != this.state.navigationIndex) {
+            this.worker.postMessage({
+                message: "gotoindex",
+                nextIndex: index,
+            })
+            this.bannerCallback = this.banner.goToIndexPreare(index);
+        }
+    }
 
-            //             if(intervalIndex % 5 === 0) {
-            //                 this.setState({
-            //                     navigationIndex: intervalIndex / 5,
-            //                 })
-            //             }
-            //         }, 1000);
-            //         clearTimeout(timeout);
-            //     }, 1000);
-            // }
+    handleMenuItemClick(index) {
+        this.changeIndex(index);
+    }
+
+    handleNextClick() {
+        let newIndex = (this.state.navigationIndex + 1) % this.state.itemsCount;
+        this.changeIndex(newIndex);
+    }
+
+    handlePrevClick() {
+        let newIndex = this.state.navigationIndex - 1;
+        this.changeIndex(newIndex >= 0 ? newIndex : this.state.itemsCount - 1);
     }
 
     onWebWorker(event) {
-        console.log("Worker message", event);
+        switch(event.data.message) {
+            case "prepare": {
+                this.bannerCallback = this.banner.goNext();
+            }; break;
+            case "change": {
+                this.setState({
+                    navigationIndex: event.data.index,
+                }, () => {
+                    if(this.bannerCallback) {
+                        this.bannerCallback();
+                        this.bannerCallback = undefined;
+                    }
+                })
+            }; break;
+            case "unpause": {
+                this.setState({
+                    navigationIndex: event.data.index,
+                }, () => {
+                    if(this.bannerCallback) {
+                        this.bannerCallback();
+                        this.bannerCallback = undefined;
+                    }
+                });
+            }; break;
+            case "started": {
+                if(this.slideBarRef) {
+                    this.slideBarRef.start();
+                }
+            }; break;
+            default: ;
+        }
     }
 
     componentWillUnmount() {
-        clearInterval(this.interval);
+       if(this.worker) {
+            this.worker.terminate();
+            this.worker = undefined;
+       }
     }
 
     render() {
@@ -480,7 +558,9 @@ class Banner extends React.Component {
             <Paper style={{margin: '15px 0px', overflow: 'hidden'}}>
                 <div className="banner">
                     <div className="banner__content">
-                        <div className="banner__content__side">
+                        <div 
+                            className="banner__content__side"
+                            onClick={this.handlePrevClick.bind(this)}>
                             <ChevronLeft style={iconStyle.pagination} />
                         </div>
                         <div className="banner-content">
@@ -488,35 +568,20 @@ class Banner extends React.Component {
                                 <BannerConatiner ref={banner => {if(this.banner == null) this.banner = banner}}/>
                             </div>
                         </div>
-                        <div className="banner__content__side">
+                        <div 
+                            className="banner__content__side"
+                            onClick={this.handleNextClick.bind(this)}>
                             <ChevronRight style={iconStyle.pagination} />
                         </div>
                     </div>
                     <BannerNavigation
-                        index={this.state.navigationIndex}/>
+                        index={this.state.navigationIndex}
+                        onMenuItemClick={this.handleMenuItemClick.bind(this)}
+                        slideBarRef={slideBar => {this.slideBarRef = slideBar}}/>
                 </div>
             </Paper>
         )
     }
 }
-
-const Scale = (props) => {
-    return(
-        <div>
-            <BannerNavigation />
-            <BannerSlideBar />
-            <div className="test"></div>
-        <div>
-            <Banner />
-            {/* <div className="banner-scale"></div> */}
-            <div className="banner-slide-bar"></div>
-            {/* <div className="test"></div> */}
-            <div className="test-test"></div>
-            <BannerMenu />
-        </div>
-        </div>
-    )
-}
-
 
 export default Banner;
