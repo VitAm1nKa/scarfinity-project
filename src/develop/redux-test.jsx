@@ -20,6 +20,17 @@ import reducer from './reducers'
 import {getTracks} from './actions/tracks';
 
 
+// ---- Pages ------------------------
+    import Page__Gallery        from '../pages/photo-gallery';
+    import Page__ProductCard    from '../pages/product-card';
+// -----------------------------------
+
+
+
+// Material-ui
+
+
+
 import PriceRangeWidget from '../components/utility/PriceRangeWidget.jsx';
 import DevelopFiltersContainer from '../components/filters/filters-container';
 import FilterPriceRange from '../components/filters/price-range';
@@ -44,15 +55,32 @@ import TopMenu from '../components/navigation/top-menu';
 import MainMenu from '../components/navigation/main-menu';
 
 // Banner
-import {Wrapper} from '../components/utility/Utility__Css.jsx';
-import Banner from '../components/utility/banner';
+import {Wrapper}    from '../components/utility/Utility__Css.jsx';
+import Banner       from '../components/utility/banner';
+import SubBanner    from '../components/utility/sub-banner';
 
 // SaleBage
 import SaleBage from '../components/utility/sale-bage';
 
+// Catalog Section
+import CatalogSection from '../components/catalog/catalog-section';
+
+// Promo block
+import PromoBlock from '../components/utility/promo-block';
+
+// Offer
+import OfferGrid from '../components/other/Offer.jsx';
+
+// Status widgets
+import FreeShippingStatus from '../components/utility/free-shipping-status';
+
+// Pop view
+import PopView from '../components/utility/pop-view';
+
 // Svg
-import SaleCircle from '../components/utility/svg/sale-circle';
-import Ribbon from '../components/utility/svg/ribbon';
+import SaleCircle   from '../components/utility/svg/sale-circle';
+import Ribbon       from '../components/utility/svg/ribbon';
+import Delivery     from '../components/utility/svg/delivery';
 
 
 
@@ -108,12 +136,21 @@ const filterTracks = (tracks, searhTrackTitle = '') => {
 // Develop container
 const DevelopContainer = (props) => {
     return(
-        <div style={{background: "#eaeaea"}}>
+        <div style={{background: "#f3f3f3"}}>
             <TopMenu />
             <MainMenu />
-            <Wrapper>
+             {/* <Wrapper>
                 <Banner />
-            </Wrapper>
+            </Wrapper> 
+            <CatalogSection />
+             <SubBanner /> 
+             <CatalogSection /> 
+             <Wrapper>
+                <CatalogSection />
+                <OfferGrid />
+                <CatalogSection />
+                <CatalogSection />
+            </Wrapper> 
             <Wrapper>
                 <div style={{
                     display: 'flex',
@@ -140,7 +177,17 @@ const DevelopContainer = (props) => {
                     <SaleBage saleSize={70} />
                     <SaleBage saleSize={80} />
                 </div>
-            </Wrapper>
+            </Wrapper> */}
+            
+            <Wrapper>
+                <Banner />
+            </Wrapper> 
+            <CatalogSection />
+            <SubBanner /> 
+            <PromoBlock />
+            <FreeShippingStatus />
+            <PopView />
+            <CatalogSection />
             <ContentGrid
                 leftSection={<Connect__FiltersGrid />}
                 middleSection={<ProductCardsGridView />}
@@ -159,6 +206,15 @@ const DevelopContainer = (props) => {
             </DevelopFiltersContainer>
             <PriceTicket /> 
             <CartIcon color={"#000"} height={120} width={120}/>
+        </div>
+    )
+}
+
+// Pop view
+const DevelopContainerPopView = (props) => {
+    return(
+        <div style={{background: "#f3f3f3"}}>
+            <PopView />
         </div>
     )
 }
@@ -305,7 +361,10 @@ const TestRedux = () => (
             <Switch>
                 <Route exact path='/' component={TestReduxWrap} />
                 <Route path='/test' component={DevelopContainer} />
-                <Route exact path='/:id' component={PriceRangeWidget} />
+                <Route path='/popview' component={DevelopContainerPopView} />
+                <Route path='/gallery' component={Page__Gallery} />
+                <Route path='/productcard' component={Page__ProductCard} />
+                <Route path='/:id' component={PriceRangeWidget} />
             </Switch>
         </HashRouter>
     </Provider>
