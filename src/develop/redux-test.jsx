@@ -21,8 +21,10 @@ import {getTracks} from './actions/tracks';
 
 
 // ---- Pages ------------------------
+    import Main                 from '../pages/main';
     import Page__Gallery        from '../pages/photo-gallery';
     import Page__ProductCard    from '../pages/product-card';
+    import Page__ProductCard1   from '../pages/product-card-test';
 // -----------------------------------
 
 
@@ -359,11 +361,12 @@ const TestRedux = () => (
     <Provider store={store}>
         <HashRouter>
             <Switch>
-                <Route exact path='/' component={TestReduxWrap} />
+                <Route exact path='/' component={Main} />
                 <Route path='/test' component={DevelopContainer} />
                 <Route path='/popview' component={DevelopContainerPopView} />
                 <Route path='/gallery' component={Page__Gallery} />
-                <Route path='/productcard' component={Page__ProductCard} />
+                <Route path='/product' component={Page__ProductCard} />
+                <Route path='/productcard1' component={Page__ProductCard1} />
                 <Route path='/:id' component={PriceRangeWidget} />
             </Switch>
         </HashRouter>

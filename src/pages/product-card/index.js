@@ -2,78 +2,27 @@ import React from 'react';
 
 import './product-card.less';
 
-import {Router, Route, Redirect, Switch} from 'react-router';
-import {HashRouter, Link} from 'react-router-dom';
-import { parse } from 'qs';
+import {Wrapper}                from '../../components/utility/Utility__Css.jsx';
+import ProductCard              from '../../components/catalog/ProductCard.jsx';
+import ReviewAndOtherSection    from '../../components/review/ReviewAndOtherSection.jsx';
+import CatalogSection           from '../../components/catalog/catalog-section';
+import RecenlyViewed__Shell     from '../../components/catalog/RecenlyViewed.jsx';
 
-const Tet = (props) => {
-    console.log("WORK!!!!!1", props);
+
+const Page__ProductCard = (props) => {
     return(
-        <span>{props.title}</span>
-    )
-} 
-Tet.defaultProps = {
-    title: "Work",
-}
-
-class Page__ProductCard extends React.Component {
-    constructor(props) {
-        super(props);
-
-        console.log(props);
-
-        let query = parse(props.location.search.substr(1));
-        // this.z = query.z;
-
-        this.path = props.match.path;
-
-        this.state = {
-            items: Array.apply(null, Array(10)).map((item, index) => ({ id: index, title: `title__${index}` })),
-            z: query.z,
-        }
-    }
-
-    componentWillMount() {
-        console.log("Will mount");
-    }
-
-    componentDidMount() {
-        console.log("Did mount");
-    }
-
-    shouldComponentUpdate(nextProps, nextState) {
-        console.log(nextProps, nextState, this.state);
-
-        if(nextState.z !== this.state.z) {
-            return true;
-        }
-
-        return false;
-    }
-
-    componentWillReceiveProps(props) {
-        console.log("New props");
-        let query = parse(props.location.search.substr(1));
-        this.setState({
-            z: query.z,
-        });
-    }
-
-    render() {
-        console.log("Main render");
-        return(
-            <div className="page__product-card">
-                {
-                    this.state.items.map((item, index) =>
-                        <div
-                            key={index}
-                            className="page__product-card-item"></div>     
-                    )
-                }
-                <Tet title={this.state.z} />
+        <Wrapper>
+            <div className="page__product-card-grid">
+                <div className="product-content">
+                    <ProductCard />
+                    <ReviewAndOtherSection />
+                </div>
+                <div className="recomended-block">
+                    <CatalogSection />
+                </div>
             </div>
-        )
-    }
+        </Wrapper>
+    )
 }
 
 export default Page__ProductCard;

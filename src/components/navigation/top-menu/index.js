@@ -2,7 +2,8 @@ import React from 'react';
 
 import './top-menu.less';
 
-import {Wrapper} from '../../utility/Utility__Css.jsx';
+import {Row, Container, Col} from '../../utility/grid';
+
 import AutocompleteBox from '../../utility/Utility__AutocompleteBox.jsx';
 
 const TopMenuSign = (props) => {
@@ -17,9 +18,9 @@ const TopMenuSign = (props) => {
 
 const TopMenu = (props) => {
     return(
-        <div className="top-menu">
-            <Wrapper>
-                <div className="top-menu__container">
+        <Row className="top-menu">
+            <Container>
+                <Col className="top-menu__container">
                     <div className="top-menu__container__logo">
                         SCARFINITY
                     </div>
@@ -29,9 +30,9 @@ const TopMenu = (props) => {
                     <div className="top-menu__container__search">
                         <AutocompleteBox />
                     </div>
-                </div>
-            </Wrapper>
-        </div>
+                </Col>
+            </Container>
+        </Row>
     )
 }
 

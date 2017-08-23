@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Wrapper} from '../utility/Utility__Css.jsx';
+import {Row, Container, Col} from '../../utility/grid';
 
 import './footer.less';
 
@@ -43,26 +43,29 @@ FooterGreed.defaultProps = {
     ]
 }
 
-const BottomBlock = (props) => {
+export const Copyright = (props) => {
     return(
-        <div>
-            <div className="bottom-logo"></div>
-            <div className="bottom-copyright">{props.copyrightTitle}</div>
-        </div>
+        <Row>
+            <Container>
+                <Col>
+                    <div className="bottom-logo"></div>
+                    <div className="bottom-copyright">{props.copyrightTitle}</div>
+                </Col>
+            </Container>
+        </Row>
     )
 }
-BottomBlock.defaultProps = {
-    copyrightTitle: "",
+Copyright.defaultProps = {
+    copyrightTitle: "© 2017 Scarfinity. Все права защищены.",
 }
 
-const Footer = (props) => {
+export const Footer = (props) => {
     return(
-        <footer>
-            <Wrapper>
+        <Row className="footer">
+            <Container>
                 <FooterGreed items={props.menuItems} />
-            </Wrapper>
-            <BottomBlock copyrightTitle={props.copyrightTitle} />
-        </footer>
+            </Container>
+        </Row>
     )
 }
 Footer.defaultProps = {
@@ -71,8 +74,7 @@ Footer.defaultProps = {
         {title: "Аккаунт", list: ["Мужчинам", "Детям", "Акции"]},
         {title: "О компании", list: ["Женщинам", "Мужчинам", "Скидки", "Акции"]},
         {title: "Контакты", list: ["Женщинам", "Мужчинам", "Детям", "Скидки", "Акции"]},
-    ],
-    copyrightTitle: "© 2017 Scarfinity. Все права защищены.",
+    ]
 }
 
 export default Footer;

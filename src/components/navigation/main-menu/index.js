@@ -2,7 +2,7 @@ import React from 'react';
 
 import './main-menu.less';
 
-import {Wrapper} from '../../utility/Utility__Css.jsx';
+import {Row, Container, Col} from '../../utility/grid';
 
 // Icon test
 const CartIcon = (props) => {
@@ -286,9 +286,9 @@ MainMenuNavigationCart.defaultProps = {
 
 export default (props) => {
     return(
-        <div className="main-menu">
-            <Wrapper>
-                <div className="main-menu-container">
+        <Row className="main-menu">
+            <Container>
+                <Col className="main-menu-container">
                     <div className="main-menu-container__navigation">
                         <MainMenuNavigation />
                     </div>
@@ -296,8 +296,8 @@ export default (props) => {
                     <div className="main-menu-container__cart">
                         <MainMenuNavigationCart />
                     </div>
-                </div>
-            </Wrapper>
-        </div>
+                </Col>
+            </Container>
+        </Row>
     )
 }

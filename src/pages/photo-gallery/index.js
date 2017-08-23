@@ -48,43 +48,40 @@ class ImageContainer extends React.Component {
         console.log("IAMGECONTAINER UPHERE!");
 
         this.state = {
+            imageId: props.imageId,
             imageSrc: "",
             prepare: true,
             success: false,
             error: false,
         }
 
-        // this.onClick = props.onClick;
+        this.onClick = props.onClick;
 
-        let imageIndex = props.match.params.id;
-        if(typeof images[imageIndex] === 'undefined') {
+        if(typeof images[this.state.imageId] === 'undefined') {
             // does not exist
         }
         else {
-             this.fetchImage(images[imageIndex]);
+             this.fetchImage(images[this.state.imageId]);
         }
     }
 
     componentWillReceiveProps(props) {
-        console.log(props);
+        this.setState({
+            imageId: props.imageId,
+        }, () => {
+            this.fetchImage(images[this.state.imageId]);
+        })
     }
 
-    onClick() {
-        console.log("THIS CLICK");
+    shouldComponentUpdate(nextProps, nextState) {
+        // if(nextState.imageId == this.state.imageId) {
+        //     return false;
+        // }
+
+        return true;
     }
 
     fetchImage(imageUrl) {
-        var myHeaders = new Headers({
-            'Access-Control-Allow-Origin':'*',
-        });
-
-        var myInit = { method: 'GET',
-                    headers: myHeaders,
-                    mode: 'cors',
-                    cache: 'default' };
-
-        var myRequest = new Request(imageUrl, myInit);
-
         if(imageUrl != "") {
             fetch(imageUrl)
             .then(response => response.blob())
@@ -113,15 +110,13 @@ class ImageContainer extends React.Component {
         console.log("Render");
         return(
             <div className="image-container" onClick={this.onClick}>
-                <Link to={`/gallery/8`} >
-                    <div className="image-container__container">
-                        {
-                            this.state.success 
-                            ? <img src={this.state.imageSrc}/>
-                            : <span>Error</span> 
-                        }
-                    </div>
-                </Link>
+                <div className="image-container__container">
+                    {
+                        this.state.success 
+                        ? <img src={this.state.imageSrc}/>
+                        : <span>Error</span> 
+                    }
+                </div>
             </div>
         )
     }
@@ -129,28 +124,26 @@ class ImageContainer extends React.Component {
 ImageContainer.defaultProps = {
     imageUrl: "",
     test: "Hello",
+    imageId: -1,
 }
 
 class Page__PhotoGallery extends React.Component {
     constructor(props) {
         super(props);
 
-        console.log("Main->", props);
+        this.state = {
+            items: props.items,
+            currentIndex: props.currentIndex,
+        }
 
-        this.path = props.match.path;
-
-        console.log("PHOTOGALLERY UPHERE!");
-
-        this.getData();
-    }
-
-    getData() {
-        const APIkey = '6223242-fb11c6a1e618352e1093c970f';
-        const query = `https://pixabay.com/api/?${APIkey}&q=yellow+flowers&image_type=photo&pretty=true`;
+        console.log(props);
     }
 
     handleClick() {
         console.log("Click");
+        this.setState({
+            currentIndex: (this.state.currentIndex + 1) % this.state.items.length,
+        });
     }
 
     render() {
@@ -163,11 +156,9 @@ class Page__PhotoGallery extends React.Component {
                 modal={false}
                 open={true}
                 >
-                    <Switch>
-                        <Route
-                            path={`/gallery/:id`}
-                            render={props => <ImageContainer onClick={this.handleClick.bind(this)} {...props} />} />
-                    </Switch>
+                    <ImageContainer
+                        imageId={this.state.currentIndex}
+                        onClick={this.handleClick.bind(this)} />
             </Dialog>
         )
     }

@@ -1,0 +1,50 @@
+// cols-setup
+.col-setup(@count, @index: 1) when (@index =< @count) {
+    &--@{index} {
+        grid-column: span @index / auto;
+    }
+    .col-setup(@count, (@index + 1));
+}
+
+.s-grid {
+    display: block;
+
+    &__row {
+        display: grid;
+        grid-template-columns: auto minmax(320px, 1202px) auto;
+    }
+
+    &__container {
+        grid-column-start: 2;
+        grid-column-end: 3;
+
+        display: grid;
+        grid-template-columns: repeat(16, 1fr);
+        grid-gap: 14px;
+
+        &__column {
+            grid-column: span 16 / auto;
+
+            @media screen and (min-width: 1127px) {
+                &.lg {
+                    .col-setup(16);
+                }
+            }
+            @media screen and (max-width: 1126px) {
+                &.md {
+                    .col-setup(16);
+                }
+            }
+            @media screen and (max-width: 768px) {
+                &.sm {
+                    .col-setup(16);
+                }
+            }
+            @media screen and (max-width: 450px) {
+                &.xs {
+                    .col-setup(16);
+                }
+            }
+        }
+    }
+}
