@@ -16,7 +16,7 @@ import Mobile__HeaderNavigation from '../navigation/Mobile__HeaderNavigation.jsx
 import OfferGrid from '../other/Offer.jsx';
 import RecenlyViewed__Shell from '../catalog/RecenlyViewed.jsx';
 import {RecenlyViewedBlock, ProductBlock} from '../catalog/RecenlyViewed.jsx';
-import Footer from '../navigation/Footer.jsx';
+// import Footer from '../navigation/Footer.jsx';
 
 
 class CartHeaderNavigation extends React.Component {
@@ -196,7 +196,7 @@ class CartHeaderNavigation extends React.Component {
 
         return (
             <div>
-                {/*<div className="cart__header-navigation">
+                <div className="cart__header-navigation">
                     <div className={`cart__header-navigation__navigation-item ${render.s1}`} data-index="1">
                         {state.navTitles[0]}
                     </div>
@@ -214,10 +214,10 @@ class CartHeaderNavigation extends React.Component {
 
                 <div>
                     <Cart__ProductSection />
-                </div>*/}
+                </div>
 
                 {/*<Mobile__HeaderNavigation />*/}
-                <p>
+                {/* <p>
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt dolor, delectus nesciunt impedit. Commodi eligendi voluptate nulla nobis numquam dignissimos reiciendis quaerat, possimus perspiciatis dolores sunt at consectetur quia beatae!
                 </p>
                 <p>
@@ -231,20 +231,20 @@ class CartHeaderNavigation extends React.Component {
                 </p>
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt dolor, delectus nesciunt impedit. Commodi eligendi voluptate nulla nobis numquam dignissimos reiciendis quaerat, possimus perspiciatis dolores sunt at consectetur quia beatae!
-                </p>
+                </p> */}
 
                 {/* <RecenlyViewed__Shell /> */}
-                <ProductBlock />
+                {/* <ProductBlock />
 
                 <div>
                     <ProductCard />
-                </div>
+                </div> */}
 
                 <RecenlyViewedBlock />
 
                 <OfferGrid />
 
-                <Footer />
+                {/* <Footer /> */}
 
                 {/*<div>
                     <FlatButton label="Secondary" secondary={true} onTouchTap={this.handleClick1}/>

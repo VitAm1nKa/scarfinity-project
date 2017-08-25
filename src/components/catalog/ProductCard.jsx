@@ -23,6 +23,8 @@ import {ProductBlock} from '../catalog/RecenlyViewed.jsx';
 import {ItemGridHorisontal, ItemGridVertical} from '../utility/Utility__ItemGrid.jsx';
 import Utility__ImageContainer  from '../utility/Utility__ImageContainer.jsx';
 
+import Paper                    from 'material-ui/Paper';
+
 const style = {
     button: {
         width: 26,
@@ -324,7 +326,7 @@ class ProductCardFavorite extends React.Component {
 	}
 }
 
-export default class ProductCard extends React.Component {
+class ProductCardView extends React.Component {
 
     constructor(props, context) {
         super(props, context);
@@ -430,3 +432,13 @@ export default class ProductCard extends React.Component {
         );
     }
 }
+
+const ProductCard = (props) => {
+	return(
+		<Paper zDepth={1} style={{padding: '40px 10px', position: 'relative'}}>
+			<ProductCardView />
+		</Paper>
+	)
+}
+
+export default ProductCard;

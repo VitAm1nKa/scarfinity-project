@@ -51,7 +51,7 @@ class FilterColorPicker extends React.Component {
     }
 }
 FilterColorPicker.defaultProps = {
-    colors: "1, 2, 3",
+    colors: "0, 1, 2, 3, 4, 5, 6, 7, 8, 9",
     values: {
         selectedColors: "",
     },

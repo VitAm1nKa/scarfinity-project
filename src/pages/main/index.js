@@ -1,34 +1,23 @@
 import React from 'react';
+import {Route, Redirect, Switch} from 'react-router';
+import { Link } from 'react-router-dom'
 
 import './main.less';
 
-import {Grid, Row, Container, Col} from '../../components/utility/grid';
+import {Grid, Row, Container, Col}  from '../../components/utility/grid';
 
-// Navigation
-// import TreeNavigation from '../components/navigation/tree-navigation';
-import TopMenu                  from '../../components/navigation/top-menu';
-import MainMenu                 from '../../components/navigation/main-menu';
-import {Footer, Copyright}      from '../../components/navigation/footer';
+import Banner                       from '../../components/utility/banner';
+import SubBanner                    from '../../components/utility/sub-banner'; 
+import PromoBlockContainer          from '../../components/utility/promo-block';
+import CatalogSection               from '../../components/catalog/catalog-section';
 
 const Main = (props) => {
     return(
         <Grid>
-            <TopMenu />
-            <MainMenu />
-            {/* Content start */}
-
-            {/* Content end */}
-            <Row className="item-width">
-                <Container>
-                    <Col className="item">Footer</Col>
-                </Container>
-            </Row>
-            <div className="item">Footer sub line</div>
-            <Row className="item-width">
-                <Container>
-                    <Col className="item">Copyright</Col>
-                </Container>
-            </Row>
+            <Banner />
+            <CatalogSection />
+            <SubBanner />
+            <PromoBlockContainer />
         </Grid>
     )
 }

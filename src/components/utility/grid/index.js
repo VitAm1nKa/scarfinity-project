@@ -22,7 +22,9 @@ export const Col = (props) => {
     return(
         <div
             className={className}
-            style={withStyle(props.style, {})}
+            style={withStyle(props.style, {
+                alignSelf: props.stretch ? 'stretch' : 'start',
+            })}
             >{props.children}</div>
     )
 }
@@ -37,7 +39,6 @@ export const Container = (props) => {
 }
 
 export const Row = (props) => {
-    console.log(props);
     return(
         <div
             className={`s-grid__row ${classN(props.className)}`.trim()}

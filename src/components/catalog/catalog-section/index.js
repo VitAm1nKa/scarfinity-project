@@ -3,7 +3,7 @@ import React from 'react';
 import './catalog-section.less';
 
 import {ProductCardCatalogView, ProductCardCatalogViewWhite}    from '../../utility/product-card-catalog';
-import {Wrapper}                                                from '../../utility/Utility__Css.jsx';
+import {Row, Container, Col}                                    from '../../utility/grid';
 import ArrowForward                                             from 'material-ui/svg-icons/navigation/arrow-forward';
 import ArrowBack                                                from 'material-ui/svg-icons/navigation/arrow-back';
 
@@ -245,8 +245,9 @@ class CatalogSection extends React.Component {
 
     render() {
         return(
-            <div className={`catalog-section catalog-section${this.state.whiteStyle ? "--white": ""}`}>
-                <Wrapper>
+            <Row className={`catalog-section catalog-section${this.state.whiteStyle ? "--white": ""}`}>
+                <Container>
+                    <Col>
                     <div className="catalog-section__header">
                         <CatalogSectionHeaderConnect
                             whiteStyle={this.state.whiteStyle}
@@ -266,8 +267,9 @@ class CatalogSection extends React.Component {
                         </div>
                         <div className="catalog-section__content__side-section"></div>
                     </div>
-                </Wrapper>
-            </div>
+                    </Col>
+                </Container>
+            </Row>
         )
     }
 }

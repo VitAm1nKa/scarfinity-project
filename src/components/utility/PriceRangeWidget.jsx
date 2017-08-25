@@ -24,7 +24,7 @@ const PriceRangeSliderPill = (props) => {
     )
 }
 PriceRangeSliderPill.defaultProps = {
-    height: 10,
+    height: 9,
     parentHeight: 0,
     leftValue: 0,
     rightValue: 90,
@@ -260,7 +260,7 @@ PriceRangeSliderController.defaultProps = {
 const PriceRangeInput = (props) => {
     return(
         <div className="price-range-input">
-            <Utility__Currency value={props.value} size="xsmall" noanimation/>
+            <Utility__Currency value={props.value} fontSize={15} noanimation/>
         </div>
     )
 }
@@ -273,10 +273,11 @@ const PriceRangeWidgetView = (props) => {
         <div style={{background: "#fefefe"}}>
             <div className="price-range-widget">
                 <PriceRangeSliderController
+                    height={18}
                     leftValue={props.leftValue}
                     rightValue={props.rightValue}
                     onValueChange={props.onValueChange}/>
-                <div className="price-range-widget__body" style={{paddingLeft: 12, paddingRight: 12}}>
+                <div className="price-range-widget__body">
                     <PriceRangeInput value={props.inputLeftValue} />
                     <SwapHoriz color="#ccc" />
                     <PriceRangeInput value={props.inputRightValue} />

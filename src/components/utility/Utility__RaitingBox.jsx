@@ -47,7 +47,6 @@ class Utility__RaitingBox extends React.Component {
 
     componentWillReceiveProps(props) {
         const {currentValue} = props;
-        console.log(props);
 
         this.setState({
             currentValue: this.prepareArray(currentValue),

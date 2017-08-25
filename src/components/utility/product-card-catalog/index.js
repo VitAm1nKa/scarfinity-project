@@ -51,7 +51,7 @@ return(
 
 export const ProductCardCatalogView = (props) => {
     return(
-        <Paper zDepth={1} >
+        <Paper zDepth={1} style={{boxShadow: "0 1px 2px rgba(0,0,0,.2)"}} >
             <div className="product-card-catalog">
 
                 <div className="product-card-catalog__image">

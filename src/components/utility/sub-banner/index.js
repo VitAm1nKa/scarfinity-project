@@ -2,7 +2,7 @@ import React from 'react';
 
 import './sub-banner.less';
 
-import {Wrapper}                    from '../Utility__Css.jsx';
+import {Row, Container, Col}        from '../grid';
 import Utility__ImageContainer      from '../Utility__ImageContainer.jsx';
 import ChevroneLeft                 from 'material-ui/svg-icons/navigation/chevron-left';
 import ChevroneRight                from 'material-ui/svg-icons/navigation/chevron-right';
@@ -187,44 +187,46 @@ class SubBanner extends React.Component {
         const prevImage = this.state.items[prevIndex].imageUrl;
         const nextImage = this.state.items[nextIndex].imageUrl;
         return(
-            <div className={`sub-banner ${this.state.changing ? "sub-banner--changing" : ""}`}>
-                <Wrapper>
-                    <div className={`sub-banner__container`}>
-                        <div 
-                            className="sub-banner__button"
-                            onClick={this.goPrev}>
-                            <SubBannerButton 
-                                left
-                                imageUrl={prevImage}/>
+            <Row className={`sub-banner ${this.state.changing ? "sub-banner--changing" : ""}`}>
+                <Container>
+                    <Col>
+                        <div className={`sub-banner__container`}>
+                            <div 
+                                className="sub-banner__button"
+                                onClick={this.goPrev}>
+                                <SubBannerButton 
+                                    left
+                                    imageUrl={prevImage}/>
+                            </div>
+                            <div className="sub-banner__image">
+                                <SubBannerImage
+                                    imageUrl={selectedItem.imageUrl}/>
+                            </div>
+                            <div className="sub-banner__content">
+                                <SubBannerContent
+                                    title={selectedItem.title}
+                                    subTitle={selectedItem.subTitle}
+                                    buttonTitle={selectedItem.buttonTitle}/>
+                            </div>
+                            <div 
+                                className="sub-banner__button"
+                                onClick={this.goNext}>
+                                <SubBannerButton
+                                    imageUrl={nextImage}/>
+                            </div>
                         </div>
-                        <div className="sub-banner__image">
-                            <SubBannerImage
-                                imageUrl={selectedItem.imageUrl}/>
+                        <div className="sub-banner__pagination">
+                            <div className="sub-banner__pagination__nothing"></div>
+                            <div className="sub-banner__pagination__dots">
+                                <SubBannerPagination
+                                    itemsCount={this.state.items.length}
+                                    currentIndex={this.state.currentIndex}
+                                    onClick={this.handlePaginationClick.bind(this)}/>
+                            </div>
                         </div>
-                        <div className="sub-banner__content">
-                            <SubBannerContent
-                                title={selectedItem.title}
-                                subTitle={selectedItem.subTitle}
-                                buttonTitle={selectedItem.buttonTitle}/>
-                        </div>
-                        <div 
-                            className="sub-banner__button"
-                            onClick={this.goNext}>
-                            <SubBannerButton
-                                imageUrl={nextImage}/>
-                        </div>
-                    </div>
-                    <div className="sub-banner__pagination">
-                        <div className="sub-banner__pagination__nothing"></div>
-                        <div className="sub-banner__pagination__dots">
-                            <SubBannerPagination
-                                itemsCount={this.state.items.length}
-                                currentIndex={this.state.currentIndex}
-                                onClick={this.handlePaginationClick.bind(this)}/>
-                        </div>
-                    </div>
-                </Wrapper>
-            </div>
+                    </Col>
+                </Container>
+            </Row>
         )
     }
 }

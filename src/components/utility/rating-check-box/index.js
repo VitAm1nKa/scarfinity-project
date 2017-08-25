@@ -13,21 +13,27 @@ var colors = {
     unckecked: "#aaaaaa",
 }
 
+var iconStyle = {
+    width: 20,
+    height: 20,
+}
+
 const RatingCheckBoxView = (props) => {
     return(
         <div className="rating-check-box">
             <Star
                 style={{
-                    width: 20,
-                    height: 20,
+                    width: 18,
+                    height: 18,
                 }}
                 color={colors.starColor}/>
             <IconButton
                 style={{
-                    width: 40,
-                    height: 40,
-                    padding: 4,
+                    width: 34,
+                    height: 34,
+                    padding: '4px 0px',
                 }}
+                iconStyle={iconStyle}
                 onClick={props.onClick}>
                 {
                     props.cheched 

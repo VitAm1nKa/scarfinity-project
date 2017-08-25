@@ -2,11 +2,12 @@ import React from 'react';
 
 import './banner.less';
 
-import FiberManualRecord    from 'material-ui/svg-icons/av/fiber-manual-record';
-import ArrowForward         from 'material-ui/svg-icons/navigation/arrow-forward';
-import ChevronLeft          from 'material-ui/svg-icons/navigation/chevron-left';
-import ChevronRight         from 'material-ui/svg-icons/navigation/chevron-right';
-import Paper                from 'material-ui/Paper';
+import {Row, Container, Col}        from '../grid';
+import FiberManualRecord            from 'material-ui/svg-icons/av/fiber-manual-record';
+import ArrowForward                 from 'material-ui/svg-icons/navigation/arrow-forward';
+import ChevronLeft                  from 'material-ui/svg-icons/navigation/chevron-left';
+import ChevronRight                 from 'material-ui/svg-icons/navigation/chevron-right';
+import Paper                        from 'material-ui/Paper';
 
 var BannerWebWorker = require('worker-loader!./bannerWebWorker.js');
 
@@ -555,31 +556,37 @@ class Banner extends React.Component {
 
     render() {
         return(
-            <Paper style={{margin: '15px 0px', overflow: 'hidden'}}>
-                <div className="banner">
-                    <div className="banner__content">
-                        <div 
-                            className="banner__content__side"
-                            onClick={this.handlePrevClick.bind(this)}>
-                            <ChevronLeft style={iconStyle.pagination} />
-                        </div>
-                        <div className="banner-content">
-                            <div className="banner-content__container">
-                                <BannerConatiner ref={banner => {if(this.banner == null) this.banner = banner}}/>
+            <Row>
+                <Container>
+                    <Col>
+                        <Paper style={{margin: '15px 0px', overflow: 'hidden'}}>
+                            <div className="banner">
+                                <div className="banner__content">
+                                    <div 
+                                        className="banner__content__side"
+                                        onClick={this.handlePrevClick.bind(this)}>
+                                        <ChevronLeft style={iconStyle.pagination} />
+                                    </div>
+                                    <div className="banner-content">
+                                        <div className="banner-content__container">
+                                            <BannerConatiner ref={banner => {if(this.banner == null) this.banner = banner}}/>
+                                        </div>
+                                    </div>
+                                    <div 
+                                        className="banner__content__side"
+                                        onClick={this.handleNextClick.bind(this)}>
+                                        <ChevronRight style={iconStyle.pagination} />
+                                    </div>
+                                </div>
+                                <BannerNavigation
+                                    index={this.state.navigationIndex}
+                                    onMenuItemClick={this.handleMenuItemClick.bind(this)}
+                                    slideBarRef={slideBar => {this.slideBarRef = slideBar}}/>
                             </div>
-                        </div>
-                        <div 
-                            className="banner__content__side"
-                            onClick={this.handleNextClick.bind(this)}>
-                            <ChevronRight style={iconStyle.pagination} />
-                        </div>
-                    </div>
-                    <BannerNavigation
-                        index={this.state.navigationIndex}
-                        onMenuItemClick={this.handleMenuItemClick.bind(this)}
-                        slideBarRef={slideBar => {this.slideBarRef = slideBar}}/>
-                </div>
-            </Paper>
+                        </Paper>
+                    </Col>
+                </Container>
+            </Row>
         )
     }
 }

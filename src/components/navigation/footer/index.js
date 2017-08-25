@@ -43,12 +43,19 @@ FooterGreed.defaultProps = {
     ]
 }
 
+// <div className="bottom-logo"></div>
+
+export const FooterLogo = (props) => {
+    return(
+        <div className="bottom-logo"></div>
+    )
+}
+
 export const Copyright = (props) => {
     return(
         <Row>
             <Container>
                 <Col>
-                    <div className="bottom-logo"></div>
                     <div className="bottom-copyright">{props.copyrightTitle}</div>
                 </Col>
             </Container>
@@ -61,9 +68,11 @@ Copyright.defaultProps = {
 
 export const Footer = (props) => {
     return(
-        <Row className="footer">
+        <Row>
             <Container>
-                <FooterGreed items={props.menuItems} />
+                <Col>
+                    <FooterGreed items={props.menuItems} />
+                </Col>
             </Container>
         </Row>
     )

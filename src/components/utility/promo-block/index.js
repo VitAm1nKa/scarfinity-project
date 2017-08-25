@@ -2,9 +2,9 @@ import React from 'react';
 
 import './promo-block.less';
 
-import Paper            from 'material-ui/Paper';
-import ChevroneRight    from 'material-ui/svg-icons/navigation/chevron-right';
-import {Wrapper}        from '../Utility__Css.jsx';
+import {Row, Container, Col}        from '../grid';
+import Paper                        from 'material-ui/Paper';
+import ChevroneRight                from 'material-ui/svg-icons/navigation/chevron-right';
 
 var iconStyle = {
     width: 18,
@@ -57,12 +57,12 @@ export const PromoBlock = (props) => {
             <div className="promo-block-content">
                 <span className="promo-block-content__title">{props.title}</span>
                 <span className="promo-block-content__subtitle">{props.subtitle}</span>
-                <div className={`propmo-block-button propmo-block-button--${props.promoType}`}>
-                    <div className="propmo-block-button__icon">
-                        <ChevroneRight style={iconStyle}/>
-                    </div>
-                    <span className="propmo-block-button__title">{props.buttonTitle}</span>
+            </div>
+            <div className={`propmo-block-button propmo-block-button--${props.promoType}`}>
+                <div className="propmo-block-button__icon">
+                    <ChevroneRight style={iconStyle}/>
                 </div>
+                <span className="propmo-block-button__title">{props.buttonTitle}</span>
             </div>
         </Paper>
     )
@@ -76,18 +76,21 @@ PromoBlock.defaultProps = {
 
 export const PromoBlockContainer = (props) => {
     return(
-        <Wrapper>
-            <div className="promo-block-container">
+        <Row>
+            <Container>
+                <Col md={2} />
                 {
                     props.items &&
                     props.items.map((item, index) =>
-                        <PromoBlock
-                            key={index}
-                            {...item}/>
+                        <Col key={index} md={4} stretch>
+                            <PromoBlock
+                                {...item}/>
+                        </Col>
                     )
                 }
-            </div>
-        </Wrapper>
+                <Col md={2} />
+            </Container>
+        </Row>
     )
 }
 PromoBlockContainer.defaultProps = {

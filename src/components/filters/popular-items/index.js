@@ -13,11 +13,8 @@ export const PopularItemsView = (props) => {
             {
                 props.items &&
                 props.items.map((item, index) =>
-                    <div 
-                        className="popular-items__item"
-                        key={index}>
-                            <ProductCardMin />
-                    </div>
+                    <ProductCardMin 
+                        key={index}/>
                 )
             }
         </div>
@@ -54,9 +51,6 @@ class FilterPopularItems extends React.Component {
     }
 
     componentDidMount() {
-        setTimeout(() => {
-            console.log("->!", this.container.offsetWidth);
-        }, 1)
     }
 
     componentWillUnmount() {

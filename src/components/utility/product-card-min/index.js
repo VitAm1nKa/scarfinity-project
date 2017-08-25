@@ -10,26 +10,24 @@ export const ProductCardMinView = (props) => {
     return(
         <div 
             className="product-card-min">
-                <div className="product-card-min__container">
-                    <div className="product-card-min__image">
-                        <Utility__ImageContainer />
-                    </div>
-                    <div 
-                        className="product-card-min__content">
-                            <div className="product-card-min__content__title">
-                                <span className="product-card-min__content__title__text">{props.title}</span>
-                            </div> 
-                            <div className="product-card-min__content__pricing">
-                                <div className="product-card-min__content__pricing__price">
-                                    <Utility__Currency
-                                        value={props.price}
-                                        fontSize={15}
-                                        accent 
-                                        glyphFull/>
-                                </div>
-                                <OfferBage size={10}/>
+                <div className="product-card-min__image">
+                    <Utility__ImageContainer />
+                </div>
+                <div 
+                    className="product-card-min__content">
+                        <span className="product-card-min__content__title">
+                            {props.title}
+                        </span> 
+                        <div className="product-card-min__content__pricing">
+                            <div className="product-card-min__content__pricing__price">
+                                <Utility__Currency
+                                    value={props.price}
+                                    fontSize={15}
+                                    accent 
+                                    glyphFull/>
                             </div>
-                    </div>
+                            <OfferBage size={10}/>
+                        </div>
                 </div>
         </div>
     )

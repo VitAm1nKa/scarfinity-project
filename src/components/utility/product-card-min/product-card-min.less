@@ -4,29 +4,21 @@
 //  -------------------------------------------------------
 
 .product-card-min {
-    width: 100%;
-    padding-top: calc(~"(100% - 10px + 2px) * 0.28");
-    position: relative;
-
-    &__container {
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-    }
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    min-height: 60px;
+    // background: red;
 
     &__image {
-        flex: 28 0;
+        flex-basis: 58px;
+        max-width: 58px;
+        max-height: 58px;
         border: 1px solid @border;
     }
 
     &__content {
-        flex: 72 1;
+        flex: 1;
         margin-left: 10px;
 
         &__title {
@@ -36,31 +28,16 @@
             height: 15px;
             font-size: 0;
 
+            max-width: 110px;
+            text-overflow: ellipsis;
             overflow: hidden;
 
+            font-family: "Roboto";
+            font-size: 13px;
+            font-weight: 400;
+            white-space: nowrap;
+
             margin-bottom: 5px;
-
-            &:after {
-                content: "";
-                position: absolute;
-                top: 0;
-                right: 0;
-                bottom: 0;
-                left: 0;
-
-                background-image: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 80%, #fefefe 97%);
-            }
-
-            &__text {
-                position: absolute;
-                top: 0;
-                left: 0;
-
-                font-family: "Roboto";
-                font-size: 13px;
-                font-weight: 400;
-                white-space: nowrap;
-            }
         }
 
         &__pricing {
