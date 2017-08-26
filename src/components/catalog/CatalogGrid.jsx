@@ -10,6 +10,8 @@ import ProductCardCatalogView from '../utility/product-card-catalog';
 
 import LazyLoader from '../utility/lazy-loader';
 
+import '../../api';
+
 const CatalogGridAutoloadLoading = (props) => {
     return(
         <div className="catalog-grid-autoload-loading">
