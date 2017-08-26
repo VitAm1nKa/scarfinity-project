@@ -33,9 +33,16 @@ const CatalogItemsGrid = (props) => {
             <div className="catalog-grid__container">
                 {
                     props.items && 
-                    props.items.map((value, index) => 
-                        <ProductCardCatalogView key={index} />
-                    )
+                    props.items.map((value, index) => {
+                        return(
+                            <ProductCardCatalogView
+                                key={index}
+                                title={value.title}
+                                reviews={value.reviews}
+                                price={value.price}
+                                images={value.images} />
+                        )
+                    })
                 }
                 <div className="catalog-grid__process-block"></div>
             </div>
@@ -52,8 +59,8 @@ export class CatalogGridAutoload extends React.Component {
         super(props);
 
         this.state = {
-            currentCount: 1,
-            maxCount: 15,
+            currentCount: 0,
+            maxCount: 3,
             loading: false,
             loadingProcess: false,
             completed: false,
@@ -66,13 +73,11 @@ export class CatalogGridAutoload extends React.Component {
 
     componentWillMount() {
         // addEventListener('scroll', this.handleScroll.bind(this));
+        this.loadMore();
     }
 
     componentDidMount() {
         addEventListener('scroll', this.handleScroll);
-        this.prepareItems(() => {
-            this.forceUpdate();
-        });
     }
 
     componentWillUnmount() {
@@ -94,9 +99,12 @@ export class CatalogGridAutoload extends React.Component {
     }
 
     prepareItems(callback) {
-        let newArray = (Array.apply(null, Array(1 * 12)).map(item => ({title: ""})));
-        this.state.items = this.state.items.concat(newArray);
-        if(callback) callback();
+        fetch(`./api/api__products__part-${this.state.currentCount}.json`)
+        .then(response => response.json())
+        .then(jsonData => {
+            this.state.items = this.state.items.concat(jsonData.items.list);
+            if(callback) callback();
+        });
     }
 
     loadMore() {
@@ -170,18 +178,7 @@ export class CatalogGrid extends React.Component {
     }
 
     render() {
-
         const {items, inProcess} = this.state;
-        // const remItemCount = items.length > 6 ? 12 : 6;
-        let itemList = [];
-        for(let i = 0; i < 12; i++) {
-            itemList = [...itemList, { 
-                isItem: !(typeof items[i] === 'undefined'),
-                data: items[i],
-            }];
-        }
-
-        console.log(itemList);
 
         return(
             <div className={`catalog-grid ${inProcess ? "catalog-grid--in-process" : "" }`}>

@@ -5,7 +5,6 @@ import {CatalogGrid, CatalogGridAutoload} from '../../components/catalog/Catalog
 const Page__CaralogGrid = (props) => {
     return(
         <div>
-            <CatalogGrid />
             <CatalogGridAutoload />
         </div>
     )

@@ -53,10 +53,10 @@ export const ProductCardCatalogView = (props) => {
     return(
         <Paper zDepth={1} style={{boxShadow: "0 1px 2px rgba(0,0,0,.2)"}} >
             <div className="product-card-catalog">
-
                 <div className="product-card-catalog__image">
                     <div className="product-card-catalog__image__image">
-                        <Utility__ImageContainer />
+                        <Utility__ImageContainer
+                            imageUrl={props.images.main}/>
                     </div>
                     <div className="product-card-catalog__image__info">
                         <span>Цвета:</span>
@@ -69,12 +69,12 @@ export const ProductCardCatalogView = (props) => {
 
                 <div className="product-card-catalog__description">
                     <Utility__RaitingBox
-                        currentValue={4.5}
-                        text={"123"}
+                        currentValue={props.reviews.rating}
+                        text={`${props.reviews.count}`}
                         iconSize={20} />
-                    <span className="product-card-catalog__title">Шарф-хомут палантин</span>
+                    <span className="product-card-catalog__title">{props.title}</span>
                     <div className="product-card-catalog__description__pricing">
-                        <PriceTicket value={1200} />
+                        <PriceTicket value={props.price.cost} />
                         <FlatButton 
                             label={`в корзину`}
                             style={{marginLeft: 5}}
@@ -86,6 +86,23 @@ export const ProductCardCatalogView = (props) => {
             </div>
         </Paper>
     )
+}
+ProductCardCatalogView.defaultProps = {
+    title: "",
+    reviews: {
+        count: 0,
+        rating: 0,
+    },
+    price: {
+        cost: 0,
+        sale: 0,
+        saleTag: 0,
+    },
+    images: {
+        main: "",
+        preview: "",
+        list: null,
+    }
 }
 
 export default ProductCardCatalogView;
