@@ -8,9 +8,10 @@ import CatalogNavigation from '../catalogNavigation/CatalogNavigation.jsx';
 import Utility__SelectBox from '../utility/Utility__SelectBox.jsx';
 import ProductCardCatalogView from '../utility/product-card-catalog';
 
+import { Link } from 'react-router-dom'
+
 import LazyLoader from '../utility/lazy-loader';
 
-import '../../api';
 
 const CatalogGridAutoloadLoading = (props) => {
     return(
@@ -30,6 +31,7 @@ CatalogGridAutoloadLoading.defaultProps = {
 }
 
 const CatalogItemsGrid = (props) => {
+    console.log(props);
     return(
         <div className={`catalog-grid ${props.loading ? "catalog-grid--in-process" : "" }`}>
             <div className="catalog-grid__container">
@@ -37,12 +39,14 @@ const CatalogItemsGrid = (props) => {
                     props.items && 
                     props.items.map((value, index) => {
                         return(
-                            <ProductCardCatalogView
-                                key={index}
-                                title={value.title}
-                                reviews={value.reviews}
-                                price={value.price}
-                                images={value.images} />
+                            <Link to={`/product/${value.id}`} key={index}>
+                                <ProductCardCatalogView
+                                    // key={index}
+                                    title={value.title}
+                                    reviews={value.reviews}
+                                    price={value.price}
+                                    images={value.images} />
+                            </Link>
                         )
                     })
                 }

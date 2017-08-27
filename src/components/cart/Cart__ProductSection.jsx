@@ -8,6 +8,14 @@ import FlatButton from 'material-ui/FlatButton';
 import IconButton from 'material-ui/IconButton';
 import NavigationCancel from 'material-ui/svg-icons/navigation/cancel';
 
+// Utility
+import {count__cartItems}		from '../../lib/currying';
+
+// Data ------------------------
+import {connect}                from 'react-redux';
+import {addItem, removeItem}    from '../../redux/actions/cart';
+
+
 const styles = {
     mediumIcon: {
         width: 22,
@@ -25,37 +33,13 @@ const styles = {
 }
 
 class Cart__ProductSection__ProductCard extends React.Component {
-    constructor(props, context) {
-        super(props, context);
+    constructor(props) {
+        super(props);
 
-        this.state = {
+        this.state = Object.assign({}, props, {
             inProcess: false,
             collapsed: false,
-            id: 0,
-            cost: 0,
-            quantity: 1,
-            onQuantityChange: () => {},
-        }
-
-        // this.data = {
-        //     id: 0,
-        //     cost: 0,
-        //     quantity: 1,
-        //     onQuantityChange: () => {},
-        // }
-
-        const { onQuantityChange } = this.props;
-
-        if(this.props.productData) {
-            let data = this.props.productData;
-            this.state.id = data.id;
-            this.state.cost = data.cost;
-            this.state.quantity = data.quantity;
-        }
-
-        if(onQuantityChange && typeof(onQuantityChange) === 'function') {
-            this.state.onQuantityChange = onQuantityChange;
-        }
+        });
 
         this.handleQuantityChange = this.handleQuantityChange.bind(this);
         this.handleRemoveItem = this.handleRemoveItem.bind(this);
@@ -71,32 +55,29 @@ class Cart__ProductSection__ProductCard extends React.Component {
     }
 
     handleRemoveItem() {
-
-        const t = this.props.onRemoveItem;
-        if(t) {
-            t(this.state.id);
-        }
-
-        const { collapsed } = this.state;
-        this.setState( { collapsed: true } );
+        this.setState({collapsed: true});
     }
 
-    componentWillReceiveProps(data) {
-        const { quantity } = data.productData;
-
-        if(quantity && typeof(quantity) === 'number') {
-            this.setState({ quantity: quantity });
+    handleTransitionEnd() {
+        if(this.state.collapsed) {
+            const timeout = setTimeout(() => {
+                if(this.state.onRemoveItem) this.state.onRemoveItem();
+            }, 50);
         }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState(nextProps);
     }
 
     render() {
-
-        const { inProcess, collapsed, name, cost, quantity } = this.state;
+        const { inProcess, collapsed, productData } = this.state;
 
         return (
             <div className={`cart__product-card 
                             ${ inProcess ? "cart__product-card--in-process" : "" }
-                            ${ collapsed ? "cart__product-card--collapsed": "" }`}>
+                            ${ collapsed ? "cart__product-card--collapsed": "" }`}
+                            onTransitionEnd={this.handleTransitionEnd.bind(this)}>
                 <div className="cart__product-card__back-remove-block">
                 </div>
                 <div className="cart__product-card__container">
@@ -111,7 +92,7 @@ class Cart__ProductSection__ProductCard extends React.Component {
                     </div>
                     <div className="cart__product-card__content-block">
                         <div className="cart__product-card__content-block__header">
-                            {name}
+                            {productData.title}
                         </div>
                         <div className="cart__product-card__content-block__content">
                             <span className="title">Цвет:</span>
@@ -121,15 +102,15 @@ class Cart__ProductSection__ProductCard extends React.Component {
                         </div>
                     </div>
                     <div className="cart__product-card__price-block">
-                        <Utility__Currency value={cost} size="small" unmutable={true} />
+                        <Utility__Currency value={productData.cost} size="small" unmutable={true} />
                     </div>
                     <div className="cart__product-card__delim-block">&#215;</div>
                     <div className="cart__product-card__quantity-block">
-                        <FlatButton label={quantity} onTouchTap={this.handleQuantityChange} />
+                        <FlatButton label={productData.quantity} onTouchTap={this.handleQuantityChange} />
                     </div>
                     <div className="cart__product-card__delim-block">&#61;</div>
                     <div className="cart__product-card__total-block">
-                        <Utility__Currency value={inProcess ? null: cost * quantity} size="small" />
+                        <Utility__Currency value={inProcess ? null: productData.cost * productData.quantity} size="small" />
                     </div>
                 </div>
                 <div className="cart__product-card__process-block">
@@ -144,93 +125,37 @@ class Cart__ProductSection__ProductCard extends React.Component {
 }
 
 class Cart__ProductSection extends React.Component {
+    constructor(props) {
+        super(props);
 
-    constructor(props, context) {
-        super(props, context);
-
-        this.state = {
-            items: [
-                { id: 1, name: "Шарф-хомут, кашемир", cost: 350, quantity: 1, color: "" },
-                { id: 2, name: "Платок пляжный", cost: 200, quantity: 2, color: "" },
-                { id: 3, name: "Шарф Gucci, новинка", cost: 1250, quantity: 1, color: "" },
-            ],
-            index: 4,
-        }
+        this.state = Object.assign({}, props, {});
 
         this.handleRemoveItem = this.handleRemoveItem.bind(this);
         this.handleItemQuantityChange = this.handleItemQuantityChange.bind(this);
-        this.addItem = this.addItem.bind(this);
-	}
+    }
+    
+    componentWillReceiveProps(nextProps) {
+        this.setState(nextProps);
+    }
 
-    handleRemoveItem(itemID) {
-        if(itemID) {
-            setTimeout(() => {
-                var {items} = this.state;
-                items.splice(items.findIndex(x => x.id === itemID), 1);
-                this.setState({items: items});
-            }, 200);
-        }
+    handleRemoveItem(productId) {
+        this.state.removeItem(productId);
     }
 
     handleItemQuantityChange(itemId, value) {
-        let {items} = this.state;
-        items.find(x => x.id === itemId).quantity = value;
-        this.setState({ items: items });
-    }
 
-    // cummon methods
-    itemsCountTitle(count) {
-        if(count && typeof(count) === 'number') {
-            let subTitle = "товар";
-
-            const hundredMod = count % 100;
-            if(hundredMod === 11 || hundredMod === 12 || hundredMod === 13 || hundredMod === 14) {
-                return `${count} товаров`;
-            }
-
-            switch (count % 10) {
-                case 0:
-                case 5:
-                case 6: 
-                case 7:
-                case 8: 
-                case 9: subTitle = "товаров"; break;
-                case 1: subTitle = "товар"; break;
-                case 2:
-                case 3:
-                case 4: subTitle = "товара"; break;
-            }
-
-            return `${count} ${subTitle}`;
-        }
-
-        return "0 товаров";
-    }
-    
-    random(min, max) {
-        return Math.floor(Math.random()  * (max - min) + min)
-    }
-
-    addItem() {
-        let {items, index} = this.state;
-        const newItem = { id: index++, name: "Шарф-хомут, кашемир", cost: this.random(701, 301), quantity: this.random(4, 1), color: "" };
-        console.log(newItem);
-        this.setState({ items: [...items, newItem], index: index });
     }
 
     render() {
-
-        const { items, value } = this.state;
+        const {items} = this.state;
         let subTotal = items.map(x => (x.cost * x.quantity)).reduce((a,b) => { return a + b }, 0);
-        console.log(subTotal);
         if(!subTotal) subTotal = 0;
-        const itemsCountTitle = this.itemsCountTitle(items.length);
+        const itemsCountTitle = count__cartItems(items.length);
 
         return (
             <div className="cart__products-container">
                 <div className="cart__header-row">
-                    У вас <span className="cart__header-row__accent">{itemsCountTitle}</span> в корзине
-                    <FlatButton label="Add Item" onTouchTap={this.addItem} />
+                    У вас <span className="cart__header-row__accent">{`${items.length} ${count__cartItems(items.length)}`}</span> в корзине
                 </div>
                 <div className="cart__product-card cart__product-card--header">
                     <div className="cart__product-card__container">
@@ -256,9 +181,9 @@ class Cart__ProductSection extends React.Component {
                 </div>
                 { items.map((item) => 
                     <Cart__ProductSection__ProductCard 
-                        key={item.id} 
+                        key={item.productId} 
                         productData={item}
-                        onRemoveItem={this.handleRemoveItem} 
+                        onRemoveItem={() => this.handleRemoveItem(item.productId)} 
                         onQuantityChange={this.handleItemQuantityChange} />
                 )}
                 <div className="cart__bottom-row">
@@ -274,5 +199,18 @@ class Cart__ProductSection extends React.Component {
     }
 }
 
-export default Cart__ProductSection;
+const mstp__Cart__ProductSection = (state, ownProps) => {
+    return {
+        items: state.cart,
+    }
+}
+
+const mdtp__Cart__ProductSection = (dispatch) => {
+    return {
+        addItem: (productId, count) => dispatch(addItem(productId, count)),
+        removeItem: (productId, count) => dispatch(removeItem(productId, count)),
+    }
+}
+
+export default connect(mstp__Cart__ProductSection, mdtp__Cart__ProductSection)(Cart__ProductSection);
 

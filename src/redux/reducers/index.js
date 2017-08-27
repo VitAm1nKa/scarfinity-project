@@ -1,13 +1,11 @@
 import {combineReducers} from 'redux';
 
-import tracks       from './tracks';
-import playlists    from './playlists';
-import filterTracks from './filterTracks';
+import products     from './products';
 import filters      from './filters';
+import cart         from './cart';
 
 export default combineReducers({
-    tracks,
-    playlists,
-    filterTracks,
+    products,
     filters,
+    cart,
 })

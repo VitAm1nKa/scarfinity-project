@@ -1,6 +1,7 @@
 import React        from 'react';
 import {parse}      from 'qs';
 import {Link}       from 'react-router-dom';
+import { Redirect } from 'react-router';
 
 import './image-gallery-view.less';
 
@@ -191,7 +192,7 @@ const ImageGalleryContainerFooter = (props) => {
                 ?
                 <div className="image-gallery-container-footer__container">
                     <span className="image-gallery-container-footer__container__accent">{props.title}</span>
-                    <span>{`Фото № ${props.currentIndex + 1} из ${props.count}`}</span>
+                    <span>{`Фото № ${Number(props.currentIndex) + 1} из ${props.count}`}</span>
                 </div>
                 :
                 <LazyLoader size={5} />
@@ -286,11 +287,7 @@ class ImageGalleryView extends React.Component {
         }
 
         let z = parse(props.location.search.substr(1)).z;
-
-        let find = this.state.images.find(x => x.name === z);
-        let currentIndex = this.state.images.indexOf(find);
-
-        this.state.currentIndex = currentIndex;
+        this.state.currentIndex = Number(z);
 
         if(this.state.images)
             this.state.count = this.state.images.length;
@@ -302,12 +299,9 @@ class ImageGalleryView extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log("Next =>", nextProps.location.search, this.state.location.search);
         if(nextProps.location.search !== this.state.location.search) {
-            console.log("!@#@@$!#$@!#%@#%$");
             let z = parse(nextProps.location.search.substr(1)).z;
-            let find = this.state.images.find(x => x.name === z);
-            let currentIndex = this.state.images.indexOf(find);
+            let currentIndex = Number(z);
             this.setState({
                 currentIndex: currentIndex,
                 location: nextProps.location,
@@ -317,7 +311,7 @@ class ImageGalleryView extends React.Component {
 
     getImageUrl() {
         if(this.state.images) {
-            return this.state.images[this.state.currentIndex].url;
+            return this.state.images[this.state.currentIndex].main;
         }
 
         return null;
@@ -336,16 +330,17 @@ class ImageGalleryView extends React.Component {
     }
 
     render() {
+        console.log("PrevIndecies =>", this.state.currentIndex, this.state.count);
         const prevIndex = this.prevIndex(this.state.currentIndex, this.state.count);
         const nextIndex = this.nextIndex(this.state.currentIndex, this.state.count);
-        // console.log("Indecies =>", prevIndex, nextIndex);
-        let leftImageSrc = imagesAPI[prevIndex].url;
-        let rightImageSrc = imagesAPI[nextIndex].url;
-        let currentImage = imagesAPI[this.state.currentIndex].url;
-        let nextLocation = this.state.location.pathname + `?z=${this.state.images[nextIndex].name}`;
-        let prevLocation = this.state.location.pathname + `?z=${this.state.images[prevIndex].name}`;
-        // console.log("New locations", prevLocation, nextLocation);
-        // console.log("current", currentImage);
+        console.log("Indecies =>", prevIndex, nextIndex, this.state.currentIndex, this.state.count);
+
+        let leftImageSrc = this.state.images[prevIndex].preview;
+        let rightImageSrc = this.state.images[nextIndex].preview;
+        let currentImage = this.state.images[this.state.currentIndex].main;
+
+        let nextLocation = this.state.location.pathname + `?z=${nextIndex}`;
+        let prevLocation = this.state.location.pathname + `?z=${prevIndex}`;
         return(
             <div className="image-gallery">
                 <ImageGalleryButton
@@ -393,7 +388,17 @@ class ImageGallery extends React.Component {
         });
     }
 
+    handleClose() {
+        this.setState({
+            dialogOpen: false,
+        });
+    }
+
     render() {
+        if(!this.state.dialogOpen) {
+            return(<Redirect push to={`${this.state.location.pathname}`} />)
+        }
+
         return(
             <Dialog
                 paperClassName="pop-view-transparent"
@@ -402,12 +407,18 @@ class ImageGallery extends React.Component {
                 bodyStyle={style.body}
                 modal={false}
                 open={this.state.dialogOpen}
+                onRequestClose={this.handleClose.bind(this)}
                 >
+                {
+                    this.state.dialogOpen ?
                     <ImageGalleryView
                         images={this.state.images}
                         currentIndex={this.state.currentIndex}
                         title={this.state.title}
                         location={this.state.location}/>
+                    : 
+                    <Redirect push to={`${this.state.location.pathname}`} />
+                }
             </Dialog>
         )
     }

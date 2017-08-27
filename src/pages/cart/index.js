@@ -7,7 +7,7 @@ import CartHeaderNavigation                     from '../../components/cart/Cart
 
 const Page__Cart = (props) => {
     return(
-        <CartHeaderNavigation />
+        <CartHeaderNavigation {...props} />
     )
 }
 

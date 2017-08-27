@@ -34,6 +34,9 @@ import Pages from './pages';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
+import api from './api';
+
+// api.init__(renderApp);
 renderApp();
 
 function renderApp() {

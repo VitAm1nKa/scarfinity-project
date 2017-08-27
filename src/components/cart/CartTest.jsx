@@ -18,17 +18,23 @@ import RecenlyViewed__Shell from '../catalog/RecenlyViewed.jsx';
 import {RecenlyViewedBlock, ProductBlock} from '../catalog/RecenlyViewed.jsx';
 // import Footer from '../navigation/Footer.jsx';
 
+// Data ------------------------
+import {connect}                from 'react-redux';
+import {addItem, removeItem}    from '../../redux/actions/cart';
+
 
 class CartHeaderNavigation extends React.Component {
 
     constructor(props, context) {
         super(props, context);
 
-        this.state = {
+        this.state = Object.assign({}, props, {
             navTitles: [ "Корзина заказов", "Доставка", "Способ оплаты" ],
             step: 0,
             items: [],
-        }
+        });
+
+        console.log(this.state);
 
         this.renderState = [
             { s1: "active active--state-1", s2: "state-1", s3: "", s4: "", s5: "" },
@@ -38,130 +44,12 @@ class CartHeaderNavigation extends React.Component {
 
         this.handleClick = this.handleClick.bind(this);
         this.handleClick1 = this.handleClick1.bind(this);
-
-        this.reviewsData = [
-            {
-                id: 1,
-                title: "Первый",
-                user: {
-                    name: "Михаил Силантьев",
-                    avatar: "https://avatars0.githubusercontent.com/u/18670623?v=3&s=460",
-                },
-                rating: 4,
-                useful: {
-                    yes: 2,
-                    no: 10,
-                },
-                content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim cupiditate deserunt ea. Eaque, excepturi corporis in hic suscipit autem, unde est dolor odit cupiditate ipsa eius amet alias velit. Autem.",
-                date: "01.07.2017",
-            },
-            {
-                id: 1,
-                title: "Первый",
-                user: {
-                    name: "Михаил Силантьев",
-                    avatar: "https://its-possible.ru/stars/symmetry/01anne-hathaway.jpg",
-                },
-                rating: 4,
-                useful: {
-                    yes: 4,
-                    no: 10,
-                },
-                content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim cupiditate deserunt ea. Eaque, excepturi corporis in hic suscipit autem, unde est dolor odit cupiditate ipsa eius amet alias velit. Autem.",
-                date: "01.07.2017",
-            },
-            {
-                id: 1,
-                title: "Первый",
-                user: {
-                    name: "Михаил Силантьев",
-                    avatar: "http://helpster.ru/pic/beauty/pic/64126/com/1737956.jpg",
-                },
-                rating: 4,
-                useful: {
-                    yes: 2,
-                    no: 2,
-                },
-                content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim cupiditate deserunt ea. Eaque, excepturi corporis in hic suscipit autem, unde est dolor odit cupiditate ipsa eius amet alias velit. Autem.",
-                date: "01.07.2017",
-            },
-            {
-                id: 1,
-                title: "Первый",
-                user: {
-                    name: "Михаил Силантьев",
-                    avatar: "http://www.fresher.ru/manager_content/02-2016/kak-by-vyglyadeli-zvyozdy-gollivuda-esli-by-ix-lica-byli-simmetrichnymi/20.jpg",
-                },
-                rating: 4,
-                useful: {
-                    yes: 2,
-                    no: 11,
-                },
-                content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim cupiditate deserunt ea. Eaque, excepturi corporis in hic suscipit autem, unde est dolor odit cupiditate ipsa eius amet alias velit. Autem.",
-                date: "01.07.2017",
-            },
-            {
-                id: 1,
-                title: "Первый",
-                user: {
-                    name: "Михаил Силантьев",
-                    avatar: "https://images4.cosmopolitan.ru/upload/img_cache/f2f/f2f5ec08823253c5035e2637a9780e8c_fitted_740x700.jpg",
-                },
-                rating: 4,
-                useful: {
-                    yes: 2,
-                    no: 10,
-                },
-                content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim cupiditate deserunt ea. Eaque, excepturi corporis in hic suscipit autem, unde est dolor odit cupiditate ipsa eius amet alias velit. Autem.",
-                date: "01.07.2017",
-            },
-            {
-                id: 1,
-                title: "Первый",
-                user: {
-                    name: "Михаил Силантьев",
-                    avatar: "http://www.kotilda.ru/uploads/pics/032.jpg",
-                },
-                rating: 4,
-                useful: {
-                    yes: 2,
-                    no: 10,
-                },
-                content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim cupiditate deserunt ea. Eaque, excepturi corporis in hic suscipit autem, unde est dolor odit cupiditate ipsa eius amet alias velit. Autem.",
-                date: "01.07.2017",
-            },
-            {
-                id: 1,
-                title: "Первый",
-                user: {
-                    name: "Михаил Силантьев",
-                    avatar: "http://www.infoniac.ru/upload/iblock/348/34893da6e6cea19df2e31dd9b42fba66.jpg",
-                },
-                rating: 4,
-                useful: {
-                    yes: 2,
-                    no: 10,
-                },
-                content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim cupiditate deserunt ea. Eaque, excepturi corporis in hic suscipit autem, unde est dolor odit cupiditate ipsa eius amet alias velit. Autem.",
-                date: "01.07.2017",
-            },
-            {
-                id: 1,
-                title: "Первый",
-                user: {
-                    name: "Михаил Силантьев",
-                    avatar: "http://img-fotki.yandex.ru/get/3414/smartmen-ru.0/0_91e6_dad5e211_L.jpg",
-                },
-                rating: 4,
-                useful: {
-                    yes: 2,
-                    no: 10,
-                },
-                content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim cupiditate deserunt ea. Eaque, excepturi corporis in hic suscipit autem, unde est dolor odit cupiditate ipsa eius amet alias velit. Autem.",
-                date: "01.07.2017",
-            }
-        ];
-	}
+    }
+    
+    componentWillReceiveProps(nextProps) {
+        console.log("AAAAAAAAAAAAAAAAAAAAA");
+        this.setState(nextProps);
+    }
 
     handleClick() {
         let { step } = this.state;
@@ -186,13 +74,29 @@ class CartHeaderNavigation extends React.Component {
     }
 
     getRandomArbitrary(min, max) {
-        return Math.random() * (max - min) + min;
+        return Math.floor(Math.random() * (max - min) + min);
+    }
+
+    handleAdd() {
+        this.state.addItem({
+            productId: this.getRandomArbitrary(0, 3),
+            quantity: this.getRandomArbitrary(1, 3),
+            title: "Шарфик от Scarfinity",
+            cost: this.getRandomArbitrary(1700, 3230),
+            color: "",
+        });
+    }
+
+    handleRemove() {
+        const id = this.getRandomArbitrary(0, 3);
+        const count = 1;
+        this.state.removeItem(id, count);
     }
 
     render() {
-
         let state = this.state;
         let render = this.renderState[state.step];
+        console.log(this.state.cart);
 
         return (
             <div>
@@ -211,10 +115,53 @@ class CartHeaderNavigation extends React.Component {
                 </div>
 
                 <FlatButton label="Secondary" secondary={true} onTouchTap={this.handleClick}/>
+                <FlatButton label="Add product" primary={true} onTouchTap={this.handleAdd.bind(this)}/>
+                <FlatButton label="Remove product" onTouchTap={this.handleRemove.bind(this)}/>
+
+                {/* <div>
+                    <ul>
+                        {
+                            this.state.cart.map((item, index) =>
+                                <li key={index}>
+                                    <div>{item.productId}</div>
+                                    <div>{item.quantity}</div>
+                                </li>
+                            )
+                        }
+                    </ul>
+                </div> */}
 
                 <div>
                     <Cart__ProductSection />
                 </div>
+
+                <RecenlyViewedBlock />
+                <OfferGrid />
+
+            </div>
+        );
+
+    }
+}
+
+const mstp__CartHeaderNavigation = (state, ownProps) => {
+    return {
+        cart: state.cart,
+    }
+}
+
+const mdtp__CartHeaderNavigation = (dispatch) => {
+    return {
+        addItem: (orderInfo) => dispatch(addItem(orderInfo)),
+        removeItem: (productId, quantity) => dispatch(removeItem(productId, quantity)),
+    }
+}
+
+//loadData: (productId) => dispatch(getProduct(productId))
+// addItem: (productId, count) => {dispatch(addItem(productId, count))},
+
+export default connect(mstp__CartHeaderNavigation, mdtp__CartHeaderNavigation)(CartHeaderNavigation);
+
 
                 {/*<Mobile__HeaderNavigation />*/}
                 {/* <p>
@@ -240,9 +187,9 @@ class CartHeaderNavigation extends React.Component {
                     <ProductCard />
                 </div> */}
 
-                <RecenlyViewedBlock />
+                {/* <RecenlyViewedBlock />
 
-                <OfferGrid />
+                <OfferGrid /> */}
 
                 {/* <Footer /> */}
 
@@ -292,10 +239,125 @@ class CartHeaderNavigation extends React.Component {
                         doValidate={ref => (this.child1 = ref)} />
                 </div>*/}
 
-            </div>
-        );
-
-    }
-}
-
-export default CartHeaderNavigation;
+        //         this.reviewsData = [
+        //     {
+        //         id: 1,
+        //         title: "Первый",
+        //         user: {
+        //             name: "Михаил Силантьев",
+        //             avatar: "https://avatars0.githubusercontent.com/u/18670623?v=3&s=460",
+        //         },
+        //         rating: 4,
+        //         useful: {
+        //             yes: 2,
+        //             no: 10,
+        //         },
+        //         content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim cupiditate deserunt ea. Eaque, excepturi corporis in hic suscipit autem, unde est dolor odit cupiditate ipsa eius amet alias velit. Autem.",
+        //         date: "01.07.2017",
+        //     },
+        //     {
+        //         id: 1,
+        //         title: "Первый",
+        //         user: {
+        //             name: "Михаил Силантьев",
+        //             avatar: "https://its-possible.ru/stars/symmetry/01anne-hathaway.jpg",
+        //         },
+        //         rating: 4,
+        //         useful: {
+        //             yes: 4,
+        //             no: 10,
+        //         },
+        //         content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim cupiditate deserunt ea. Eaque, excepturi corporis in hic suscipit autem, unde est dolor odit cupiditate ipsa eius amet alias velit. Autem.",
+        //         date: "01.07.2017",
+        //     },
+        //     {
+        //         id: 1,
+        //         title: "Первый",
+        //         user: {
+        //             name: "Михаил Силантьев",
+        //             avatar: "http://helpster.ru/pic/beauty/pic/64126/com/1737956.jpg",
+        //         },
+        //         rating: 4,
+        //         useful: {
+        //             yes: 2,
+        //             no: 2,
+        //         },
+        //         content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim cupiditate deserunt ea. Eaque, excepturi corporis in hic suscipit autem, unde est dolor odit cupiditate ipsa eius amet alias velit. Autem.",
+        //         date: "01.07.2017",
+        //     },
+        //     {
+        //         id: 1,
+        //         title: "Первый",
+        //         user: {
+        //             name: "Михаил Силантьев",
+        //             avatar: "http://www.fresher.ru/manager_content/02-2016/kak-by-vyglyadeli-zvyozdy-gollivuda-esli-by-ix-lica-byli-simmetrichnymi/20.jpg",
+        //         },
+        //         rating: 4,
+        //         useful: {
+        //             yes: 2,
+        //             no: 11,
+        //         },
+        //         content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim cupiditate deserunt ea. Eaque, excepturi corporis in hic suscipit autem, unde est dolor odit cupiditate ipsa eius amet alias velit. Autem.",
+        //         date: "01.07.2017",
+        //     },
+        //     {
+        //         id: 1,
+        //         title: "Первый",
+        //         user: {
+        //             name: "Михаил Силантьев",
+        //             avatar: "https://images4.cosmopolitan.ru/upload/img_cache/f2f/f2f5ec08823253c5035e2637a9780e8c_fitted_740x700.jpg",
+        //         },
+        //         rating: 4,
+        //         useful: {
+        //             yes: 2,
+        //             no: 10,
+        //         },
+        //         content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim cupiditate deserunt ea. Eaque, excepturi corporis in hic suscipit autem, unde est dolor odit cupiditate ipsa eius amet alias velit. Autem.",
+        //         date: "01.07.2017",
+        //     },
+        //     {
+        //         id: 1,
+        //         title: "Первый",
+        //         user: {
+        //             name: "Михаил Силантьев",
+        //             avatar: "http://www.kotilda.ru/uploads/pics/032.jpg",
+        //         },
+        //         rating: 4,
+        //         useful: {
+        //             yes: 2,
+        //             no: 10,
+        //         },
+        //         content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim cupiditate deserunt ea. Eaque, excepturi corporis in hic suscipit autem, unde est dolor odit cupiditate ipsa eius amet alias velit. Autem.",
+        //         date: "01.07.2017",
+        //     },
+        //     {
+        //         id: 1,
+        //         title: "Первый",
+        //         user: {
+        //             name: "Михаил Силантьев",
+        //             avatar: "http://www.infoniac.ru/upload/iblock/348/34893da6e6cea19df2e31dd9b42fba66.jpg",
+        //         },
+        //         rating: 4,
+        //         useful: {
+        //             yes: 2,
+        //             no: 10,
+        //         },
+        //         content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim cupiditate deserunt ea. Eaque, excepturi corporis in hic suscipit autem, unde est dolor odit cupiditate ipsa eius amet alias velit. Autem.",
+        //         date: "01.07.2017",
+        //     },
+        //     {
+        //         id: 1,
+        //         title: "Первый",
+        //         user: {
+        //             name: "Михаил Силантьев",
+        //             avatar: "http://img-fotki.yandex.ru/get/3414/smartmen-ru.0/0_91e6_dad5e211_L.jpg",
+        //         },
+        //         rating: 4,
+        //         useful: {
+        //             yes: 2,
+        //             no: 10,
+        //         },
+        //         content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim cupiditate deserunt ea. Eaque, excepturi corporis in hic suscipit autem, unde est dolor odit cupiditate ipsa eius amet alias velit. Autem.",
+        //         date: "01.07.2017",
+        //     }
+        // ];

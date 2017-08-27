@@ -17,7 +17,8 @@ const Site__MiddleSection = (props) => {
             <TreeNavigation />
             <Switch>
                 <Route path="/catalog" exact component={Page__CatalogGrid} />
-                <Route path="/product" exact component={Page__ProductCard} />
+                <Route path="/product/:id" component={Page__ProductCard} />
+                <Route path="/product" component={Page__ProductCard} />
                 <Route path="/cart" exact component={Page__Cart} />
             </Switch>
         </div>

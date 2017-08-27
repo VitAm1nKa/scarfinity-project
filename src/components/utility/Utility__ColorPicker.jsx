@@ -171,6 +171,7 @@ export class ColorPicker extends React.Component {
             unselectable: props.unselectable,
             itemSize: props.itemSize,
             itemGap: props.itemGap,
+            long: props.long,
         }
 
         this.style = {
@@ -228,7 +229,7 @@ export class ColorPicker extends React.Component {
         const {items, selectedIndex, unselectable} = this.state;
 
         return(
-            <div className="color-picker" style={this.style.main}>
+            <div className={`color-picker ${this.state.long ? "color-picker--long" : ""}`} style={this.style.main}>
                 {
                     items.map((item, index) => 
                         <ColorPickerItem 
@@ -251,4 +252,5 @@ ColorPicker.defaultProps = {
     itemGap: 5,
     selectedIndex: "",
     colors: "",
+    long: false,
 }
