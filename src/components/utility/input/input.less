@@ -1,0 +1,61 @@
+//- Colors --------------------
+    @basic__border:             #d7d7d7; 
+    @basic-background:          #ffffff;   
+    @basic-disabled-border:     #eeeeee;  
+    @basic-disabled-background: #f9f9f9;
+
+    @success:                   #1bb869;
+    @error:                     #e05543;
+    @active:                    #2799c9;
+//- ---------------------------
+
+.sInput {
+    &__basic {
+        display: inline-block;
+        width: 100%;
+        padding: 12px 15px;
+        margin: 5px 0;
+        box-sizing: border-box;
+
+        border-radius: 2px;
+        border: 1px solid @basic__border;
+        outline: none;
+
+        transition: border 0.4s ease;
+
+        font-family: "Roboto";
+        font-weight: 400;
+        font-size: 14px;
+
+        background-color: @basic-background;
+        background-size: 18px 100%;
+        background-position: right 10px top 0px;
+        background-repeat: no-repeat;
+
+        &:focus {
+            border-color: @active;
+        }
+
+        &--success {
+            background-image: url('./icons/checked.svg');
+            &:focus { border-color: @success }
+        }
+
+        &--error {
+            background-image: url('./icons/error.svg');
+            &:focus { border-color: @success }
+        }
+
+        &--search {
+            background-image: url('./icons/search.svg');
+            &:focus { border-color: @success }
+        }
+
+        &:disabled {
+            background-color: @basic-disabled-background;
+            border-color: @basic-disabled-border;
+        }
+    }
+}
+
+//     style={{fill: #1bb869, fill-rule: evenodd}} 

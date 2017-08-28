@@ -1,29 +1,32 @@
 .utility__autocomplete-box {
-	width: 220px;
+	width: 100%;
+	margin: 5px 0;
+	box-sizing: border-box;
+
 	display: inline-flex;
 	align-items: center;
-	border: 1px solid #ccc;
+	border: 1px solid #d7d7d7;
 	position: relative;
 	border-radius: 2px;
-	background: #f0f0f0;
+	background: #f9f9f9;
 	transition: background 0.1s linear;
 	font-size: 0;
 	
 	&:hover {
-		background: #eaeaea;
+		background: #f2f2f2;
 	}
 	
 	&__input {
 		display: block;
 		width: 100%;
-		padding: 10px 14px;
+		padding: 12px 15px;
 		padding-right: 28px;
 
 		font-family: "Roboto";
-		font-size: 15px;
+		font-size: 14px;
 		font-weight: 500;
 		
-		color: #333;
+		color: #303030;
 		background: none;
 		border: none;
 
@@ -72,8 +75,8 @@
 		bottom: 0;
 		
 		font-family: "Roboto";
-		font-size: 15px;
-		font-weight: 500;
+		font-size: 14px;
+		font-weight: 400;
 		
 		user-select: none;
 		pointer-events: none;
@@ -97,7 +100,7 @@
 	&--state-pre-select {
 		&:before {
 			content: attr(data-pre-select-title);
-			color: #888;
+			color: #aaaaaa;
 		}
 
 		&:after {
@@ -165,9 +168,13 @@
 	&__icon {
 		flex: 0 0 30px;
 		padding: 4px 0px;
-		border-left: 1px solid #ccc;
+		border-left: 1px solid #d7d7d7;
 		align-self: stretch;
-		background: #f0f0f0;
+
+		background-image: url('./svg/arrows.svg');
+        background-size: 8px 100%;
+        background-position: center center;
+        background-repeat: no-repeat;
 		
 		&:hover {
 			cursor: pointer;

@@ -28,6 +28,8 @@
 		font-weight: 400;
 		color: @secondary;
 		user-select: none;
+
+		transition: color 0.3s ease;
 		
 		&__full {
 			font-size: 0.9em;
@@ -36,8 +38,10 @@
 
 	&__value {
 		font-size: 1.0em;
-		font-weight: 400;
+		// font-weight: 400;
 		color: @primary;
+
+		transition: color 0.3s ease;
 		
 		&--changing {
 			animation: utility-currency-value-changing 0.8s ease-in-out;

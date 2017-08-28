@@ -1,20 +1,19 @@
 import React from 'react';
 
-import './cart__product-section.less';
+import './products.less';
 
-import Utility__Currency from '../utility/Utility__Currency.jsx';
+import Utility__Currency        from '../../utility/Utility__Currency.jsx';
 
-import FlatButton from 'material-ui/FlatButton';
-import IconButton from 'material-ui/IconButton';
-import NavigationCancel from 'material-ui/svg-icons/navigation/cancel';
+import FlatButton               from 'material-ui/FlatButton';
+import IconButton               from 'material-ui/IconButton';
+import NavigationCancel         from 'material-ui/svg-icons/navigation/cancel';
 
 // Utility
-import {count__cartItems}		from '../../lib/currying';
+import {count__cartItems}		from '../../../lib/currying';
 
 // Data ------------------------
 import {connect}                from 'react-redux';
-import {addItem, removeItem}    from '../../redux/actions/cart';
-
+import {addItem, removeItem}    from '../../../redux/actions/cart';
 
 const styles = {
     mediumIcon: {
@@ -124,7 +123,7 @@ class Cart__ProductSection__ProductCard extends React.Component {
     }
 }
 
-class Cart__ProductSection extends React.Component {
+class Products extends React.Component {
     constructor(props) {
         super(props);
 
@@ -212,5 +211,4 @@ const mdtp__Cart__ProductSection = (dispatch) => {
     }
 }
 
-export default connect(mstp__Cart__ProductSection, mdtp__Cart__ProductSection)(Cart__ProductSection);
-
+export default connect(mstp__Cart__ProductSection, mdtp__Cart__ProductSection)(Products);

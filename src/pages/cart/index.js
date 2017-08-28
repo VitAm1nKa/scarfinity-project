@@ -2,12 +2,12 @@ import React from 'react';
 import {Route, Redirect, Switch} from 'react-router';
 import { Link } from 'react-router-dom'
 
-import {Grid, Row, Container, Col}              from '../../components/utility/grid';
-import CartHeaderNavigation                     from '../../components/cart/CartTest.jsx';
+import {Grid, Row, Container, Col}          from '../../components/utility/grid';
+import Cart                                 from '../../components/cart';
 
 const Page__Cart = (props) => {
     return(
-        <CartHeaderNavigation {...props} />
+        <Cart {...props} />
     )
 }
 

@@ -317,15 +317,11 @@ class Utility__AutocompleteBox extends React.Component {
                         ><Clear hoverColor={"#888"}/>
                     </IconButton>
                 </div>
-                <div className="utility__autocomplete-box__icon">
-                    <IconButton 
-                        style={style.iconButton} 
-                        iconStyle={style.icon}
-                        onClick={this.handleClick}
-                        onMouseEnter={this.handleClearMouseEnter}
-                        onMouseLeave={this.handleClearMouseLeave}
-                        ><MoreVert />
-                    </IconButton>
+                <div
+                    className="utility__autocomplete-box__icon"
+                    onClick={this.handleClick}
+                    onMouseEnter={this.handleClearMouseEnter}
+                    onMouseLeave={this.handleClearMouseLeave}>
                 </div>
                 <div 
                     className={`utility__autocomplete-box__options-container ${ exFocus ? "utility__autocomplete-box__options-container--expand": "" }`} 

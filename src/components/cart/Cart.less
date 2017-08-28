@@ -1,5 +1,4 @@
 .cart_m {
-	
 	&__bottom-section {
 		display: flex;
 		flex-direction: row;
@@ -17,5 +16,120 @@
 			flex-shrink: 1;
 		}
 	}
+}
 
+.cart__bottom-navigation {
+	// border: 1px solid #ccc;
+	// height: 120px;
+	padding: 0 20px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+
+	background: #ffffff;
+	
+	&__button {
+		display: flex;
+		align-items: center;
+		// border: 1px solid #333;
+		// margin: 5px 10px;
+		cursor: pointer;
+		padding: 10px 15px;
+		// position: relative;
+		
+		& .text {
+			display: block;
+			flex-grow: 1;
+			margin: 0 10px;
+			font-size: 14px;
+			font-family: "Roboto";
+			color: #aaa;
+		}
+		
+		&.back {
+			padding-left: 0px;
+
+			// @media screen and (max-width: @screen-xs-min) {
+			// 	padding-left: 0px;
+			// }				
+
+			// & .text {
+			// 	@media screen and (max-width: @screen-xs-min) {
+			// 		display: none;
+			// 	}
+			// }
+			&:before {
+				// position: absolute;
+				display: block;
+				content: "\f104";
+				padding-right: 3px;
+				font-family: "FontAwesome";
+				width: 23px;
+				height: 26px;
+				font-size: 24px;
+				line-height: 24px;
+				// line-height: 28px;
+				text-align: center;
+				border: 2px solid #aaa;
+				border-radius: 50%;
+				// .border-radius(50%);
+				color: #aaa;
+				// vertical-align: center;
+				
+				// @media screen and (max-width: @screen-xs-min) {
+				// 	width: 27px;
+				// 	height: 30px;
+				// 	font-size: 26px;
+				// 	line-height: 28px;
+				// }
+			}
+		}
+
+		&.forward {
+			background-color: #1bb869;
+			color: #fff;
+			// .border-radius(5px);
+			border-radius: 2px;
+			
+			& .text {
+				color: #fff;
+				// @media screen and (max-width: @screen-xs-min) {
+				// 	font-size: 17px;
+				// }
+				// border-right: 1px solid #a8f7ce;
+			}
+
+			&:after {
+				// position: absolute;
+				display: block;
+				content: "\f105";
+				padding-left: 3px;
+				font-family: "FontAwesome";
+				width: 23px;
+				height: 26px;
+				font-size: 30px;
+				line-height: 24px;
+				padding-left: 10px;
+				// line-height: 28px;
+				text-align: center;
+				// border: 2px solid #aaa;
+				// .border-radius(50%);
+				color: #fff;
+				border-left: 1px solid #1ba861;
+				box-shadow: inset 3px 0 5px -4px #a8f7ce;
+				// vertical-align: center;
+			}
+		}
+	}
+}
+
+.cart {
+	padding-bottom: 15px;
+	overflow: hidden;
+	position: relative;
+
+	&__container {
+		// padding: 0px 15px;
+	}
 }

@@ -44,3 +44,5 @@ var declOfNum = (function(){
 
 export var count__reviews = declOfNum(['Отзыв', 'Отзыва', 'Отзывов']);
 export var count__cartItems = declOfNum(['Товар', 'Товара', 'Товаров']);
+export var count__shipDuration__day = declOfNum(['День', 'Дня', 'Дней']);
+export var count__shipDuration__week = declOfNum(['Неделя', 'Недели', 'Недель']);

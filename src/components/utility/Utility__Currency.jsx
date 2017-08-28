@@ -20,7 +20,9 @@ class Utility__Currency extends React.Component {
             noanimation: props.noanimation,
             fontSize: props.fontSize,
             glyphFull: props.glyphFull,
+            subAccent: props.subAccent,
             test: false,
+            fontWeight: props.fontWeight,
         }
 
         let { value, saleValue, currencyType, size, accent, unmutable, test } = props;
@@ -115,6 +117,10 @@ class Utility__Currency extends React.Component {
         if(this.styleData.fontSize > 0)
             style.fontSize = this.styleData.fontSize;
 
+        if(this.styleData.fontWeight) {
+            style.fontWeight = this.styleData.fontWeight;
+        }
+
         return (
             <div 
                 className={`utility__currency ${size} ${accent}`}
@@ -130,6 +136,8 @@ Utility__Currency.defaultProps = {
     noanimation: false,
     fontSize: 0,
     glyphFull: false,
+    subAccent: false,
+    fontWeight: 400,
 }
 
 export default Utility__Currency;

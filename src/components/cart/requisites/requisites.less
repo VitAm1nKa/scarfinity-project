@@ -1,0 +1,197 @@
+.requisites {
+    background: #ffffff;
+    padding: 20px 14px;
+}
+
+.requisites-row {
+    display: inline-flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    box-sizing: border-box;
+
+    &__left {
+        flex: 1;
+        margin: -5px 0px;
+    }
+
+    &__right {
+        flex: 1;
+        margin: -5px 0px;
+    }
+
+    &__middle {
+        flex: 0 1 1px;
+        margin: 0px 15px;
+        align-self: stretch;
+
+        &--delim {
+            background: #d7d7d7;
+        }
+    }
+}
+
+.requisites-title {
+    display: block;
+
+    font-family: "Roboto";
+    font-size: 16px;
+    font-weight: 400;
+
+    padding: 10px 0px;
+    box-sizing: border-box;
+
+    color: #303030;
+
+    b {
+        font-weight: 500;
+    }
+}
+
+.requisites--container {
+    margin: -5px;
+
+    & > input, & > div {
+        margin: 5px;
+        box-sizing: border-box;
+    }
+}
+
+.requisites-shipping-method {
+    margin: 5px 0px;
+    border: 1px solid #d7d7d7;
+    border-radius: 2px;
+    overflow: hidden;
+
+    &__title {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        
+        padding: 12px 15px;
+
+        background: #f9f9f9;
+
+        font-family: "Roboto";
+        font-size: 14px;
+        font-weight: 500;
+        
+        color: #808080;
+
+        border-bottom: 1px solid #d7d7d7;
+    }
+
+    &__item {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+
+        padding: 12px 15px;
+
+        border-bottom: 1px solid #d7d7d7;
+
+        &:hover {
+            cursor: pointer;
+            background: #fefefe;
+        }
+
+        &__title {
+            flex: 1;
+            font-family: "Roboto";
+            font-size: 14px;
+            color: #303030;
+
+            margin-left: 10px;
+
+            transition: color 0.3s ease;
+        }
+
+        &__duration {
+            font-family: "Roboto";
+            font-size: 14px;
+            font-weight: 400;
+
+            text-transform: lowercase;
+
+            color: #808080;
+        }
+
+        &:last-child {
+            border-bottom: none;
+        }
+
+        &--selected & {
+            &__title {
+                color: #1bb869;
+            }
+        }
+
+        &--selected {
+            & .utility__currency__value, .utility__currency__currency {
+                color: #1bb869 !important;
+            }
+        }
+
+        //utility__currency
+
+    }
+}
+
+.requisites-price-calculation {
+    margin: 5px 0px;
+    border: 1px solid #d7d7d7;
+    border-radius: 2px;
+    padding: 6px 15px;
+
+    &__row {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+
+        &__text {
+            width: 80px;
+
+            font-family: "Roboto";
+            font-size: 13px;
+            text-transform: uppercase;
+
+            text-align: center;
+
+            color: #aaaaaa;
+
+            & .utility__currency__value {
+                color: #808080 !important;
+            }
+
+            &.accent {
+                color: #303030;
+
+                & .utility__currency__value {
+                    color: #303030 !important;
+                }
+            }
+        }
+
+        &__sign {
+            width: 30px;
+            height: 30px;
+
+            &.equals {
+                background-image: url('./icons/equals.svg');
+                background-size: 40% 40%;
+                background-position: center center;
+                background-repeat: no-repeat;
+            }
+
+            &.plus {
+                background-image: url('./icons/plus.svg');
+                background-size: 40% 40%;
+                background-position: center center;
+                background-repeat: no-repeat;
+            }
+        }
+    }
+}

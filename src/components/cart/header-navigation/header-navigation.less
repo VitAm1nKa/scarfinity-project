@@ -13,11 +13,16 @@
 			align-items: center;
 			height: 54px;
 			position: relative;
-			
-			font-family: "Roboto";
-			font-size: 16px;
+
 			font-weight: 400;
-			text-transform: capitalize;
+
+			&__text {
+				font-family: "Roboto";
+				font-size: 16px;
+				text-transform: capitalize;
+
+				margin-left: 10px;
+			}
 
 			color: #777;
 			background: #fefefe;
@@ -25,27 +30,27 @@
 			// animation
 			transition: all 0.3s;
 
-			&:before {
-				content: attr(data-index);
-				font-family: "Roboto";
-				font-weight: 600;
-				font-size: 16px;
-				text-align: center;
-				width: 30px;
-				height: 30px;
-				line-height: 31px;
-				border: 2px solid #ccc;
-				border-radius: 30px;
-				margin: 0px 10px;
-			}
+			// &:before {
+			// 	content: attr(data-index);
+			// 	font-family: "Roboto";
+			// 	font-weight: 600;
+			// 	font-size: 16px;
+			// 	text-align: center;
+			// 	width: 30px;
+			// 	height: 30px;
+			// 	line-height: 31px;
+			// 	border: 2px solid #ccc;
+			// 	border-radius: 30px;
+			// 	margin: 0px 10px;
+			// }
 
 			&.active {
 				font-weight: 500;
 				color: #fefefe;
 				
-				&:before {
-					border-color: rgba(255, 255, 255, 0.4);
-				}
+				// &:before {
+				// 	border-color: rgba(255, 255, 255, 0.4);
+				// }
 
 				&--state-1 { background: #bf4e79; }
 				&--state-2 { background: #ef8642; }
@@ -53,13 +58,13 @@
 			}
 
 			&.complete {
-				&:before {
-					content: "\f00c";
-					border-color: #1bb869;
-					color: #1bb869;
-					font-family: "FontAwesome";
-					font-weight: 500;
-				}
+				// &:before {
+				// 	content: "\f00c";
+				// 	border-color: #1bb869;
+				// 	color: #1bb869;
+				// 	font-family: "FontAwesome";
+				// 	font-weight: 500;
+				// }
 			}
 
 			@media screen and (max-width: 620px) {
