@@ -15,6 +15,9 @@ import {count__cartItems}		from '../../../lib/currying';
 import {connect}                from 'react-redux';
 import {addItem, removeItem}    from '../../../redux/actions/cart';
 
+// ---------------------
+import ProductCard              from './product-card';
+
 const styles = {
     mediumIcon: {
         width: 22,
@@ -127,18 +130,18 @@ class Products extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = Object.assign({}, props, {});
+        //this.state = Object.assign({}, props, {});
 
         this.handleRemoveItem = this.handleRemoveItem.bind(this);
         this.handleItemQuantityChange = this.handleItemQuantityChange.bind(this);
     }
     
     componentWillReceiveProps(nextProps) {
-        this.setState(nextProps);
+        // this.setState(nextProps);
     }
 
     handleRemoveItem(productId) {
-        this.state.removeItem(productId);
+        this.props.removeItem(productId);
     }
 
     handleItemQuantityChange(itemId, value) {
@@ -146,7 +149,7 @@ class Products extends React.Component {
     }
 
     render() {
-        const {items} = this.state;
+        const {items} = this.props;
         let subTotal = items.map(x => (x.cost * x.quantity)).reduce((a,b) => { return a + b }, 0);
         if(!subTotal) subTotal = 0;
         const itemsCountTitle = count__cartItems(items.length);
@@ -179,9 +182,12 @@ class Products extends React.Component {
                     </div>
                 </div>
                 { items.map((item) => 
-                    <Cart__ProductSection__ProductCard 
-                        key={item.productId} 
-                        productData={item}
+                    <ProductCard
+                        key={item.productId}
+                        
+                        productId={item.productId}
+                        colorCode={item.colorCode}
+
                         onRemoveItem={() => this.handleRemoveItem(item.productId)} 
                         onQuantityChange={this.handleItemQuantityChange} />
                 )}
@@ -200,7 +206,7 @@ class Products extends React.Component {
 
 const mstp__Cart__ProductSection = (state, ownProps) => {
     return {
-        items: state.cart,
+        items: state.cart.products,
     }
 }
 

@@ -7,7 +7,9 @@ import Cart                                 from '../../components/cart';
 
 const Page__Cart = (props) => {
     return(
-        <Cart {...props} />
+        <div style={{minHeight: 1400}}>
+            <Cart {...props} />
+        </div>
     )
 }
 

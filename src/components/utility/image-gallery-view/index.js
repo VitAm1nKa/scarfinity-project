@@ -1,22 +1,12 @@
-import React        from 'react';
-import {parse}      from 'qs';
-import {Link}       from 'react-router-dom';
-import { Redirect } from 'react-router';
+import React            from 'react';
+import {connect}        from 'react-redux';
+import {Link}           from 'react-router-dom';
 
 import './image-gallery-view.less';
 
-import Dialog                       from 'material-ui/Dialog';
-import ChevroneLeft                 from 'material-ui/svg-icons/navigation/chevron-left';
-import ChevroneRight                from 'material-ui/svg-icons/navigation/chevron-right';
-import LazyLoader                   from '../lazy-loader';
-
-var imagesAPI = [
-    {url: "https://cdn.pixabay.com/photo/2013/10/15/09/20/flower-195897_150.jpg", name: "photo-12345"},
-    {url: "https://cdn.pixabay.com/photo/2013/10/16/16/59/yellow-rose-196393_150.jpg", name: "photo-12346"},
-    {url: "https://cdn.pixabay.com/photo/2015/03/26/18/52/spring-693286_150.jpg", name: "photo-12347"},
-    {url: "https://cdn.pixabay.com/photo/2016/05/01/18/29/gerbera-1365459_150.jpg", name: "photo-12348"},
-    {url: "https://cdn.pixabay.com/photo/2014/01/18/11/09/flower-247409_150.jpg", name: "photo-12349"},
-];
+import ChevroneLeft     from 'material-ui/svg-icons/navigation/chevron-left';
+import ChevroneRight    from 'material-ui/svg-icons/navigation/chevron-right';
+import LazyLoader       from '../lazy-loader';
 
 var style = {
     overlay: {
@@ -184,7 +174,6 @@ ImageGalleryImageContainer.defaultProps = {
 }
 
 const ImageGalleryContainerFooter = (props) => {
-    // console.log("Footer props =>", props);
     return(
         <div className="image-gallery-container-footer">
             {
@@ -208,40 +197,28 @@ ImageGalleryContainerFooter.defaultProps = {
 }
 
 const ImageGalleryButton = (props) => {
-    const content = () => {
-        return(
-            <div
-                className={`image-gallery-button__container image-gallery-button__container${props.right ? "--right" : "--left"}`}>
-                    <div className="image-gallery-button__container__icon">
-                        {
-                            props.right
-                            ? <ChevroneRight style={style.icon} />
-                            : <ChevroneLeft  style={style.icon} />
-                        }
-                    </div>
-                    <div className="image-gallery-button__container__content">
-                        {
-                            props.imageSrc &&
-                            <img src={props.imageSrc} />
-                        }
-                    </div>
-            </div>
-        )
-    }
     return(
-            <div 
-                className={`image-gallery-button`}
-                onClick={props.onClick}>
-                {
-                    props.link
-                    ?
-                    <Link to={props.link}>
-                        {content()}
-                    </Link>
-                    :
-                    content()
-                }
-            </div>
+        <div 
+            className={`image-gallery-button`}>
+            <Link to={props.link}>
+                <div
+                    className={`image-gallery-button__container image-gallery-button__container${props.right ? "--right" : "--left"}`}>
+                        <div className="image-gallery-button__container__icon">
+                            {
+                                props.right
+                                ? <ChevroneRight style={style.icon} />
+                                : <ChevroneLeft  style={style.icon} />
+                            }
+                        </div>
+                        <div className="image-gallery-button__container__content">
+                            {
+                                props.imageSrc &&
+                                <img src={props.imageSrc} />
+                            }
+                        </div>
+                </div>
+            </Link>
+        </div>
     )
 }
 ImageGalleryButton.defaultProps = {
@@ -271,169 +248,52 @@ ImageGalleryContainer.defaultProps = {
     imageUrl: null,
 }
 
-class ImageGalleryView extends React.Component {
-    constructor(props) {
-        super(props);
-
-        // console.log("Main props =>", props);
-
-        this.state = {
-            images: props.images,
-            currentIndex: props.currentIndex,
-            title: props.title,
-            path: props.path,
-            count: 0,
-            location: props.location,
-        }
-
-        let z = parse(props.location.search.substr(1)).z;
-        this.state.currentIndex = Number(z);
-
-        if(this.state.images)
-            this.state.count = this.state.images.length;
-
-        // console.log("Location", this.state.location);
-
-        this.prevIndex = (current, count) => (current + count - 1) % count;
-        this.nextIndex = (current, count) => (current + 1) % count;
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if(nextProps.location.search !== this.state.location.search) {
-            let z = parse(nextProps.location.search.substr(1)).z;
-            let currentIndex = Number(z);
-            this.setState({
-                currentIndex: currentIndex,
-                location: nextProps.location,
-            });
-        }
-    }
-
-    getImageUrl() {
-        if(this.state.images) {
-            return this.state.images[this.state.currentIndex].main;
-        }
-
-        return null;
-    }
-
-    handleNextClick() {
-        // this.setState({
-        //     currentIndex: this.nextIndex(this.state.currentIndex, this.state.count),
-        // });
-    }
-
-    handlePrevClick() {
-        // this.setState({
-        //     currentIndex: this.prevIndex(this.state.currentIndex, this.state.count),
-        // });
-    }
-
-    render() {
-        console.log("PrevIndecies =>", this.state.currentIndex, this.state.count);
-        const prevIndex = this.prevIndex(this.state.currentIndex, this.state.count);
-        const nextIndex = this.nextIndex(this.state.currentIndex, this.state.count);
-        console.log("Indecies =>", prevIndex, nextIndex, this.state.currentIndex, this.state.count);
-
-        let leftImageSrc = this.state.images[prevIndex].preview;
-        let rightImageSrc = this.state.images[nextIndex].preview;
-        let currentImage = this.state.images[this.state.currentIndex].main;
-
-        let nextLocation = this.state.location.pathname + `?z=${nextIndex}`;
-        let prevLocation = this.state.location.pathname + `?z=${prevIndex}`;
-        return(
-            <div className="image-gallery">
-                <ImageGalleryButton
-                    imageSrc={leftImageSrc}
-                    link={prevLocation}
-                    onClick={this.handlePrevClick.bind(this)}/>
-                <ImageGalleryContainer
-                    currentIndex={this.state.currentIndex}
-                    count={this.state.count}
-                    title={this.state.title}
-                    imageUrl={currentImage}/>
-                <ImageGalleryButton
-                    imageSrc={rightImageSrc}
-                    link={nextLocation}
-                    onClick={this.handleNextClick.bind(this)}
-                    right/>
-            </div>
-        )
-    }
-}
-ImageGalleryView.defaultProps = {
-    images: null,
-    currentIndex: -1,
-    title: "",
-    location: null,
+const ImageGallery = (props) => {
+    return(
+        <div className="image-gallery">
+            <ImageGalleryButton
+                imageSrc={props.imageUrl.prev}
+                link={props.link.prev}/>
+            <ImageGalleryContainer
+                currentIndex={props.currentIndex}
+                count={props.count}
+                title={props.title}
+                imageUrl={props.imageUrl.current}/>
+            <ImageGalleryButton
+                imageSrc={props.imageUrl.next}
+                link={props.link.next}
+                right/>
+        </div>
+    )
 }
 
-class ImageGallery extends React.Component {
-    constructor(props) {
-        super(props);
+const mstp = (state, ownProps) => {
+    const images = state.products.find(x => x.id == ownProps.productId).images.list;
+    const currentIndex = images.findIndex(x => x.id == ownProps.photoId);
+    const count = images.length;
+    const prevIndex = (currentIndex + count - 1) % count;
+    const nextIndex = (currentIndex + 1) % count;
 
-        this.state = {
-            dialogOpen: true,
-
-            images: props.images,
-            currentIndex: props.currentIndex,
-            title: props.title,
-            location: props.location,
+    return {
+        title: ownProps.title,
+        currentIndex: images.findIndex(x => x.id == ownProps.photoId),
+        count: images.length,
+        imageUrl: {
+            current: images[currentIndex].main,
+            prev: images[prevIndex].preview,
+            next: images[nextIndex].preview,
+        },
+        link: {
+            prev: ownProps.subQuery(images[prevIndex].id),
+            next: ownProps.subQuery(images[nextIndex].id),
         }
     }
-
-    componentWillReceiveProps(nextProps) {
-        this.setState({
-            location: nextProps.location,
-        });
-    }
-
-    handleClose() {
-        this.setState({
-            dialogOpen: false,
-        });
-    }
-
-    render() {
-        if(!this.state.dialogOpen) {
-            return(<Redirect push to={`${this.state.location.pathname}`} />)
-        }
-
-        return(
-            <Dialog
-                paperClassName="pop-view-transparent"
-                overlayStyle={style.overlay}
-                contentStyle={style.content}
-                bodyStyle={style.body}
-                modal={false}
-                open={this.state.dialogOpen}
-                onRequestClose={this.handleClose.bind(this)}
-                >
-                {
-                    this.state.dialogOpen ?
-                    <ImageGalleryView
-                        images={this.state.images}
-                        currentIndex={this.state.currentIndex}
-                        title={this.state.title}
-                        location={this.state.location}/>
-                    : 
-                    <Redirect push to={`${this.state.location.pathname}`} />
-                }
-            </Dialog>
-        )
-    }
-}
-ImageGallery.defaultProps = {
-    images: [
-        {name: "photo-12345"},
-        {name: "photo-12346"},
-        {name: "photo-12347"},
-        {name: "photo-12348"},
-        {name: "photo-12349"},
-    ],
-    currentIndex: 0,
-    title: "Галерея изображений",
-    location: null,
 }
 
-export default ImageGallery;
+const mdtp = (dispatch) => {
+    return {
+        
+    }
+}
+
+export default connect(mstp, mdtp)(ImageGallery);

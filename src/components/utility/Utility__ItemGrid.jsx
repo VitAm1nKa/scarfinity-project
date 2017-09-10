@@ -509,3 +509,53 @@ ItemGridVertical.defaultProps = {
     selectedIndex: 0,
     onIndexChange: () => {},
 }
+
+class ItemGrid extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = Object.assign({}, props, {
+            dimensions: {
+                width: -1,
+                height: -1,
+            }
+        });
+    }
+
+    handleIndexChange(index) {
+        this.setState({
+            selectedIndex: index,
+        }, () => {
+            if(this.state.onIndexChange(index))
+                this.state.onIndexChange(index);
+        });
+    }
+
+    render() {
+        const {width, height} = this.state.dimensions;
+
+        return(
+            <Measure
+                bounds
+                onResize={(contentRect) => {this.setState({dimensions: contentRect.bounds})}}>
+                {({measureRef}) => 
+                    <div ref={measureRef}>
+                        {
+                              width / Math.max(height, 1) >= 1
+                            ? <ItemGridHorisontal
+                                selectedIndex={this.state.selectedIndex}
+                                items={this.state.items}
+                                onIndexChange={this.handleIndexChange.bind(this)}/>
+                            : <ItemGridVertical
+                                selectedIndex={this.state.selectedIndex}
+                                items={this.state.items}
+                                onIndexChange={this.handleIndexChange.bind(this)}/>
+                        }
+                    </div>
+                }
+            </Measure>
+        )
+    }
+}
+
+export default ItemGrid;

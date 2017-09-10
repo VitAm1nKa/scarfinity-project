@@ -50,10 +50,20 @@ class Cart extends React.Component {
 
     handleNextStep() {
         // DO Validation check
-
-        this.setState({
-            step: (this.state.step + 1) % 3,
-        });
+        switch(this.state.step) {
+            case 0: {
+                this.setState({
+                    step: this.state.step + 1
+                });
+            } break;
+            case 1: {
+                if(this.requisites.getWrappedInstance().validate()) {
+                    this.setState({
+                        step: this.state.step + 1
+                    });
+                }
+            } break;
+        }
     }
 
     handlePrevStep() {
@@ -71,7 +81,7 @@ class Cart extends React.Component {
                     <div className="cart__container">
                         {
                               this.state.step == 0  ? <Products />  
-                            : this.state.step == 1  ? <Requisites /> 
+                            : this.state.step == 1  ? <Requisites ref={ref => this.requisites = ref } /> 
                             : <Payments/>
                         }
                     </div>
@@ -83,6 +93,13 @@ class Cart extends React.Component {
 
                     <FlatButton label="Add product" primary={true} onTouchTap={this.handleAdd.bind(this)}/>
                     <FlatButton label="Remove product" onTouchTap={this.handleRemove.bind(this)}/>
+
+                    <div style={{
+                        background: '#ccc',
+                    }}>
+                        <div className="price-ticket2"></div>
+                    </div>
+
             </Paper>
         );
 
@@ -90,9 +107,7 @@ class Cart extends React.Component {
 }
 
 const mstp__Cart = (state, ownProps) => {
-    return {
-        cart: state.cart,
-    }
+    return {}
 }
 
 const mdtp__Cart = (dispatch) => {

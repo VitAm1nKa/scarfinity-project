@@ -1,80 +1,89 @@
-import React from 'react';
+import React            from 'react';
+import {connect}        from 'react-redux';
+import {Link}           from 'react-router-dom';
+import qs 			    from 'qs';
 
-import './catalog-grid.less';
+import                       './catalog-grid.less';
 
-import ProductCardCatalogView from '../../utility/product-card-catalog';
+import GalleryDialog    from '../../utility/gallery-dialog';
+import ProductGallery   from '../../utility/product-card-preview';
+import {getProduct}     from '../../../redux/actions/products';
 
-import CONSTANTS from '../../../develop/lib/constants';
 
-// Filters import
-import FilterPriceRange         from '../../filters/price-range';
-import FilterColorPicker        from '../../filters/color-picker';
-import FilterRatingSelect       from '../../filters/rating-select';
-import FilterSeasonSelectView   from '../../filters/check-box-list-view';
-import LeftMenu                 from '../../utility/left-menu';
-
-// Product cards
-export const ProductCardsGridView = (props) => {
+const CatalogGridNavigation = (props) => {
     return(
-        <div className="product-cards-grid">
-            {
-                props.items &&
-                props.items.map((item, index) =>
-                    <ProductCardCatalogView
-                        key={index}/>
-                )
-            }
+        <div className="catalog-grid-navigation">
+            <div className="catalog-grid-navigation__item">
+                <Paper zDepth={1}>
+                    <Utility__SelectBox lightTheme/>
+                </Paper>
+            </div>
+            <div className="catalog-grid-navigation__middle">
+
+            </div>
+            <div className="catalog-grid-navigation__item">
+                <Paper zDepth={1}>
+                    <Utility__SelectBox lightTheme/>
+                </Paper>
+            </div>
         </div>
     )
 }
-ProductCardsGridView.defaultProps = {
-    items: ["", ""],
-}
 
-// Filters
-export const FiltersGridView = (props) => {
+const CatalogGrid = (props) => {
     console.log(props);
     return(
-        <div className="filters-grid">
-            <LeftMenu />
+        <div className="catalog-grid">
+            {/* <CatalogGridNavigation /> */}
+            {/* <CatalogInfinityLoad /> */}
             {
-                props.priceRange && 
-                <FilterPriceRange
-                    values={{
-                        leftValue: props.priceRange.leftValue,
-                        rightValue: props.priceRange.rightValue,
-                    }}
-                    minValue={props.priceRange.minValue}
-                    maxValue={props.priceRange.maxValue}/>
+                props.productInfo == null ?
+                <div>Загрузка...</div> :
+                <GalleryDialog 
+                    open={props.galleryProductId != null}
+                    onRequestClose={props.galleryClose} >
+                        <ProductGallery
+                            productId={props.galleryProductId}
+                            location={props.location}
+                            history={props.history}/>
+                </GalleryDialog>
             }
-            {props.colors && <FilterColorPicker />}
-            {props.rating && <FilterRatingSelect />}
-            {props.season && <FilterSeasonSelectView />}
         </div>
-    )
-}
-FiltersGridView.defaultProps = {
-    priceRange: null,
-    colors: null,
-    rating: null,
-    season: null,
+    );
 }
 
-export const FiltersGrid = (props) => {
-    return(
-        <FiltersGridView
-            priceRange={props.priceRange}
-            colors={props.colors}
-            rating={props.rating}
-            season={props.season}/>
-    )
-}
-FiltersGrid.defaultProps = {
-    priceRange: null,
-    colors: null,
-    rating: null,
-    season: null,
-    onClick: () => {},
+const mstp = (state, ownProps) => {
+    const params = qs.parse(ownProps.location.search, {ignoreQueryPrefix: true});
+    const productInfo = state.products.find(x => x.id == params.p);
+
+    return {
+        productInfo: state.products.find(x => x.id == params.p),
+        galleryProductId: params.p,
+        gallerySubQuery: (productId) => `${ownProps.location.pathname}${qs.stringify(Object.assign({}, params, {p: productId}), {addQueryPrefix: true})}`,
+        galleryClose: () => {
+            const link = `${ownProps.location.pathname}${qs.stringify(Object.assign({}, params, {p: undefined}), {addQueryPrefix: true})}`;
+            ownProps.history.push(link);
+        },
+    }
 }
 
-export default ProductCardsGridView;
+const mdtp = (dispatch) => {
+    return {
+        loadProduct: (productId) => {dispatch(getProduct(productId))},
+    }
+}
+
+const mp = (state, dispatch, ownProps) => {
+    console.log(state, dispatch, ownProps);
+    // Если при загрузке, отобраджается галлерея,
+    // нужно загрузить продукт в стейт
+    if(state.galleryProductId != null) {
+        if(state.productInfo == null) {
+            dispatch.loadProduct(state.galleryProductId);
+        }
+    }
+
+    return Object.assign({}, state, dispatch, ownProps);
+}
+
+export default connect(mstp, mdtp, mp)(CatalogGrid);

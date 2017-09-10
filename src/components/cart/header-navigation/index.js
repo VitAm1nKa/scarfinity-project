@@ -8,6 +8,43 @@ const renderState = [
     { s1: "complete", s2: "", s3: "complete", s4: "state-4", s5: "active active--state-3" }
 ];
 
+const delimTable = [
+    [["#bf4f79", "#ffffff", "#ffffff"], ["#ffffff", "#ef8742", "#ffffff"], ["#ffffff", "#ffffff", "#d7d7d7"]],
+    [["#ffffff", "#ffffff", "#d7d7d7"], ["#ef8742", "#ffffff", "#ffffff"], ["#ffffff", "#8869ca", "#ffffff"]],
+]
+
+const CartHeaderDelimIcon = (props) => {
+    return(
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="51" viewBox="0 0 60 170">
+            <path
+                style={{
+                    fillRule: "evenodd",
+                    fill: delimTable[props.side][props.step][2],
+                    transition: 'all 0.3s',
+                }}
+                d="M12,0h4L48,85,16,170H12L44,85Z"/>
+            <path
+                style={{
+                    fillRule: "evenodd",
+                    fill: delimTable[props.side][props.step][0],
+                    transition: 'all 0.3s',
+                }}
+                d="M12,0L44,85,12,170H0V0H12Z"/>
+            <path
+                style={{
+                    fillRule: "evenodd",
+                    fill: delimTable[props.side][props.step][1],
+                    transition: 'all 0.3s',
+                }}
+                d="M16,170L48,85,16,0H60V170H16Z"/>
+        </svg>
+    )
+}
+CartHeaderDelimIcon.defaultProps = {
+    side: 0,
+    step: 0,
+}
+
 const CartHeaderPaginationIcon = (props) => {
     const style = {
         iddle: {
@@ -80,17 +117,21 @@ const HeaderNavigation = (props) => {
     const render = renderState[props.step];
     return(
         <div className="cart__header-navigation">
-            <div className={`cart__header-navigation__navigation-item ${render.s1}`} data-index="1">
+            <div className={`cart__header-navigation__navigation-item ${render.s1}`}>
                 <CartHeaderPaginationIcon value={1} state={props.step + 1} />
                 <span className="cart__header-navigation__navigation-item__text">{"Корзина заказов"}</span>
             </div>
-            <div className={`cart__header-navigation__navigation-item__delim ${render.s2}`}></div>
-            <div className={`cart__header-navigation__navigation-item ${render.s3}`} data-index="2">
+            <CartHeaderDelimIcon
+                side={0}
+                step={props.step} />
+            <div className={`cart__header-navigation__navigation-item ${render.s3}`}>
                 <CartHeaderPaginationIcon value={2} state={props.step} />
                 <span className="cart__header-navigation__navigation-item__text">{"Доставка"}</span>
             </div>
-            <div className={`cart__header-navigation__navigation-item__delim ${render.s4}`}></div>
-            <div className={`cart__header-navigation__navigation-item ${render.s5}`} data-index="3">
+            <CartHeaderDelimIcon
+                side={1}
+                step={props.step} />
+            <div className={`cart__header-navigation__navigation-item ${render.s5}`}>
                 <CartHeaderPaginationIcon value={3} state={props.step - 1} />
                 <span className="cart__header-navigation__navigation-item__text">{"Способ оплаты"}</span>
             </div>

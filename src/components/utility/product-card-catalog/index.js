@@ -2,6 +2,8 @@ import React from 'react';
 
 import './product-card-catalog.less';
 
+import { Link } from 'react-router-dom'
+
 import Paper                            from 'material-ui/Paper';
 import FlatButton                       from 'material-ui/FlatButton';
 import RaisedButton                     from 'material-ui/RaisedButton';
@@ -51,7 +53,7 @@ return(
 
 export const ProductCardCatalogView = (props) => {
     return(
-        <Paper zDepth={1} style={{boxShadow: "0 1px 2px rgba(0,0,0,.2)"}} >
+        <Paper zDepth={1} >
             <div className="product-card-catalog">
                 <div className="product-card-catalog__image">
                     <div className="product-card-catalog__image__image">
@@ -65,22 +67,20 @@ export const ProductCardCatalogView = (props) => {
                 </div>
 
                 <div className="product-card-catalog__rating">
+                    <Utility__RaitingBox
+                            currentValue={props.reviews.rating}
+                            iconSize={16} />
                 </div>
 
                 <div className="product-card-catalog__description">
-                    <Utility__RaitingBox
-                        currentValue={props.reviews.rating}
-                        text={`${props.reviews.count}`}
-                        iconSize={20} />
+
                     <span className="product-card-catalog__title">{props.title}</span>
                     <div className="product-card-catalog__description__pricing">
-                        <PriceTicket value={props.price.cost} />
-                        <FlatButton 
-                            label={`в корзину`}
-                            style={{marginLeft: 5}}
-                            icon={
-                                <AddShopingCart color={"#aaaaaa"} style={{width: 18, height: 18}} />
-                            }/>
+                        <Utility__Currency
+                            glyphFull
+                            value={props.price.cost}
+                            fontSize={18}
+                            fontWeight={500}/>
                     </div>
                 </div>
             </div>
@@ -106,3 +106,10 @@ ProductCardCatalogView.defaultProps = {
 }
 
 export default ProductCardCatalogView;
+
+// <FlatButton 
+// label={`в корзину`}
+// style={{marginLeft: 5}}
+// icon={
+//     <AddShopingCart color={"#aaaaaa"} style={{width: 18, height: 18}} />
+// }/>

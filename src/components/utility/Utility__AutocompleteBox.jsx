@@ -201,6 +201,29 @@ class Utility__AutocompleteBox extends React.Component {
 
     handleInput(event) {
         this.autocompleteChange(event.target.value);
+
+        const text = event.target.value;
+
+        // if(text != "") {
+        //     $.ajax({
+        //         url: `http://kladr-api.ru/api.php?query=${text}&limit=5&contentType=city`,
+        //         type: 'get',
+        //         dataType: 'jsonp'
+        //     }).done(jsonData => {
+        //         if(jsonData.result != null) {
+        //             if(jsonData.result.length > 0) {
+        //                 this.setState({
+        //                     options: jsonData.result.map(item => ({title: item.name})),
+        //                 });
+        //                 return;
+        //             }
+        //         }
+
+        //         this.setState({
+        //             options: [],
+        //         });
+        //     });
+        // }
     }
 
     handleChange(event) {
@@ -317,23 +340,23 @@ class Utility__AutocompleteBox extends React.Component {
                         ><Clear hoverColor={"#888"}/>
                     </IconButton>
                 </div>
-                <div
+                {/* <div
                     className="utility__autocomplete-box__icon"
                     onClick={this.handleClick}
                     onMouseEnter={this.handleClearMouseEnter}
                     onMouseLeave={this.handleClearMouseLeave}>
-                </div>
+                </div> */}
                 <div 
                     className={`utility__autocomplete-box__options-container ${ exFocus ? "utility__autocomplete-box__options-container--expand": "" }`} 
                     data-section-title={options.length == 0 ? cummonTitle.noElements : cummonTitle.section }>
                     { 
-                        options.map((option, index) => 
+                        options.map((item, index) => 
                             <div 
-                                key={option.id}
+                                key={index}
                                 className={`utility__autocomplete-box__options-container__item 
                                             ${(selectedId === index) ? "utility__autocomplete-box__options-container__item--selected" : ""}`}
-                                onMouseDown={() => {this.handleSelect(option.id)}}
-                            >{option.title}</div>
+                                onMouseDown={() => {this.handleSelect(item.id)}}
+                            >{item.title}</div>
                         )
                     }
                 </div>
@@ -342,4 +365,239 @@ class Utility__AutocompleteBox extends React.Component {
     }
 }
 
+// export class AutocompleteInput extends React.Component {
+//     constructor(props) {
+//         super(props);
+
+//         this.state = Object.assign({}, props, {
+//             options: [],
+//             optionsIndex: -1,
+//             showOptions: false,
+//             inputValue: "",
+//             clearButton: false,
+//             clearButtonHover: false,
+//             valid: false,
+//             validate: false,
+//         });
+//     }
+
+//     inputValue() {
+//         if(this.state.optionsIndex == -1) {
+//             return this.state.inputValue;
+//         } else {
+//             return this.state.options[this.state.optionsIndex];
+//         }
+//     }
+
+//     showOptions() {
+//         return this.state.options.length > 0;
+//     }
+
+//     // Навигация по списку
+//     handleKeyDown(event) {
+//         if(event.nativeEvent.key == "ArrowDown" || event.nativeEvent.key == "ArrowUp") {
+//             event.stopPropagation();
+//             event.preventDefault();
+
+//             let index = this.state.optionsIndex;
+//             let count = this.state.options.length;
+            
+//             if(count > 0) {
+//                 count = count + 1; // add -1 value
+
+//                 switch(event.nativeEvent.key) {
+//                     case "ArrowDown": index = (index + 2) % count - 1; break;
+//                     case "ArrowUp": ; index = (index + count) % count - 1; break;
+//                 }
+
+//                 this.setState({
+//                     optionsIndex: index,
+//                 }, () => {
+//                     this.input.value = this.inputValue();
+//                     this.input.selectionStart = this.input.value.length;
+//                     this.input.selectionEnd = this.input.value.length;
+//                 });
+//             }
+
+//             return false;
+//         }
+
+//         if(event.nativeEvent.key == "Enter") {
+//             this.input.blur();
+//         }
+
+//         return true;
+//     }
+
+//     isClearButton() {
+//         return this.input.value.length > 0;
+//     }
+
+//     handleInput(event) {
+//         this.state.inputValue = event.target.value;
+//         this.state.optionsIndex = -1;
+//         this.search(this.state.inputValue);
+//     }
+
+//     handleFocus() {
+//         this.setState({
+//             showOptions: this.showOptions(),
+//             clearButton: this.isClearButton(),
+//         });
+//     }
+
+//     handleBlur() {
+//         this.setState({
+//             showOptions: false,
+//             clearButton: false,
+//             optionsIndex: -1,
+//             options: [],
+//         });
+//     }
+
+//     getRandomArbitrary(min, max) {
+//         return Math.floor(Math.random() * (max - min) + min);
+//     }
+
+//     search(query) {
+//         if(query !== "") {
+//             const count = this.getRandomArbitrary(1, 5);
+//             const items = Array.apply(null, Array(5)).map(item => `Кубышка №${this.getRandomArbitrary(1, 5)}`);
+//             this.setState({
+//                 options: items,
+//                 showOptions: items.length > 0,
+//             });
+//         } else {
+//             this.setState({
+//                 options: [],
+//                 showOptions: false,
+//             });
+//         }
+//     }
+
+//     handleSelect(index) {
+//         this.state.optionsIndex = index;
+//         this.input.value = this.inputValue();
+//         this.input.selectionStart = this.input.value.length;
+//         this.input.selectionEnd = this.input.value.length;
+
+//         this.setState({
+//             showOptions: false,
+//         });
+//     }
+
+//     render() {
+//         return (
+//             <div style={{position: 'relative'}}>
+//                 <input
+//                     className={`sInput-autocomplete
+//                         ${this.state.valid                          ? " sInput-phone--success" : 
+//                         (!this.state.valid && this.state.validate)  ? " sInput-phone--error"   : ""}`}
+//                     onFocus={this.handleFocus.bind(this)}
+//                     onBlur={this.handleBlur.bind(this)}
+//                     onInput={this.handleInput.bind(this)}
+//                     onKeyDown={this.handleKeyDown.bind(this)}
+//                     ref={ref => this.input = ref}/>
+//                 {
+//                     this.state.showOptions &&
+//                     <div 
+//                         className="options-container"
+//                         data-section-title={this.state.options.length == 0 ? "Ничего не найдено" : "Результаты" }>
+//                         {
+//                             this.state.options.length > 0 &&
+//                             this.state.options.map((item, index) => 
+//                                 <div 
+//                                     key={index}
+//                                     className={`options-container__item
+//                                         ${(this.state.optionsIndex === index) ? " options-container__item--selected" : ""}`}
+//                                     onMouseDown={() => {this.handleSelect(index)}}
+//                                 >{item}</div>
+//                             )
+//                         }
+//                     </div>
+//                 }
+//             </div>
+//         );
+//     }
+// }
+
 export default Utility__AutocompleteBox;
+
+
+// {
+//     this.state.clearButton &&
+//     <IconButton
+//         className="sInput-autocomplete__clear-button"
+//         style={style.cummonIconButton} 
+//         iconStyle={style.cummonIcon}
+//         onMouseEnter={this.handleClearMouseEnter.bind(this)}
+//         onMouseLeave={this.handleClearMouseLeave.bind(this)}
+//         onClick={this.handleClearClick}
+//         ><Clear hoverColor={"#888"}/>
+//     </IconButton>
+// }
+
+
+                
+
+        // if(text != "") {
+        //     $.ajax({
+        //         url: `http://kladr-api.ru/api.php?query=${text}&limit=5&contentType=city`,
+        //         type: 'get',
+        //         dataType: 'jsonp'
+        //     }).done(jsonData => {
+        //         if(jsonData.result != null) {
+        //             if(jsonData.result.length > 0) {
+        //                 this.setState({
+        //                     options: jsonData.result.map(item => ({title: item.name})),
+        //                 });
+        //                 return;
+        //             }
+        //         }
+
+        //         this.setState({
+        //             options: [],
+        //         });
+        //     });
+        // }
+
+        // <div className={`utility__autocomplete-box ${vState}`} 
+        //         data-pre-select-title={cummonTitle.pre}
+        //         data-error-title={cummonTitle.error}
+        //         // data-autocomplete-title={autocomplete}
+        //         >
+        //         <input 
+        //                 className="utility__autocomplete-box__input" 
+        //                 type="text"
+        //                 value={currentValue}
+        //                 onFocus={this.handleFocus}
+        //                 onBlur={this.handleBlur}
+        //                 onInput={this.handleInput}
+        //                 onChange={this.handleChange}
+        //                 onKeyUp={this.handleKeyDown}
+        //                 ref="root"
+        //                 />
+        //         <div className="utility__autocomplete-box__cummon-button">
+
+        //         </div>
+        //         {/* <div
+        //             className="utility__autocomplete-box__icon"
+        //             onClick={this.handleClick}
+        //             onMouseEnter={this.handleClearMouseEnter}
+        //             onMouseLeave={this.handleClearMouseLeave}>
+        //         </div> */}
+                // <div 
+                //     className={`utility__autocomplete-box__options-container ${ exFocus ? "utility__autocomplete-box__options-container--expand": "" }`} 
+                //     data-section-title={options.length == 0 ? cummonTitle.noElements : cummonTitle.section }>
+                //     { 
+                //         options.map((item, index) => 
+                //             <div 
+                //                 key={index}
+                //                 className={`utility__autocomplete-box__options-container__item 
+                //                             ${(selectedId === index) ? "utility__autocomplete-box__options-container__item--selected" : ""}`}
+                //                 onMouseDown={() => {this.handleSelect(item.id)}}
+                //             >{item.title}</div>
+                //         )
+                //     }
+                // </div>
+        //     </div>

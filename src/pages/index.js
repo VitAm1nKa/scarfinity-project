@@ -36,6 +36,7 @@ const Pages = (props) => {
                     <Col md={2} className="item"><Link to="/catalog">Catalog</Link></Col>
                     <Col md={2} className="item"><Link to="/cart">Cart</Link></Col>
                     <Col md={2} className="item"><Link to="/info">Information</Link></Col>
+                    <Col md={2} className="item"><Link to="/opt">Opt</Link></Col>
                 </Container>
             </Row>
             {/* Content start */}

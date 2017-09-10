@@ -10,6 +10,8 @@ import TreeNavigation               from '../../components/navigation/tree-navig
 import Page__CatalogGrid            from '../catalog-grid';
 import Page__ProductCard            from '../product-card';
 import Page__Cart                   from '../cart';
+import Page__Info                   from '../info';
+import Page__OptInfo                from '../opt-info';
 
 const Site__MiddleSection = (props) => {
     return(
@@ -20,6 +22,9 @@ const Site__MiddleSection = (props) => {
                 <Route path="/product/:id" component={Page__ProductCard} />
                 <Route path="/product" component={Page__ProductCard} />
                 <Route path="/cart" exact component={Page__Cart} />
+                <Route path="/info" exact component={Page__Info} />
+                <Route path="/opt/:id" component={Page__OptInfo} />
+                <Route path="/opt" component={Page__OptInfo} />
             </Switch>
         </div>
     )

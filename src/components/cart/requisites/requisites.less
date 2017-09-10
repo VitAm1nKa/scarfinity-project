@@ -1,12 +1,22 @@
+//- Colors ----------------------
+    @success:                   #1bb869;
+    @warning:                   #ef8742;   
+    @error:                     #e05543;
+    @active:                    #2799c9;
+//- -----------------------------
+
 .requisites {
     background: #ffffff;
-    padding: 20px 14px;
+    padding: 20px 20px;
+
+    border-top: 1px solid #d7d7d7;
 }
 
 .requisites-row {
     display: inline-flex;
     width: 100%;
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: flex-start;
     box-sizing: border-box;
@@ -24,6 +34,7 @@
     &__middle {
         flex: 0 1 1px;
         margin: 0px 15px;
+        margin-top: 40px;
         align-self: stretch;
 
         &--delim {
@@ -39,7 +50,8 @@
     font-size: 16px;
     font-weight: 400;
 
-    padding: 10px 0px;
+    height: 40px;
+    line-height: 40px;
     box-sizing: border-box;
 
     color: #303030;
@@ -68,10 +80,11 @@
         display: flex;
         flex-direction: row;
         justify-content: center;
+        position: relative;
         
         padding: 12px 15px;
 
-        background: #f9f9f9;
+        background-color: #f9f9f9;
 
         font-family: "Roboto";
         font-size: 14px;
@@ -80,6 +93,8 @@
         color: #808080;
 
         border-bottom: 1px solid #d7d7d7;
+
+        transform: all 0.4s ease;
     }
 
     &__item {
@@ -136,6 +151,30 @@
 
         //utility__currency
 
+    }
+
+    &--success & {
+        &__title {
+            border-bottom-color: #d7d7d7;
+        }
+    }
+
+    &--error & {
+        &__title {
+            border-bottom-color: @error;
+        }
+    }
+
+    &--warning & {
+        &__title {
+            border-bottom-color: @warning;
+        }
+    }
+
+    &--active & {
+        &__title {
+            border-bottom-color: @active;
+        }
     }
 }
 

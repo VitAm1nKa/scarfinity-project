@@ -8,9 +8,14 @@ import CatalogNavigation from '../catalogNavigation/CatalogNavigation.jsx';
 import Utility__SelectBox from '../utility/Utility__SelectBox.jsx';
 import ProductCardCatalogView from '../utility/product-card-catalog';
 
+import GalleryDialog from '../utility/gallery-dialog';
+
 import { Link } from 'react-router-dom'
 
 import LazyLoader from '../utility/lazy-loader';
+
+import {connect}    from 'react-redux';
+import Wrapper from '../utility/product-card-preview/wrapper';
 
 
 const CatalogGridAutoloadLoading = (props) => {
@@ -31,7 +36,6 @@ CatalogGridAutoloadLoading.defaultProps = {
 }
 
 const CatalogItemsGrid = (props) => {
-    console.log(props);
     return(
         <div className={`catalog-grid ${props.loading ? "catalog-grid--in-process" : "" }`}>
             <div className="catalog-grid__container">
@@ -39,14 +43,13 @@ const CatalogItemsGrid = (props) => {
                     props.items && 
                     props.items.map((value, index) => {
                         return(
-                            <Link to={`/product/${value.id}`} key={index}>
-                                <ProductCardCatalogView
-                                    // key={index}
-                                    title={value.title}
-                                    reviews={value.reviews}
-                                    price={value.price}
-                                    images={value.images} />
-                            </Link>
+                            <ProductCardCatalogView
+                                key={index}
+                                link={`/product/${value.id}`}
+                                title={value.title}
+                                reviews={value.reviews}
+                                price={value.price}
+                                images={value.images} />
                         )
                     })
                 }
@@ -60,11 +63,11 @@ CatalogItemsGrid.defaultProps = {
     items: null,
 }
 
-export class CatalogGridAutoload extends React.Component {
+class CatalogGridAutoload_connect extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {
+        this.state = Object.assign({}, props, {
             currentCount: 0,
             maxCount: 3,
             loading: false,
@@ -72,7 +75,7 @@ export class CatalogGridAutoload extends React.Component {
             completed: false,
             items: [],
             autoload: null,
-        }
+        });
 
         this.handleScroll = this.handleScroll.bind(this);
     }
@@ -110,6 +113,8 @@ export class CatalogGridAutoload extends React.Component {
         .then(jsonData => {
             this.state.items = this.state.items.concat(jsonData.items.list);
             if(callback) callback();
+            console.log(jsonData.items);
+            this.state.addItems(jsonData.items.list);
         });
     }
 
@@ -148,6 +153,13 @@ export class CatalogGridAutoload extends React.Component {
         )
     }
 }
+
+export const CatalogGridAutoload = connect(null, dispatch => {
+    return {
+        addItems: (data) => {dispatch({type: "ADDD__CATALOG", data: data})}
+    }
+})(CatalogGridAutoload_connect);
+
 
 export class CatalogGrid extends React.Component {
 
@@ -212,8 +224,9 @@ export class CatalogGrid extends React.Component {
                     }
                     <div className="catalog-grid__process-block"></div>
                 </div>
-                <div>123</div>
-
+                <GalleryDialog open>
+                    <Wrapper />
+                </GalleryDialog>
             </div>
         );
     }

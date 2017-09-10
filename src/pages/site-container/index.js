@@ -10,7 +10,6 @@ import Site__LeftSection            from '../left-section';
 import Site__MiddleSection          from '../middle-section';
 
 const SiteContainer = (props) => {
-    console.log("LOLOL =>", props);
     return(
         <Grid>
             <Row>

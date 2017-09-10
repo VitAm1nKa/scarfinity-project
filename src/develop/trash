@@ -1,3 +1,262 @@
+    const params = qs.parse(ownProps.location.search, {ignoreQueryPrefix: true});
+    const productInfo = state.products.find(x => x.id === ownProps.productId);
+
+    return Object.assign({}, ownProps, {
+        images: productInfo.images.list, // Далее будет images.find(x => x.colorId == ownProps.colorId)
+        galleryPhotoId: params.z,
+        gallerySubQuery: (photoId) => `${ownProps.location.pathname}${qs.stringify(Object.assign({}, params, {z: photoId}), {addQueryPrefix: true})}`,
+        galleryClose: () => {
+            const link = `${ownProps.location.pathname}${qs.stringify(Object.assign({}, params, {z: undefined}), {addQueryPrefix: true})}`;
+            ownProps.history.push(link);
+        },
+    });
+}
+
+
+
+const style = {
+    button: {
+        width: 26,
+        height: 30,
+        padding: 3,
+    }
+}
+
+class ProductCardImageBlockView extends React.Component {
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			imageData: props.imageData,
+			selectedIndex: 0,
+			directionRow: props.directionRow,
+			galeryRef: props.galeryRef,
+			location: props.location,
+			zGallery: this.checkOpenGallery(props.location),
+		}
+
+		this.checkOpenGallery(this.state.location);
+
+		this.handleIndexChange = this.handleIndexChange.bind(this);
+	}
+
+	componentWillReceiveProps(nextProps) {
+		this.state.zGallery = this.checkOpenGallery(nextProps.location);
+		this.setState(nextProps);
+	}
+
+	handleIndexChange(index) {
+		console.log(index);
+		this.setState({
+			selectedIndex: index,
+		});
+	}
+
+	checkOpenGallery(location) {
+		if(location) {
+			const query = parse(location.search.substr(1));
+			if(query.z) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	render() {
+		console.log(this.state.location, this.state.selectedIndex);
+		return(
+			<div className="product-card-image-container">
+				<div className="product-card-image-container__main">
+					{
+						this.state.imageData && this.state.location &&
+						<Link to={`${this.state.location.pathname}?z=${this.state.selectedIndex}`}>
+							<Utility__ImageContainer
+								imageUrl={this.state.imageData.list[this.state.selectedIndex].main} />
+						</Link>
+					}
+				</div>
+				{
+					this.state.imageData.list && this.state.imageData.list.length > 0 &&
+					<div 
+						className="product-card-image-container__galery"
+						ref={this.state.galeryRef}
+						>
+						{
+							this.state.directionRow 
+							? <ItemGridHorisontal
+								selectedIndex={this.state.selectedIndex}
+								items={this.state.imageData.list}
+								onIndexChange={this.handleIndexChange}/>
+							: <ItemGridVertical
+								selectedIndex={this.state.selectedIndex}
+								items={this.state.imageData.list}
+								onIndexChange={this.handleIndexChange}/>
+
+						}
+					</div>
+				}
+				{
+					this.state.zGallery && this.state.location &&
+					<ImageGallery
+						images={this.state.imageData.list}
+						location={this.state.location}
+						currentIndex={this.state.selectedIndex}/>
+				}
+			</div>
+		)
+	}
+}
+ProductCardImageBlockView.defaultProps = {
+	directionRow: true,
+	galeryRef: null,
+	imageData: null,
+	location: null,
+}
+
+
+
+
+
+        let b = new google.maps.LatLngBounds(
+            new google.maps.LatLng(82.74051600000007, 83.15829389999999),
+            new google.maps.LatLng(54.800147, 55.139807)
+        );
+        const center = b.getCenter();
+        const ne = b.getNorthEast();
+
+        console.log(center.lat(), ne);
+        console.log(b);
+
+        // r = radius of the earth in statute miles
+        var r = 6378.8;  
+
+        // Convert lat or lng from decimal degrees into radians (divide by 57.2958)
+        var lat1 = center.lat() / 57.2958; 
+        var lon1 = center.lng() / 57.2958;
+        var lat2 = ne.lat() / 57.2958;
+        var lon2 = ne.lng() / 57.2958;
+
+        // distance = circle radius from center to Northeast corner of bounds
+        var dis = r * Math.acos(Math.sin(lat1) * Math.sin(lat2) + 
+        Math.cos(lat1) * Math.cos(lat2) * Math.cos(lon2 - lon1));
+
+        // var radius = google.maps.geometry.spherical.computeDistanceBetween(center, ne);
+
+        console.log(dis);
+
+        // 72530409b791f68a996ff3d0835f10ca2e1f0f8a
+        let addressOptions = {
+            componentRestrictions: {
+                country: "ru",
+                location: `${center.lat()}, ${center.lng()}`,
+                radius: 500,
+                strictBounds: true,
+            }
+            // bounds: b,
+            // strictBounds: true,
+            // componentRestrictions: {locality: "72530409b791f68a996ff3d0835f10ca2e1f0f8a"},
+        }             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+                // if(caret >= 5 && caret <= 7) {
+                //     this.state.values = this.removeFromArray(this.state.values, caret - 5);
+                //     this.input.value = this.updateValue(this.state.values.length);
+                //     this.input.selectionStart = caret - 1;
+                //     this.input.selectionEnd = caret - 1;
+                // }
+                // if(caret >= 8 && caret <= 9) {
+                //     this.state.values = this.removeFromArray(this.state.values, 2);
+                //     this.input.value = this.updateValue(this.state.values.length);
+                //     this.input.selectionStart = caret - 1;
+                //     this.input.selectionEnd = caret - 1;
+                // }
+                // if(caret >= 10 && caret <= 12) {
+                //     this.state.values = this.removeFromArray(this.state.values, caret - 7);
+                //     this.input.value = this.updateValue(this.state.values.length);
+                //     this.input.selectionStart = caret - 1;
+                //     this.input.selectionEnd = caret - 1;
+                // }
+                // if(caret == 13) {
+                //     this.state.values = this.removeFromArray(this.state.values, 5);
+                //     this.input.value = this.updateValue(this.state.values.length);
+                //     this.input.selectionStart = caret - 1;
+                //     this.input.selectionEnd = caret - 1;
+                // }
+                // if(caret >= 14 && caret <= 15) {
+                //     this.state.values = this.removeFromArray(this.state.values, caret - 8);
+                //     this.input.value = this.updateValue(this.state.values.length);
+                //     this.input.selectionStart = caret - 1;
+                //     this.input.selectionEnd = caret - 1;
+                // }
+                // if(caret == 16) {
+                //     this.state.values = this.removeFromArray(this.state.values, 7);
+                //     this.input.value = this.updateValue(this.state.values.length);
+                //     this.input.selectionStart = caret - 1;
+                //     this.input.selectionEnd = caret - 1;
+                // }
+                // if(caret >= 17 && caret <= 18) {
+                //     this.state.values = this.removeFromArray(this.state.values, caret - 9);
+                //     this.input.value = this.updateValue(this.state.values.length);
+                //     this.input.selectionStart = caret - 1;
+                //     this.input.selectionEnd = caret - 1;
+                // }
+
+
+            if(caret === 3) {
+                this.state.values = this.insertIntoArray(this.state.values, 0, Number(event.nativeEvent.key));
+                this.input.value = this.updateValue(this.state.values.length);
+            }
+            if(caret >= 4 && caret <= 6) {
+                this.state.values = this.insertIntoArray(this.state.values, caret - 4, Number(event.nativeEvent.key));
+                this.input.value = this.updateValue(this.state.values.length);
+            }
+            if(caret >= 7 && caret <= 9) {
+                this.state.values = this.insertIntoArray(this.state.values, 3, Number(event.nativeEvent.key));
+                this.input.value = this.updateValue(this.state.values.length);
+            }
+            if(caret >= 10 && caret <= 11) {
+                this.state.values = this.insertIntoArray(this.state.values, caret - 6, Number(event.nativeEvent.key)); // 5
+                this.input.value = this.updateValue(this.state.values.length);
+            }
+            if(caret >= 12 && caret <= 13) {
+                this.state.values = this.insertIntoArray(this.state.values, 6, Number(event.nativeEvent.key));
+                this.input.value = this.updateValue(this.state.values.length);
+            }
+            if(caret == 14) {
+                this.state.values = this.insertIntoArray(this.state.values, 7, Number(event.nativeEvent.key));
+                this.input.value = this.updateValue(this.state.values.length);
+            }
+            if(caret >= 15 && caret <= 16) {
+                this.state.values = this.insertIntoArray(this.state.values, 8, Number(event.nativeEvent.key));
+                this.input.value = this.updateValue(this.state.values.length);
+            }
+            if(caret == 17) {
+                this.state.values = this.insertIntoArray(this.state.values, 9, Number(event.nativeEvent.key));
+                this.input.value = this.updateValue(this.state.values.length);
+            }
+
+            event.stopPropagation();
+            event.preventDefault();
+            return false;
+
+
+
+
+
+
+
 
 // import Cart__ProductSection from './Cart__ProductSection.jsx';
 // import Utitlity__SelectBox from '../utility/Utility__SelectBox.jsx';

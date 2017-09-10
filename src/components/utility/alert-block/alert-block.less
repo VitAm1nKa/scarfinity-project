@@ -1,0 +1,121 @@
+//- Colors --------------------------
+    @container-bg:          rgba(255, 255, 255, 0.85);
+    @text-color:            rgba(48, 48, 48, 0.7);
+    @text-color-bold:       rgba(38, 38, 38, 0.7);
+
+    @success:               #1bb869;
+    @success-border:        rgba(27, 184, 105, 0.45);
+    @error:                 #e05543;
+    @error-border:          rgba(224, 85, 67, 0.45);
+    @warning:               #ef8742;
+    @warning-border:        rgba(239, 135, 66, 0.45);
+    @default:               #2799c9;
+    @default-border:        rgba(39, 153, 201, 0.45); 
+//- ---------------------------------
+
+.alert-block-container {
+    transform: all 0.2s ease;
+}
+
+.alert-block {
+    display: block;
+
+    margin: 4px 0px;
+
+    border-radius: 2px;
+    border: 2px solid rgba(0, 0, 0, 0.0);
+
+    background-color: #ffffff;
+    background-clip: padding-box;
+
+    &__container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center; 
+
+        min-height: 40px;
+
+        padding: 0px 10px;
+
+        background-color: @container-bg;
+        background-size: 18px 100%, 8px 100%;
+        background-position: left 12px center, right 12px center;
+        background-repeat: no-repeat, no-repeat;
+
+        &__text {
+            font-family: "Roboto";
+            font-size: 14px;
+            font-weight: 400;
+    
+            color: @text-color;
+        }
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+    &--success {
+        border-color: @success-border;
+        background-color: @success;
+    }
+
+    &--success & {
+        &__container {
+            background-image: url('./icons/alert-success.svg'), url('./icons/close-success.svg');
+            padding-left: 40px;
+            padding-right: 35px;
+        }
+    }
+
+    &--error {
+        border-color: @error-border;
+        background-color: @error;
+    }
+
+    &--error & {
+        &__container {
+            background-image: url('./icons/alert-error.svg'), url('./icons/close-error.svg');
+            padding-left: 40px;
+            padding-right: 35px;
+        }
+    }
+
+    &--warning {
+        border-color: @warning-border;
+        background-color: @warning;
+    }
+
+    &--warning & {
+        &__container {
+            background-image: url(''), url('./icons/close-warning.svg');
+            padding-right: 35px;
+        }
+    }
+
+    &--default {
+        border-color: @default-border;
+        background-color: @default;
+    }
+
+    &--default & {
+        &__container {
+            background-image: url(''), url('./icons/close-default.svg');
+            padding-right: 35px;
+        }
+    }
+}
+
+.alert-block-text {
+    font-family: "Roboto";
+    font-size: 14px;
+    font-weight: 400;
+
+    color: @text-color;
+
+    & > b {
+        font-weight: 500;
+        color: @text-color-bold;
+    }
+}
