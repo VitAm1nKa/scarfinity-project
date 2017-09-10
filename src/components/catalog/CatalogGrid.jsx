@@ -6,8 +6,162 @@ import Paper from 'material-ui/Paper';
 import {CatalogProductCardDefault} from './CatalogProductCardMini.jsx';
 import CatalogNavigation from '../catalogNavigation/CatalogNavigation.jsx';
 import Utility__SelectBox from '../utility/Utility__SelectBox.jsx';
+import ProductCardCatalogView from '../utility/product-card-catalog';
 
-export default class CatalogGrid extends React.Component {
+import GalleryDialog from '../utility/gallery-dialog';
+
+import { Link } from 'react-router-dom'
+
+import LazyLoader from '../utility/lazy-loader';
+
+import {connect}    from 'react-redux';
+import Wrapper from '../utility/product-card-preview/wrapper';
+
+
+const CatalogGridAutoloadLoading = (props) => {
+    return(
+        <div className="catalog-grid-autoload-loading">
+            {
+                props.loading  
+                ? <LazyLoader size={9} text={props.loadingText}/>
+                : <span className="catalog-grid-autoload-loading__text">{props.completedText}</span>
+            }
+        </div>
+    )
+}
+CatalogGridAutoloadLoading.defaultProps = {
+    loading: true,
+    loadingText: "",
+    completedText: "",
+}
+
+const CatalogItemsGrid = (props) => {
+    return(
+        <div className={`catalog-grid ${props.loading ? "catalog-grid--in-process" : "" }`}>
+            <div className="catalog-grid__container">
+                {
+                    props.items && 
+                    props.items.map((value, index) => {
+                        return(
+                            <ProductCardCatalogView
+                                key={index}
+                                link={`/product/${value.id}`}
+                                title={value.title}
+                                reviews={value.reviews}
+                                price={value.price}
+                                images={value.images} />
+                        )
+                    })
+                }
+                <div className="catalog-grid__process-block"></div>
+            </div>
+        </div>
+    )
+}
+CatalogItemsGrid.defaultProps = {
+    loading: false,
+    items: null,
+}
+
+class CatalogGridAutoload_connect extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = Object.assign({}, props, {
+            currentCount: 0,
+            maxCount: 3,
+            loading: false,
+            loadingProcess: false,
+            completed: false,
+            items: [],
+            autoload: null,
+        });
+
+        this.handleScroll = this.handleScroll.bind(this);
+    }
+
+    componentWillMount() {
+        // addEventListener('scroll', this.handleScroll.bind(this));
+        this.loadMore();
+    }
+
+    componentDidMount() {
+        addEventListener('scroll', this.handleScroll);
+    }
+
+    componentWillUnmount() {
+        removeEventListener('scroll', this.handleScroll);
+    }
+
+    handleScroll(event) {
+        let loadingGap = 600;
+        let bounds = this.state.autoload.getBoundingClientRect();
+        let windowHeight = document.documentElement.clientHeight;
+
+        let topVisible = bounds.top > 0 && bounds.top < windowHeight;
+        let bottomVisible = bounds.bottom < windowHeight && bounds.bottom > 0;
+
+        // start loading
+        if(bounds.bottom > 0 && bounds.bottom < (windowHeight + loadingGap)) {
+            this.loadMore();
+        }
+    }
+
+    prepareItems(callback) {
+        fetch(`./api/api__products__part-${this.state.currentCount}.json`)
+        .then(response => response.json())
+        .then(jsonData => {
+            this.state.items = this.state.items.concat(jsonData.items.list);
+            if(callback) callback();
+            console.log(jsonData.items);
+            this.state.addItems(jsonData.items.list);
+        });
+    }
+
+    loadMore() {
+        // check is loading needed
+        if(!this.state.loading) {
+            if(this.state.currentCount < this.state.maxCount) {
+                this.setState({
+                    loading: true,
+                });
+                this.prepareItems(() => {
+                    this.setState({
+                        currentCount: this.state.currentCount + 1,
+                        loading: false,
+                        completed: this.state.currentCount + 1 >= this.state.maxCount,
+                    });
+                });
+            }
+        }
+    }
+
+    render() {
+        return(
+            <div
+                className="catalog-grid-autoload" 
+                ref={autoload => this.state.autoload = autoload}>
+                    <div className="catalog-grid-autoload__body">
+                        {
+                            <CatalogItemsGrid items={this.state.items} />
+                        }
+                    </div>
+                    <div className="catalog-grid-autoload__footer">
+                        <CatalogGridAutoloadLoading loading={!this.state.completed} completedText={"Показаны все товары в этой категории"}/>
+                    </div>
+            </div>
+        )
+    }
+}
+
+export const CatalogGridAutoload = connect(null, dispatch => {
+    return {
+        addItems: (data) => {dispatch({type: "ADDD__CATALOG", data: data})}
+    }
+})(CatalogGridAutoload_connect);
+
+
+export class CatalogGrid extends React.Component {
 
     constructor(props, context) {
         super(props, context);
@@ -28,13 +182,6 @@ export default class CatalogGrid extends React.Component {
         if(nextProps.items != null) {
             this.state.items = nextProps.items;
         }
-
-        // setTimeout(callback, 2000);
-
-        // callback();
-
-
-        // this.forceUpdate(callback);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -49,51 +196,37 @@ export default class CatalogGrid extends React.Component {
     }
 
     render() {
-
         const {items, inProcess} = this.state;
-        // const remItemCount = items.length > 6 ? 12 : 6;
-        let itemList = [];
-        for(let i = 0; i < 12; i++) {
-            itemList = [...itemList, { 
-                isItem: !(typeof items[i] === 'undefined'),
-                data: items[i],
-            }];
-        }
-
-        console.log(itemList);
 
         return(
             <div className={`catalog-grid ${inProcess ? "catalog-grid--in-process" : "" }`}>
-                <div className="catalog-grid__navigation">
-                    {/*<div className="catalog-grid__navigation__pagination">
-                        <CatalogNavigation onIndexChange={this.handleIndexChange} pagesCount={1} currentPage={1} />
-                    </div>*/}
-                    <div className="catalog-grid__navigation__item">
+                <div className="catalog-grid-navigation">
+                    <div className="catalog-grid-navigation__item">
                         <Paper zDepth={1}>
                             <Utility__SelectBox lightTheme/>
                         </Paper>
                     </div>
-                    <div className="catalog-grid__navigation__middle">
+                    <div className="catalog-grid-navigation__middle">
 
                     </div>
-                    <div className="catalog-grid__navigation__item">
+                    <div className="catalog-grid-navigation__item">
                         <Paper zDepth={1}>
                             <Utility__SelectBox lightTheme/>
                         </Paper>
                     </div>
                 </div>
+
                 <div className="catalog-grid__container">
                     {
                         itemList.map((value, index) => 
-                            <div key={index} className={`catalog-grid__container__item ${value.isItem ? "catalog-grid__container__item--active" : ""}`}>
-                                {value.isItem ? <CatalogProductCardDefault /> : ""}
-                            </div>
+                            <ProductCardCatalogView key={index} />
                         )
                     }
                     <div className="catalog-grid__process-block"></div>
                 </div>
-                <div>123</div>
-
+                <GalleryDialog open>
+                    <Wrapper />
+                </GalleryDialog>
             </div>
         );
     }

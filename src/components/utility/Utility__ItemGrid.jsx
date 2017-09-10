@@ -2,6 +2,8 @@ import React                    from 'react';
 
 import                               './utility__item-grid.less';
 
+import Measure                  from 'react-measure'
+
 import Utility__ImageContainer  from '../utility/Utility__ImageContainer.jsx';
 import ChevronLeft              from 'material-ui/svg-icons/navigation/chevron-left';
 import ChevronRight             from 'material-ui/svg-icons/navigation/chevron-right';
@@ -25,12 +27,14 @@ const ItemGridItemView = (props) => {
     return(
         <div 
             className="item-grid-item">
-            <Utility__ImageContainer />
+            <Utility__ImageContainer
+                imageUrl={props.imageUrl}/>
         </div>
     )
 }
 ItemGridItemView.defaultProps = {
     selected: false,
+    imageUrl: null,
 }
 
 const ItemGridHorisontalView = (props) => {
@@ -38,39 +42,47 @@ const ItemGridHorisontalView = (props) => {
     const itemWidth = 100 / props.items.length;
     const offset = props.offset * itemSize;
     return(
-        <div 
-            className="item-grid-horisontal"
-            ref={props.gridRef}
-            style={{height: itemSize}}>
-                <div 
-                    className="item-grid-horisontal__container"
-                    style={{
-                        top: 0,
-                        bottom: 0,
-                        width: `${props.items.length * itemSize}px`,
-                        transform: `translate3d(${offset > 0 ? -offset : Math.abs(offset)}px, 0,0)`,
-                    }}>
-                        {
-                            props.items.map((value, index) => 
-                                <div 
-                                    key={index}
-                                    onClick={() => props.onItemClick(index - props.offset)}
-                                    style={{width: `${itemSize}px`}}>
-                                         <ItemGridItemView />
-                                    </div>
-                            )
-                        }
-                </div>
-                <div 
-                    className="item-grid-horisontal__select-block"
-                    style={{
-                        width: `${itemSize - 10}px`,
-                        height: `${itemSize - 10}px`,
-                        left: 5,
-                        transform: `translate3d(${itemSize * props.selectedIndex}px, 0px, 0px)`,
-                    }}
-                ></div>
-        </div>
+        <Measure
+            bounds
+            onResize={(contentRect) => {props.onResize(contentRect.bounds)}}>
+            {
+                ({measureRef}) =>
+                    <div 
+                        className="item-grid-horisontal"
+                        ref={measureRef}
+                        style={{height: itemSize}}>
+                            <div 
+                                className="item-grid-horisontal__container"
+                                style={{
+                                    top: 0,
+                                    bottom: 0,
+                                    width: `${props.items.length * itemSize}px`,
+                                    transform: `translate3d(${offset > 0 ? -offset : Math.abs(offset)}px, 0,0)`,
+                                }}>
+                                    {
+                                        props.items.map((value, index) => 
+                                            <div 
+                                                key={index}
+                                                onClick={() => props.onItemClick(index - props.offset)}
+                                                style={{width: `${itemSize}px`}}>
+                                                    <ItemGridItemView
+                                                        imageUrl={value.preview}/>
+                                                </div>
+                                        )
+                                    }
+                            </div>
+                            <div 
+                                className="item-grid-horisontal__select-block"
+                                style={{
+                                    width: `${itemSize - 10}px`,
+                                    height: `${itemSize - 10}px`,
+                                    left: 5,
+                                    transform: `translate3d(${itemSize * props.selectedIndex}px, 0px, 0px)`,
+                                }}
+                            ></div>
+                    </div>
+            }
+        </Measure>
     )
 }
 ItemGridHorisontalView.defaultProps = {
@@ -81,46 +93,55 @@ ItemGridHorisontalView.defaultProps = {
     offset: 0,
     gridRef: null,
     onItemClick: () => {},
+    onResize: () => {},
 }
 
 const ItemGridVerticalView = (props) => {
     const itemHeight = 100 / props.items.length;
     const offset = props.offset * itemHeight;
     return(
-        <div 
-            className="item-grid-vertical"
-            ref={props.gridRef}
-            style={{width: `100%`}}>
-            <div 
-                className="item-grid-vertical__container"
-                style={{
-                    top: 0,
-                    bottom: 0,
-                    width: `${props.itemSize}px`,
-                    height: `${props.items.length * props.itemSize}px`,
-                    transform: `translate3d(0, ${offset > 0 ? -offset : Math.abs(offset)}%,0)`,
-                }}>
-                    {
-                        props.items.map((value, index) => 
+        <Measure
+            bounds
+            onResize={(contentRect) => {props.onResize(contentRect.bounds)}}>
+            {
+                ({measureRef}) =>
+                    <div 
+                        className="item-grid-vertical"
+                        ref={measureRef}
+                        style={{width: `100%`}}>
+                        <div 
+                            className="item-grid-vertical__container"
+                            style={{
+                                top: 0,
+                                bottom: 0,
+                                width: `${props.itemSize}px`,
+                                height: `${props.items.length * props.itemSize}px`,
+                                transform: `translate3d(0, ${offset > 0 ? -offset : Math.abs(offset)}%,0)`,
+                            }}>
+                                {
+                                    props.items.map((value, index) => 
+                                        <div 
+                                            key={index}
+                                            onClick={() => props.onItemClick(index - props.offset)}
+                                            style={{width: `${props.itemSize}px`, height: `${props.itemSize}px`}}>
+                                                <ItemGridItemView
+                                                    imageUrl={value.preview}/>
+                                            </div>
+                                    )
+                                }
+                            </div>
                             <div 
-                                key={index}
-                                onClick={() => props.onItemClick(index - props.offset)}
-                                style={{width: `${props.itemSize}px`, height: `${props.itemSize}px`}}>
-                                    <ItemGridItemView/>
-                                </div>
-                        )
-                    }
-                </div>
-                <div 
-                    className="item-grid-vertical__select-block"
-                    style={{
-                        width: `${props.itemSize - 10}px`,
-                        height: `${props.itemSize - 10}px`,
-                        top: 5,
-                        transform: `translate3d(0px, ${props.itemSize * props.selectedIndex}px, 0px)`,
-                    }}
-                ></div>
-        </div>
+                                className="item-grid-vertical__select-block"
+                                style={{
+                                    width: `${props.itemSize - 10}px`,
+                                    height: `${props.itemSize - 10}px`,
+                                    top: 5,
+                                    transform: `translate3d(0px, ${props.itemSize * props.selectedIndex}px, 0px)`,
+                                }}
+                            ></div>
+                    </div>
+            }
+        </Measure>
     )
 }
 ItemGridVerticalView.defaultProps = {
@@ -131,6 +152,7 @@ ItemGridVerticalView.defaultProps = {
     offset: 0,
     gridRef: null,
     onItemClick: () => {},
+    onResize: () => {},
 }
 
 const ItemGridContainerHorisontalView = (props) => {
@@ -150,7 +172,8 @@ const ItemGridContainerHorisontalView = (props) => {
                     offset={props.offset}
                     selectedIndex={props.selectedIndex}
                     onChange={props.onChange} 
-                    ref={props.gridRef}/>
+                    ref={props.gridRef}
+                    onIndexChange={props.onIndexChange}/>
             </div>
             <IconButton
                 className="item-grid-container-horisontal__button"
@@ -173,6 +196,7 @@ ItemGridContainerHorisontalView.defaultProps = {
     itemBasis: 80,
     offset: 0,
     selectedIndex: 0,
+    onIndexChange: () => {},
 }
 
 const ItemGridContainerVerticalView = (props) => {
@@ -192,7 +216,8 @@ const ItemGridContainerVerticalView = (props) => {
                     offset={props.offset}
                     selectedIndex={props.selectedIndex}
                     onChange={props.onChange} 
-                    ref={props.gridRef}/>   
+                    ref={props.gridRef}
+                    onIndexChange={props.onIndexChange}/>   
             </div>
             <IconButton 
                 className="item-grid-container-vertical__button"
@@ -215,6 +240,7 @@ ItemGridContainerVerticalView.defaultProps = {
     itemBasis: 80,
     offset: 0,
     selectedIndex: 0,
+    onIndexChange: () => {},
 }
 
 // Smart Controllers  ------------------------------------------------------------
@@ -232,32 +258,18 @@ class ItemGridHorisontalController extends React.Component {
         }
 
         this.onChange = props.onChange;
+        this.onIndexChange = props.onIndexChange;
 
-        this.grid = props.gridRef;
-        this.clientWidth = () => this.grid.getBoundingClientRect().width;
-
-        this.handleResize = this.handleResize.bind(this);
         this.recalcItemsCount = this.recalcItemsCount.bind(this);
         this.handleItemClick = this.handleItemClick.bind(this);
         this.doOnChange = this.doOnChange.bind(this);
         this.move = this.move.bind(this);
     }
     
-    componentDidMount() {
-        window.addEventListener("resize", this.handleResize);
-        this.recalcItemsCount(this.clientWidth(), true);
-    }
-
-    componentWillUnmount() {
-        window.removeEventListener("resize", this.handleResize);
-    }
-
-    handleResize() {
-        this.recalcItemsCount(this.clientWidth());
-    }
-
     handleItemClick(selectedIndex) {
-        this.setState({selectedIndex});
+        this.setState({selectedIndex}, () => {
+            if(this.onIndexChange) this.onIndexChange(selectedIndex + this.state.offset);
+        });
     }
 
     move(direction = 1) {
@@ -265,8 +277,12 @@ class ItemGridHorisontalController extends React.Component {
         const countDiff = Math.max(this.state.items.length - this.state.itemsCount, 0);
         this.setState({offset: newOffset > countDiff ? countDiff : newOffset}, this.doOnChange);
     }
+    
+    handleOnResize(bounds) {
+        this.recalcItemsCount(bounds);
+    }
 
-    recalcItemsCount(width, update = true) {
+    recalcItemsCount({width}, update = true) {
         const minHeight = this.state.minItemHeight;
         const itemsCount = Math.floor(width / minHeight);
         const itemSize = Math.round(width / itemsCount);
@@ -284,6 +300,7 @@ class ItemGridHorisontalController extends React.Component {
         const leftToggle = this.state.offset > 0;
         const rightToggle = offset + this.state.itemsCount < this.state.items.length;
         this.onChange({leftToggle, rightToggle, offset});
+        if(this.onIndexChange) this.onIndexChange(this.state.selectedIndex + this.state.offset);
     }
 
     render() {
@@ -295,7 +312,8 @@ class ItemGridHorisontalController extends React.Component {
                 maxVisibleItems={this.state.itemsCount}
                 offset={this.state.offset}
                 selectedIndex={this.state.selectedIndex}
-                onItemClick={this.handleItemClick}/>
+                onItemClick={this.handleItemClick} 
+                onResize={this.handleOnResize.bind(this)}/>
         )
     }
 }
@@ -306,6 +324,7 @@ ItemGridHorisontalController.defaultProps = {
     selectedIndex: 0,
     onChange: () => {},
     gridRef: null,
+    onIndexChange: () => {},
 }
 
 class ItemGridVerticalController extends React.Component {
@@ -323,35 +342,18 @@ class ItemGridVerticalController extends React.Component {
         }
 
         this.onChange = props.onChange;
+        this.onIndexChange = props.onIndexChange;
 
-        this.grid = props.gridRef;
-        this.clientBounds = () => this.grid.getBoundingClientRect();
-
-        this.handleResize = this.handleResize.bind(this);
         this.recalcItemsCount = this.recalcItemsCount.bind(this);
         this.handleItemClick = this.handleItemClick.bind(this);
         this.doOnChange = this.doOnChange.bind(this);
         this.move = this.move.bind(this);
     }
-    
-    componentWillMount() {
-        window.addEventListener("resize", this.handleResize);
-    }
-
-    componentDidMount() {
-        this.recalcItemsCount(this.clientBounds());
-    }
-
-    componentWillUnmount() {
-        window.removeEventListener("resize", this.handleResize);
-    }
-
-    handleResize() {
-        this.recalcItemsCount(this.clientBounds());
-    }
 
     handleItemClick(selectedIndex) {
-        this.setState({selectedIndex});
+        this.setState({selectedIndex}, () => {
+            if(this.onIndexChange) this.onIndexChange(selectedIndex + this.state.offset);
+        });
     }
 
     move(direction = 1) {
@@ -365,6 +367,11 @@ class ItemGridVerticalController extends React.Component {
         const leftToggle = this.state.offset > 0;
         const rightToggle = offset + this.state.itemsCount < this.state.items.length;
         this.onChange({leftToggle, rightToggle, offset});
+        if(this.onIndexChange) this.onIndexChange(this.state.selectedIndex + this.state.offset);
+    }
+
+    handleOnResize(bounds) {
+        this.recalcItemsCount(bounds);
     }
 
     recalcItemsCount(bounds, update = true) {
@@ -387,7 +394,8 @@ class ItemGridVerticalController extends React.Component {
                 maxVisibleItems={this.state.itemsCount}
                 offset={this.state.offset}
                 selectedIndex={this.state.selectedIndex}
-                onItemClick={this.handleItemClick}/>
+                onItemClick={this.handleItemClick}
+                onResize={this.handleOnResize.bind(this)}/>
         )
     }
 }
@@ -395,6 +403,7 @@ ItemGridVerticalController.defaultProps = {
     itemBasis: 80,
     onChange: () => {},
     gridRef: null,
+    onIndexChange: () => {},
 }
 
 // Export components ------------------------------------------------------
@@ -411,6 +420,7 @@ export class ItemGridHorisontal extends React.Component {
         this.offset = props.offset;
         this.itemBasis = props.itemBasis;
         this.selectedIndex = props.selectedIndex,
+        this.onIndexChange = props.onIndexChange;
 
         this.handleOffsetChange = this.handleOffsetChange.bind(this);
     }
@@ -436,7 +446,8 @@ export class ItemGridHorisontal extends React.Component {
                 selectedIndex={this.selectedIndex}
                 onMoveForward={() => this.grid.move()}
                 onMoveBack={() => this.grid.move(-1)}
-                onChange={this.handleOffsetChange}/>
+                onChange={this.handleOffsetChange}
+                onIndexChange={this.onIndexChange}/>
         )
     } 
 }
@@ -445,6 +456,7 @@ ItemGridHorisontal.defaultProps = {
     itemBasis: 70,
     offset: 0,
     selectedIndex: 0,
+    onIndexChange: () => {},
 }
 
 export class ItemGridVertical extends React.Component {
@@ -455,6 +467,8 @@ export class ItemGridVertical extends React.Component {
             leftToggle: false,
             rightToggle: false,
         }
+
+        this.onIndexChange = props.onIndexChange;
 
         this.items = props.items;
         this.offset = props.offset;
@@ -483,7 +497,8 @@ export class ItemGridVertical extends React.Component {
                 selectedIndex={this.selectedIndex}
                 onMoveForward={() => this.grid.move()}
                 onMoveBack={() => this.grid.move(-1)}
-                onChange={this.handleOffsetChange}/>
+                onChange={this.handleOffsetChange}
+                onIndexChange={this.onIndexChange}/>
         )
     } 
 }
@@ -492,4 +507,55 @@ ItemGridVertical.defaultProps = {
     itemBasis: 70,
     offset: 0,
     selectedIndex: 0,
+    onIndexChange: () => {},
 }
+
+class ItemGrid extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = Object.assign({}, props, {
+            dimensions: {
+                width: -1,
+                height: -1,
+            }
+        });
+    }
+
+    handleIndexChange(index) {
+        this.setState({
+            selectedIndex: index,
+        }, () => {
+            if(this.state.onIndexChange(index))
+                this.state.onIndexChange(index);
+        });
+    }
+
+    render() {
+        const {width, height} = this.state.dimensions;
+
+        return(
+            <Measure
+                bounds
+                onResize={(contentRect) => {this.setState({dimensions: contentRect.bounds})}}>
+                {({measureRef}) => 
+                    <div ref={measureRef}>
+                        {
+                              width / Math.max(height, 1) >= 1
+                            ? <ItemGridHorisontal
+                                selectedIndex={this.state.selectedIndex}
+                                items={this.state.items}
+                                onIndexChange={this.handleIndexChange.bind(this)}/>
+                            : <ItemGridVertical
+                                selectedIndex={this.state.selectedIndex}
+                                items={this.state.items}
+                                onIndexChange={this.handleIndexChange.bind(this)}/>
+                        }
+                    </div>
+                }
+            </Measure>
+        )
+    }
+}
+
+export default ItemGrid;

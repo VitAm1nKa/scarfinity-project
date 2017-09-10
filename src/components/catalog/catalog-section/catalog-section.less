@@ -1,0 +1,211 @@
+//  Colors ------------------------------------------------
+    @spacer-top:                    #d7d7d7;
+    @spacer-bottom:                 rgba(255, 255, 255, 1.0);
+    @header-title:                  #303030;
+
+    @button-background:             #ffffff;
+    @button-arrow:                  #808080;
+    @button-arrow-disabled:         #aaaaaa;
+
+    //-- white style
+    @white-background:              #ffffff;
+    @white-back-shadow:             #d7d7d7;
+    @white-button-border:           #d7d7d7;
+    @white-button-arrow:            #aaaaaa;
+    @white-button-background:       #f9f9f9;
+    @white-button-arrow-disabled:   #cccccc;
+//  -------------------------------------------------------
+
+.catalog-section {
+    margin-bottom: 40px;
+    padding: 40px 0px;
+    position: relative;
+
+    &__header{
+        padding: 0px 0px 20px 0px;
+    }
+
+    &__content {
+        display: grid;
+        grid-template-columns: auto 6.25%;
+        grid-template-rows: auto;
+        grid-gap: 14px;
+
+        &__container {
+            // background: lightcoral;
+            // min-height: 260px;
+            overflow: hidden;
+            padding: 0px 5px;
+            margin: 0px -5px;
+        }
+
+        &__side-section {
+            background: lightblue;
+        }
+    }
+
+    &--white {
+        background: @white-background;
+        margin-left: -5px;
+        margin-right: -5px;
+
+        box-shadow: inset @white-back-shadow 0px 0px 1px 1px; 
+    }
+}
+
+.catalog-section-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    &__button {
+        font-size: 0;
+        padding: 10px;
+        background: @button-background;
+        border-radius: 4px;
+        box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
+
+        transition: background 0.3s ease;
+
+        & > svg {
+            fill: @button-arrow !important;
+        }
+
+        &:hover {
+            cursor: pointer;
+
+            background: darken(@button-background, 2%);
+
+            & > svg {
+                fill: darken(@button-arrow, 10%) !important;
+            }
+        }
+
+        &--disabled {
+            & > svg {
+                fill: @button-arrow-disabled !important;
+            }
+
+            &:hover {
+                cursor: default;
+                background: @button-background;
+
+                & > svg {
+                    fill: @button-arrow-disabled !important;
+                }
+            }
+        }
+    }
+
+    &__spacer {
+        flex: 1;
+        border-top: 1px solid @spacer-top;
+        border-bottom: 1px solid @spacer-bottom;
+
+        margin: 0px 10px;
+    }
+
+    &__title {
+        font-family: 'Roboto';
+        font-weight: 400;
+        font-size: 26px;
+        color: @header-title;
+    }
+}
+
+.catalog-section-header--white {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    &__button {
+        font-size: 0;
+        padding: 10px;
+        background: @white-button-background;
+        border: 1px solid @white-button-border;
+
+        transition: background 0.3s ease;
+
+        & > svg {
+            fill: @white-button-arrow !important;
+        }
+
+        &:hover {
+            cursor: pointer;
+
+            background: darken(@white-button-background, 3%);
+
+            & > svg {
+                fill: darken(@white-button-arrow, 10%) !important;
+            }
+        }
+
+        &--disabled {
+            & > svg {
+                fill: @white-button-arrow-disabled !important;
+            }
+
+            &:hover {
+                cursor: default;
+                background: @white-button-background;
+
+                & > svg {
+                    fill: @white-button-arrow-disabled !important;
+                }
+            }
+        }
+
+        &.first {
+            border-top-left-radius: 4px;
+            border-bottom-left-radius: 4px;
+        }
+
+        &.second {
+            border-left: none;
+            border-top-right-radius: 4px;
+            border-bottom-right-radius: 4px;
+        }
+    }
+
+    &__title {
+        flex: 1 1;
+        font-family: 'Roboto';
+        font-weight: 400;
+        font-size: 26px;
+        color: @header-title;
+    }
+}
+
+.catalog-section-products {
+    width: 100%;
+    height: 350px;
+    position: relative;
+
+    transition: transform 0.2s linear;
+
+    &__container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+
+        transition: transform 0.2s linear;
+
+        &__item {
+            flex: 1;
+            margin: 0px 4px;
+            padding: 3px;
+
+            &:first-child {
+                margin-left: -3px;
+            }
+
+            &:last-child {
+                margin-right: -3px;
+            }
+        }
+    }
+}

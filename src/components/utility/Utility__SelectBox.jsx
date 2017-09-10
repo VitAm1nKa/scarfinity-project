@@ -188,10 +188,7 @@ class Utility__SelectBox extends React.Component {
                         onBlur={this.handleBlur}
                         ref="root"
                         />
-                <div className="utility__select-box__icon">
-                    <IconButton style={style.iconButton} iconStyle={style.icon} onClick={this.handleClick}>
-                        <MoreVert />
-                    </IconButton>
+                <div className="utility__select-box__icon" onClick={this.handleClick}>
                 </div>
                 <div 
                     className={`utility__select-box__options-container ${ focus ? "utility__select-box__options-container--expand": "" }`} 

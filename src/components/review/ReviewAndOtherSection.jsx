@@ -5,6 +5,10 @@ import './review-and-other-section.less';
 import {ReviewsContainer, ReviewsContainerHeader} from './ReviewsContainer.jsx';
 import {LeaveReview, LeaveReviewHeader} from './LeaveReview.jsx';
 
+// Data --------------------
+import {connect} 			from 'react-redux';
+import {parse} 			    from 'qs';
+
 class ReviewAndOtherSection extends React.Component {
     constructor(props, context) {
         super(props, context);
@@ -15,6 +19,7 @@ class ReviewAndOtherSection extends React.Component {
             t: true,
             reviews: [],
             currentReviewListIndex: 0,
+            reviewsInfo: props.reviewsInfo,
         }
 
         const {reviewsData} = props;
@@ -57,6 +62,11 @@ class ReviewAndOtherSection extends React.Component {
 
     }
 
+    componentWillReceiveProps(nextProps) {
+        console.log('ALLLO!');
+        this.setState(nextProps);
+    }
+
     render() {
         const { options, selectedId, t, currentReviewListIndex, reviews } = this.state;
         let reviewsCount = reviews.length;
@@ -79,27 +89,48 @@ class ReviewAndOtherSection extends React.Component {
                         {navItems}
                     </div>
                     <div className={`review-ao-section__container ${selectedId === 0 ? "rao-border" : ""}`}>
-                        <div className="review-ao-section__container__header">
-                            {   t 
-                                ? <ReviewsContainerHeader onWriteReview={this.handleWriteReview} reviewsCount={reviewsCount} />
-                                : <LeaveReviewHeader onBackToReviews={this.handleBackToReviews} />
-                            }
-                        </div>
-                        <div className="review-ao-section__container__content">
-                            {   t 
-                                ? <ReviewsContainer 
-                                    reviewListIndex={currentReviewListIndex} 
-                                    reviewsData={this.getReviews(currentReviewListIndex)}
-                                    onIndexChange={this.handleIndexChange}
-                                    pagesCount={pagesCount}/>
-                                : <LeaveReview />
-                            }
-                        </div>
+                        {
+                            this.state.reviewsInfo
+                            ? <Reviews
+                                reviewsInfo={this.state.reviewsInfo}
+                                reviews={t}
+                                onWriteReview={this.handleWriteReview}
+                                onBackToReviews={this.handleBackToReviews}/>
+                            : "Тут пока что ничего"
+                        }
                     </div>
                 </div>
             </div>
         );
     }
+} 
+
+const Reviews = (props) => {
+    const {reviewsInfo} = props;
+    return(
+        <div>
+            <div className="review-ao-section__container__header">
+                {   props.reviews
+                    ? <ReviewsContainerHeader onWriteReview={props.onWriteReview} reviewsCount={reviewsInfo.count} />
+                    : <LeaveReviewHeader onBackToReviews={props.onBackToReviews} />
+                }
+            </div>
+            <div className="review-ao-section__container__content">
+                {   props.reviews
+                    ? <ReviewsContainer 
+                        items={reviewsInfo.list} />
+                    : <LeaveReview />
+                }
+            </div>
+        </div>
+    )
+}
+Reviews.defaultProps = {
+    reviewInfo: null,
+    reviews: true,
+    onWriteReview: () => {},
+    onBackToReviews: () => {},
+
 }
 
 export default ReviewAndOtherSection;

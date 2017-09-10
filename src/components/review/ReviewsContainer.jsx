@@ -10,68 +10,47 @@ import {green} from '../basic/SRaisedButton.js';
 import CatalogNavigation from '../catalogNavigation/CatalogNavigation.jsx';
 
 export class ReviewsContainer extends React.Component {
-    constructor(props, context) {
-        super(props, context);
+    constructor(props) {
+        super(props);
 
         this.state = {
-            items: ["", "", ""],
-            pagesCount: 10,
-            currentPage: 1,
+            items: props.items,
+            currentIndex: 0,
+            pagesCount: props.items && props.items.length > 0 ? Math.ceil(props.items.length / 3) : 0,
         }
-
-        const {reviewsData, onIndexChange, pagesCount, currentPage} = props;
-
-        if(reviewsData) {
-            this.state.items = reviewsData;
-        }
-
-        if(onIndexChange) {
-            this.onIndexChange = onIndexChange;
-        }
-
-        if(pagesCount !== null) {
-            this.state.pagesCount = pagesCount;
-        }
-
-        if(currentPage !== null) {
-            this.state.currentPage = currentPage;
-        }
-
-        this.handleIndexChange = this.handleIndexChange.bind(this);
     }
 
     handleIndexChange(index) {
-        if(this.onIndexChange) {
-            this.onIndexChange(index);
-        }
+        this.setState({
+            currentIndex: index,
+        });
     }
 
-    ////------------------------------
-
     componentWillReceiveProps(props) {
-        const {reviewsData} = props;
-        if(reviewsData) {
-            this.setState({items: reviewsData});
-            console.log(reviewsData);
-        }
+        this.setState(props);
     }
 
     render() {
-
-        const {items, pagesCount, currentPage} = this.state;
-
         return(
             <div className="reviews-container">
-                {items.map((item, index) => 
-                    <div key={index} className="reviews-container__item">
-                        <Review reviewData={item}/>
-                    </div>
+                {
+                    this.state.pagesCount > 0 &&
+                    this.state.items
+                    .slice(this.state.currentIndex * 3, (this.state.currentIndex + 1) * 3)
+                    .map((item, index) => 
+                        <div key={index} className="reviews-container__item">
+                            <Review {...item}/>
+                        </div>
                 )}
-
                 <div className="reviews-container__bottom-navigation">
-                    <CatalogNavigation onIndexChange={this.handleIndexChange} pagesCount={pagesCount} currentPage={currentPage} />
+                    {
+                        this.state.pagesCount > 0 &&
+                        <CatalogNavigation
+                            onIndexChange={this.handleIndexChange.bind(this)}
+                            pagesCount={this.state.pagesCount}
+                            currentPage={this.state.currentIndex + 1} />
+                    }
                 </div>
-
             </div>
         );
     }

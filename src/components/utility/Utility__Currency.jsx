@@ -18,7 +18,11 @@ class Utility__Currency extends React.Component {
             accent: "",
             unmutable: false,
             noanimation: props.noanimation,
+            fontSize: props.fontSize,
+            glyphFull: props.glyphFull,
+            subAccent: props.subAccent,
             test: false,
+            fontWeight: props.fontWeight,
         }
 
         let { value, saleValue, currencyType, size, accent, unmutable, test } = props;
@@ -109,18 +113,31 @@ class Utility__Currency extends React.Component {
 
         const { value, saleValue, changing } = this.state;
         const { size, accent } = this.styleData;
+        const style = {};
+        if(this.styleData.fontSize > 0)
+            style.fontSize = this.styleData.fontSize;
+
+        if(this.styleData.fontWeight) {
+            style.fontWeight = this.styleData.fontWeight;
+        }
 
         return (
-            <div className={`utility__currency ${size} ${accent}`}>
-                <div className="utility__currency__currency">₽</div>
-                <div className={`utility__currency__value ${changing ? "utility__currency__value--changing": "" }`}>{value}</div>
-                { saleValue !== -1 ? <div className="utility__currency__sale-value">{saleValue}</div> : "" }
+            <div 
+                className={`utility__currency ${size} ${accent}`}
+                style={style}>
+                    <div className={`utility__currency__currency ${this.styleData.glyphFull && "utility__currency__currency__full"}`}>₽</div>
+                    <div className={`utility__currency__value ${changing ? "utility__currency__value--changing": "" }`}>{value}</div>
+                    { saleValue !== -1 ? <div className="utility__currency__sale-value">{saleValue}</div> : "" }
             </div>
         );
     }
 }
 Utility__Currency.defaultProps = {
     noanimation: false,
+    fontSize: 0,
+    glyphFull: false,
+    subAccent: false,
+    fontWeight: 400,
 }
 
 export default Utility__Currency;

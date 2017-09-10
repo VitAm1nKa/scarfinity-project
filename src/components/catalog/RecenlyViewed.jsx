@@ -119,7 +119,7 @@ RecenlyViewedVertical.defaultProps = {
 
 export const RecenlyViewedBlock = (props) => {
     return(
-        <Paper zDepth={1} style={{overflow: "auto", margin: 15}}>
+        <Paper zDepth={1} style={{overflow: "auto", margin: "15px 0px"}}>
             <div className="recenly-viewed">
                 <div className="recenly-viewed__head">
                     <span className="recenly-viewed-title">{props.title}</span>

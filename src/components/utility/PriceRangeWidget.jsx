@@ -24,7 +24,7 @@ const PriceRangeSliderPill = (props) => {
     )
 }
 PriceRangeSliderPill.defaultProps = {
-    height: 10,
+    height: 9,
     parentHeight: 0,
     leftValue: 0,
     rightValue: 90,
@@ -260,7 +260,7 @@ PriceRangeSliderController.defaultProps = {
 const PriceRangeInput = (props) => {
     return(
         <div className="price-range-input">
-            <Utility__Currency value={props.value} size="xsmall" noanimation/>
+            <Utility__Currency value={props.value} fontSize={15} noanimation/>
         </div>
     )
 }
@@ -273,10 +273,11 @@ const PriceRangeWidgetView = (props) => {
         <div style={{background: "#fefefe"}}>
             <div className="price-range-widget">
                 <PriceRangeSliderController
+                    height={18}
                     leftValue={props.leftValue}
                     rightValue={props.rightValue}
                     onValueChange={props.onValueChange}/>
-                <div className="price-range-widget__body" style={{paddingLeft: 12, paddingRight: 12}}>
+                <div className="price-range-widget__body">
                     <PriceRangeInput value={props.inputLeftValue} />
                     <SwapHoriz color="#ccc" />
                     <PriceRangeInput value={props.inputRightValue} />
@@ -297,26 +298,37 @@ class PriceRangeWidget extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = props;
+        this.state = Object.assign({}, props, {
+            leftValue: (props.leftValue - props.minValue) / (props.maxValue - props.minValue) * 100, 
+            rightValue: (props.rightValue - props.minValue) / (props.maxValue - props.minValue) * 100, 
+        });
 
         this.handleValueChange = this.handleValueChange.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
         this.setState({
-            leftValue: nextProps.leftValue,
-            rightValue: nextProps.rightValue,
+            leftValue: (nextProps.leftValue - nextProps.minValue) / (nextProps.maxValue - nextProps.minValue) * 100, 
+            rightValue: (nextProps.rightValue - nextProps.minValue) / (nextProps.maxValue - nextProps.minValue) * 100,
         });
     }
 
     handleValueChange(values) {
+        const retValues = this.getValues(values);
         this.setState({
             leftValue: values.leftValue,
             rightValue: values.rightValue,
+        }, () => {
+            if(this.state.onValueChange) {
+                this.state.onValueChange({
+                    leftValue: retValues.inputLeftValue,
+                    rightValue: retValues.inputRightValue,
+                })
+            }
         });
     }
 
-    getValues () {
+    getValues() {
         const {minValue, maxValue} = this.state;
         const valuePerPoint = (maxValue - minValue) / 100;
         return ({
@@ -336,10 +348,11 @@ class PriceRangeWidget extends React.Component {
     }
 }
 PriceRangeWidget.defaultProps = {
-    leftValue: 10,
-    rightValue: 90,
+    leftValue: 700,
+    rightValue: 4000,
     minValue: 500,
     maxValue: 5000,
+    onValueChange: null,
 }
 
 export default PriceRangeWidget;

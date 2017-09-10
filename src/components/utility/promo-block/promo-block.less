@@ -1,0 +1,211 @@
+//  Colors ------------------------------------------------
+
+    @content-title:                 #303030;
+    @content-subtitle:              #808080;
+    @content-background:            #ffffff;
+
+    @delivery:                      #2799c9;
+    @gift:                          #9cbf3e;
+    @basket:                        #ef8742;
+
+    @content-button-background:     #e05543;
+    @content-button-color:          #ffffff;
+    @content-sep:                   #d7d7d7;
+//  -------------------------------------------------------
+
+.promo-block-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: stretch;
+
+    margin: 0px calc(~"12.5% - 7px");
+
+    & > div {
+        flex: 1;
+    }
+}
+
+.promo-block {
+    overflow: hidden;
+    display: flex !important;
+    height: 100%;
+    flex-direction: column;
+}
+
+.propmo-block-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    margin-bottom: 20px;
+
+    &__icon {
+        transition: transform 0.2s ease;
+        transform: rotate3d(0, 0, 1, 90deg);
+    }
+
+    &__title {
+        font-family: "Roboto";
+        font-weight: 500;
+        font-size: 13px;
+
+        text-transform: capitalize;
+
+        user-select: none;
+    }
+
+    &:hover {
+        cursor: pointer;
+    }
+
+    &:hover & {
+        &__icon {
+            cursor: pointer;
+        }
+
+        &__title {
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    }
+
+    &--delivery & {
+        &__icon > svg {
+            fill: @delivery !important;
+        }
+
+        &__title {
+            color: @delivery;
+        }
+    }
+
+    &--gift & {
+        &__icon > svg {
+            fill: @gift !important;
+        }
+
+        &__title {
+            color: @gift;
+        }
+    }
+
+    &--basket & {
+        &__icon > svg {
+            fill: @basket !important;
+        }
+
+        &__title {
+            color: @basket;
+        }
+    }
+}
+
+.promo-block-content {
+    position: relative;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    background: @content-background;
+    padding: 15px 25px;
+
+    font-family: "Roboto";
+
+    &:before {
+        content: "";
+        position: absolute;
+
+        border-bottom: 10px solid @content-background;
+        border-right: 10px solid transparent;
+
+        top: -10px;
+        left: 0;
+        right: 50%;
+    }
+
+    &:after {
+        content: "";
+        position: absolute;
+
+        border-bottom: 10px solid @content-background;
+        border-left: 10px solid transparent;
+
+        top: -10px;
+        right: 0;
+        left: 50%;
+    }
+
+    &__title {
+        font-size: 20px;
+        font-weight: 500;
+        text-transform: uppercase;
+
+        text-align: center;
+
+        color: @content-title;
+    }
+
+    &__subtitle {
+        font-size: 14px;
+        font-weight: 400;
+
+        margin: 10px 0px;
+
+        text-align: center;
+
+        color: @content-subtitle;
+    }
+}
+
+.promo-block-icon {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    background-color: #9cbf3e;
+    background-image: url('./gift.svg');
+    background-size: 30px 56px;
+
+    &__icon {
+        background: @content-background;
+        border-radius: 50%;
+        padding: 20px;
+        margin: 30px;
+    }
+
+    &--delivery {
+        background-color: @delivery;
+        background-image: url('./delivery.svg');
+    }
+
+    &--delivery & {
+        &__icon > svg {
+            fill: @delivery;
+        }
+    }
+
+    &--gift {
+        background-color: @gift;
+        background-image: url('./gift.svg');
+    }
+
+    &--gift & {
+        &__icon > svg {
+            fill: @gift;
+        }
+    }
+
+    &--basket {
+        background-color: @basket;
+        background-image: url('./basket.svg');
+    }
+
+    &--basket & {
+        &__icon > svg {
+            fill: @basket;
+        }
+    }
+}

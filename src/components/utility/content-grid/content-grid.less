@@ -1,0 +1,141 @@
+.content-grid {
+	&__navigation {
+		display: flex;
+		margin: 6px 0px 14px 0px;
+	}
+
+	&__container {
+		display: flex;
+		
+		&--reverse {
+			flex-direction: row-reverse;
+			
+			@media screen and (min-width: 899px) {
+				.main-content__container {
+					&__left-section {
+						flex-basis: calc(~"(100%-14px)/16*3");
+						flex-shrink: 0;
+					}
+
+					&__middle-section {
+						flex-grow: 1;
+					}
+
+					&__delim {
+						flex-grow: 0;
+					}
+				}
+			}
+		}
+
+		&__left-section {
+			background: lighten(red, 35%);
+		}
+
+		&__middle-section {
+			align-self: flex-start;
+
+			display: grid;
+			grid-template-columns: auto;
+			grid-gap: 10px;
+
+			background: lighten(blue, 35%);
+		}
+
+		&__additional-section {
+			background: lighten(orange, 35%);
+		}
+
+		&__delim {
+			flex: 14px;
+			flex-shrink: 0;
+			background: lightcyan;
+		}
+
+		@media screen and (min-width: 899px) {
+			&__middle-section {
+				// flex-basis: calc(~"(100%-28px)/16*12");
+				width: calc(~"(100%-28px)/16*12");
+				// flex-shrink: 1;
+			}
+
+			&__left-section {
+				// flex-basis: calc(~"(100%-28px)/16*3");
+				width: calc(~"(100%-28px)/16*3");
+				// flex-shrink: 1;
+			}
+
+			&__additional-section {
+				// flex-basis: calc(~"(100%-28px)/16*1");
+				width: calc(~"(100%-28px)/16*1");
+				// flex-shrink: 0;
+			}
+		}
+
+		@media screen and (max-width: 898px) { 
+			flex-direction: column;
+			
+			&__middle-section {
+				flex-basis: 0px;
+				width: 100%;
+			}
+
+			&__left-section {
+				flex-basis: 0px;
+			}
+			
+			&--reverse {
+				flex-direction: column-reverse;
+			}
+		}
+
+	}
+
+	&__filters-grid {
+		display: flex;
+		flex-direction: column;
+		// margin: -7px;
+		
+		&__item {
+			margin: 7px;
+		}
+
+		@media screen and (max-width: 898px) {
+			flex-direction: row;
+			flex-wrap: wrap;
+			
+			&__item {
+				flex-basis: calc(~"25% - 14px");
+			}
+		}
+	}
+
+	&__product-grid {
+		display: flex;
+		flex-wrap: wrap;
+		margin: -7px;
+		
+		&__item {
+			margin: 7px;
+			flex-basis: calc(~"25% - 14px");
+
+			@media screen and (min-width: 594px) and (max-width: 1050px) { 
+				flex-basis: calc(~"33.333333333% - 14px");
+			}
+
+			@media screen and (min-width: 442px) and (max-width: 593px) {
+				flex-basis: calc(~"50% - 14px");
+			}
+
+			@media screen and (min-width: 320px) and (max-width: 441px) { 
+				flex-basis: calc(~"50% - 10px");
+				margin: 5px;
+			}
+
+			@media screen and (max-width: 319px) { 
+				flex-basis: calc(~"100%");
+				padding: 5px 0px;
+			}
+		}
+	}
+}

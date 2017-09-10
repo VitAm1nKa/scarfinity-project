@@ -10,11 +10,15 @@
   "author": "Mikhail VitAm1nKa.trisquare Silantyev",
   "license": "ISC",
   "dependencies": {
+    "css-element-queries": "^0.4.0",
     "jquery": "*",
-    "material-ui": "^0.18.1",
+    "key-mirror": "^1.0.1",
+    "material-ui": "^0.19.0",
     "prop-types": "^15.5.8",
+    "qs": "^6.5.0",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
+    "react-measure": "^2.0.2",
     "react-redux": "^5.0.5",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
@@ -22,13 +26,15 @@
     "react-tap-event-plugin": "^2.0.1",
     "redux": "^3.7.2",
     "redux-devtools-extension": "^2.13.2",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "whatwg-fetch": "^2.0.3"
   },
   "devDependencies": {
     "autoprefixer-loader": "*",
     "babel": "6.x",
     "babel-core": "6.24.0",
     "babel-loader": "7.x",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-react": "^6.24.1",
     "css-loader": "0.28.x",
     "file-loader": "0.11.0",
@@ -38,6 +44,7 @@
     "style-loader": "0.17.0",
     "url-loader": "0.5.8",
     "webpack": "^2.x",
-    "webpack-dev-server": "^2.4.5"
+    "webpack-dev-server": "^2.4.5",
+    "worker-loader": "^0.8.1"
   }
 }

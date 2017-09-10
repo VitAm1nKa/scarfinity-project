@@ -5,7 +5,7 @@ import './filter-block.less';
 
 const FilterContainerView = (props) => {
     return(
-        <Paper style={{padding: '0px 15px', position: 'relative'}} zDepth={1}>
+        <Paper style={{padding: '0px 15px', position: 'relative', display: 'inline-block'}} zDepth={1}>
             <div className="filter-block">
                 <div className="filter-block__header">
                     <span className="filter-block__header__title">{props.title}</span>

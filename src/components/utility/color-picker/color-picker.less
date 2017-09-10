@@ -1,0 +1,34 @@
+.color-picker-item {
+    width: 100%;
+    padding-top: 100%;
+    position: relative;
+
+    &__container {
+        @padding: 4px;
+        position: absolute;
+        top: @padding;
+        right: @padding;
+        bottom: @padding;
+        left: @padding;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}
+
+.color-picker1 {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin: -6px;
+
+    &__item {
+        margin: 6px;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}

@@ -20,10 +20,98 @@ import reducer from './reducers'
 import {getTracks} from './actions/tracks';
 
 
+// ---- Pages ------------------------
+    import Main                 from '../pages/main';
+    import Page__Gallery        from '../pages/photo-gallery';
+    import Page__ProductCard    from '../pages/product-card';
+    import Page__ProductCard1   from '../pages/product-card-test';
+// -----------------------------------
+
+
+
+// Material-ui
+
+
+
 import PriceRangeWidget from '../components/utility/PriceRangeWidget.jsx';
 import DevelopFiltersContainer from '../components/filters/filters-container';
 import FilterPriceRange from '../components/filters/price-range';
 import FilterColorPicker from '../components/filters/color-picker';
+import FilterRatingSelect from '../components/filters/rating-select';
+import FilterTagGrid from '../components/filters/tag-grid';
+import FilterSeasonSelectView from '../components/filters/check-box-list-view';
+import FilterPopularItems from '../components/filters/popular-items';
+
+// Catalog
+import ProductCardCatalogView from '../components/utility/product-card-catalog';
+import PriceTicket from '../components/utility/price-ticket';
+import CatalogGrid from '../components/catalog/CatalogGrid.jsx';
+
+// Main
+import ContentGrid from '../components/utility/content-grid';
+import {ProductCardsGridView, FiltersGrid} from '../components/catalog/catalog-grid';
+
+// Navigation
+import TreeNavigation from '../components/navigation/tree-navigation';
+import TopMenu from '../components/navigation/top-menu';
+import MainMenu from '../components/navigation/main-menu';
+
+// Banner
+import {Wrapper}    from '../components/utility/Utility__Css.jsx';
+import Banner       from '../components/utility/banner';
+import SubBanner    from '../components/utility/sub-banner';
+
+// SaleBage
+import SaleBage from '../components/utility/sale-bage';
+
+// Catalog Section
+import CatalogSection from '../components/catalog/catalog-section';
+
+// Promo block
+import PromoBlock from '../components/utility/promo-block';
+
+// Offer
+import OfferGrid from '../components/other/Offer.jsx';
+
+// Status widgets
+import FreeShippingStatus from '../components/utility/free-shipping-status';
+
+// Pop view
+import PopView from '../components/utility/pop-view';
+
+// Svg
+import SaleCircle   from '../components/utility/svg/sale-circle';
+import Ribbon       from '../components/utility/svg/ribbon';
+import Delivery     from '../components/utility/svg/delivery';
+
+
+
+// Icon test
+const CartIcon = (props) => {
+    return(
+        <svg 
+            viewBox="0 0 200 200"
+            {...props.style}
+            style={{
+                display: 'inline-block',
+                userSelect: 'none',
+                fill: props.color,
+                fillRule: 'evenodd',
+                width: props.width,
+                height: props.height,
+            }}>>
+            <path d="M43,176L24,102c-1.125-5.906-8-8-8-8-6,0-6-15,0-15H184c6,0,6,15,0,15,0,0-7,2.063-8,8l-19,74s-2,8-6,8H49C45,184,43,176,43,176Zm19-21H86c10,0,10,13,0,13H62C52,168,52,155,62,155Zm52,0h26c8.15,0,7.994,13,0,13H114C104,168,104,155,114,155ZM54,139a7.017,7.017,0,1,1,0-14H86a7.017,7.017,0,1,1,0,14H54Zm60,0a7.017,7.017,0,1,1,0-14h32a7.017,7.017,0,1,1,0,14H114ZM44,108c-10,0-10-15,0-15H86c10,0,10,15,0,15C86,108.462,41.479,108,44,108Zm70,0c-10,0-10-15,0-15h42c10,0,10,15,0,15H114ZM79,18c8-8,17.861,2.139,10,10L49,68c-7.4,7.4-17.538-2.462-10-10Zm70,50c8,8,17.861-2.139,10-10L119,18c-7.4-7.4-17.538,2.462-10,10Z"/>
+        </svg>
+    )
+}
+CartIcon.defaultProps = {
+    color: '#fff',
+    width: 22,
+    height: 22,
+}
+
+
+
 
 
 const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)));
@@ -33,19 +121,122 @@ const filterTracks = (tracks, searhTrackTitle = '') => {
     return tracks.filter(track => track.title.includes(searhTrackTitle));
 }
 
+                // leftSection={connect(
+                //     state => ({
+                //         testStore: state.colors
+                //     }),
+                //     dispatch => ({})
+                //     (
+                //         props => {
+                //             return(
+                //                 <FiltersGrid />
+                //             )
+                //         }
+                //     )
+                // )}
+
 // Develop container
 const DevelopContainer = (props) => {
     return(
-        <div style={{background: "#eaeaea"}}>
+        <div style={{background: "#f3f3f3"}}>
+            <TopMenu />
+            <MainMenu />
+             {/* <Wrapper>
+                <Banner />
+            </Wrapper> 
+            <CatalogSection />
+             <SubBanner /> 
+             <CatalogSection /> 
+             <Wrapper>
+                <CatalogSection />
+                <OfferGrid />
+                <CatalogSection />
+                <CatalogSection />
+            </Wrapper> 
+            <Wrapper>
+                <div style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'space-around',
+                }}>
+                    <Ribbon ribbonType="hot"/>
+                    <Ribbon ribbonType="new"/>
+                    <Ribbon ribbonType="sale"/>
+                </div>
+            </Wrapper>
+            <Wrapper>
+                <div style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'space-around',
+                }}>
+                    <SaleBage saleSize={10} />
+                    <SaleBage saleSize={20} />
+                    <SaleBage saleSize={30} />
+                    <SaleBage saleSize={40} />
+                    <SaleBage saleSize={50} />
+                    <SaleBage saleSize={60} />
+                    <SaleBage saleSize={70} />
+                    <SaleBage saleSize={80} />
+                </div>
+            </Wrapper> */}
+            
+            <Wrapper>
+                <Banner />
+            </Wrapper> 
+            <CatalogSection />
+            <SubBanner /> 
+            <PromoBlock />
+            <FreeShippingStatus />
+            <PopView />
+            <CatalogSection />
+            <ContentGrid
+                leftSection={<Connect__FiltersGrid />}
+                middleSection={<ProductCardsGridView />}
+                treeNavigation={<TreeNavigation />}/>
+            <CatalogGrid /> 
             <DevelopFiltersContainer>
                 <FilterPriceRange />
                 <FilterColorPicker />
+                <FilterRatingSelect />
+                <FilterPopularItems />
+                <FilterTagGrid />
+                <FilterSeasonSelectView />
+                <ProductCardCatalogView /> 
+                <div></div>
+                <div></div>
             </DevelopFiltersContainer>
+            <PriceTicket /> 
+            <CartIcon color={"#000"} height={120} width={120}/>
+        </div>
+    )
+}
+
+// Pop view
+const DevelopContainerPopView = (props) => {
+    return(
+        <div style={{background: "#f3f3f3"}}>
+            <PopView />
         </div>
     )
 }
 
 // Components  -----------------------------------
+const Connect__FiltersGrid = connect(
+    state => ({
+        colors: state.filters.colors,
+        priceRange: state.filters.priceRange,
+        rating: state.filters.rating,
+        season: state.filters.season,
+    }),
+    dispatch => ({
+        onPriceRangeChange: (action) => {
+            dispatch({type: 'PRICE_RANGE__DEFAULT', action: action});
+        }
+    })
+)
+(FiltersGrid);
+
 const FirstTest = connect(
     state => ({
         testStore: filterTracks(state.tracks, state.filterTracks),
@@ -170,9 +361,13 @@ const TestRedux = () => (
     <Provider store={store}>
         <HashRouter>
             <Switch>
-                <Route exact path='/' component={TestReduxWrap} />
+                <Route exact path='/' component={Main} />
                 <Route path='/test' component={DevelopContainer} />
-                <Route exact path='/:id' component={PriceRangeWidget} />
+                <Route path='/popview' component={DevelopContainerPopView} />
+                <Route path='/gallery' component={Page__Gallery} />
+                <Route path='/product' component={Page__ProductCard} />
+                <Route path='/productcard1' component={Page__ProductCard1} />
+                <Route path='/:id' component={PriceRangeWidget} />
             </Switch>
         </HashRouter>
     </Provider>

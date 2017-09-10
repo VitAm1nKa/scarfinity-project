@@ -1,0 +1,71 @@
+//- Colors --------------------
+@basic__border:             #d7d7d7; 
+@basic-background:          #ffffff;   
+@basic-disabled-border:     #eeeeee;  
+@basic-disabled-background: #f9f9f9;
+
+@search-delim:				#d7d7d7;
+@search-options-background:	#ffffff;
+@search-background:         #f9f9f9;
+
+@delim-left:                rgba(0, 0, 0, 0.1);
+@delim-right:               rgba(255, 255, 255, 0.17);
+
+@end:                       #1bb869;
+@loading:                   #ef8742;   
+@start:                     #e05543;
+//- ---------------------------
+
+.buttons__cart-button {
+    @icon-size: 22px;
+
+    padding: 12px 15px;
+    border-radius: 2px;
+    height: 50px;
+    max-width: 300px;
+
+    cursor: pointer;
+
+    border: none;
+
+    background-image: 
+        url('./icons/basket.svg'),
+        linear-gradient(90deg, @delim-left 1px, @delim-right 1px),
+        url('./icons/basket.svg');
+    background-position: left 12px center, left (@icon-size + 24px - 1px) center, right 12px center;
+    background-size: @icon-size @icon-size, 2px 100%, 0px 0px;
+    background-repeat: no-repeat, no-repeat, no-repeat;
+
+    padding-left: @icon-size + 36px;
+
+    text-align: center;
+
+    font-family: "Roboto";
+    font-size: 14px;
+    font-weight: 400;
+
+    color: #ffffff;
+
+    background-color: @start;
+
+    outline: none;
+
+    transition: background 0.15s ease 0.2s, color 0.2s ease 0.3s, max-width 0.2s ease 0.1s, padding 0.2s ease 0.1s;
+
+    &--end {
+        background-color: @end;
+        background-size: 0px 0px, 2px 100%, @icon-size @icon-size;
+        background-position: left 12px center, right (@icon-size + 24px - 1px) center, right 12px center;
+        padding-right: @icon-size + 36px;
+        padding-left: 15px;
+    }
+
+    &--loading {
+        background-color: @loading;
+        max-width: 50px;
+        padding: 0;
+        background-size: 0px 0px, 0px 100%, 0px 0px;
+        color: rgba(255, 255, 255, 0.0);
+        transition: background 0.2s ease 0.1s, color 0.2s ease 0.1s, max-width 0.3s ease 0.2s, padding 0.3s ease 0.2s;
+    }
+}
